@@ -1,0 +1,1 @@
+<view style="padding:20rpx;"><block wx:for="{{focusUserList}}" wx:for-item="e" wx:for-index="i"><block><user-card vue-id="{{'29301033-1-'+i}}" user="{{e}}" bind:__l="__l"></user-card></block></block></view>

@@ -1,0 +1,1 @@
+<view><scroll-view style="{{'height:'+(listHeight)+';'}}" scroll-y="true" data-event-opts="{{[['scrolltolower',[['loadMore',['$event']]]]]}}" bindscrolltolower="__e"><slot></slot><uni-load-more vue-id="2885d3c6-1" status="{{loadMoreStatus}}" bind:__l="__l"></uni-load-more></scroll-view></view>

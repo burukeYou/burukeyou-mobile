@@ -1,0 +1,39 @@
+
+.input-view {
+		
+		display: -webkit-box;
+		display: -webkit-flex;
+		display: flex;
+		
+		-webkit-box-orient: horizontal;
+		-webkit-box-direction: normal;
+		-webkit-flex-direction: row;
+		        flex-direction: row;
+
+		-webkit-box-flex: 1;
+
+		-webkit-flex: 1;
+
+		        flex: 1;
+		background-color: #f8f8f8;
+		height: 30px;
+		border-radius: 15px;
+		padding: 0 15px;
+		-webkit-flex-wrap: nowrap;
+		        flex-wrap: nowrap;
+		margin: 7px 0;
+		line-height: 30px;
+}
+.input-uni-icon {
+	line-height: 30px;
+}
+.nav-bar-input {
+	height: 30px;
+	line-height: 30px;
+	
+	padding: 0 5px;
+	font-size: 28rpx;
+	background-color: #f8f8f8;
+	width: 400rpx;
+}
+

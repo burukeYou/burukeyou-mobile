@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "消息通知",
+  "usingComponents": {
+    "bk-tabs": "/bkcomponents/bk-tabs"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "小视频",
+  "usingComponents": {
+    "video-card": "/bkcomponents/video-card"
+  }
+}

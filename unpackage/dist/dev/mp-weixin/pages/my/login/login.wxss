@@ -1,0 +1,151 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* header */
+.header {
+	width:300rpx;
+	height:80rpx;
+	padding-top: 27rpx;
+	/*box-shadow:0upx 0upx 60upx 0upx rgba(0,0,0,0.1); */
+	/*border-radius:50%; */
+	/*background-color:  #007BFF;  */
+	margin: 38rpx auto;
+}
+.header image{
+	width:300rpx;
+	height:80rpx;
+	/*border-radius:50%; */
+}
+/* 表单 */
+.main {
+	/*border: 1px solid #000000; */
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: column;
+	        flex-direction: column;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	        align-items: center;	
+	margin-top: 108rpx;
+}
+/*  */
+.flex-all-center > view {
+	margin-left: 64rpx;
+	font-size: 64rpx;
+	color: #1a73e8;
+}
+/*  */
+.footer text{
+	font-size: 24rpx;
+	margin-left: 15rpx;
+	margin-right: 15rpx;
+}
+
+
+

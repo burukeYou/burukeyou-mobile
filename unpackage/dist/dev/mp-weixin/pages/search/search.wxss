@@ -1,0 +1,10 @@
+
+#history > view {
+	margin-left: 20rpx;
+	margin-top: 20rpx;
+	border-radius: 10rpx;
+	background-color: #F2F2F2;
+	color: #868686;
+	padding: 4rpx 10rpx;
+}
+

@@ -1,0 +1,10 @@
+{
+  "navigationStyle": "custom",
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "uni-nav-bar": "/components/uni-nav-bar/uni-nav-bar",
+    "uni-popup": "/components/uni-popup/uni-popup",
+    "uni-badge": "/components/uni-badge/uni-badge",
+    "chat-card": "/bkcomponents/chatCard"
+  }
+}

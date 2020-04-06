@@ -1,0 +1,6 @@
+
+#moreCard >view > view:nth-of-type(0) {
+	font-size: 200rpx;
+}
+
+

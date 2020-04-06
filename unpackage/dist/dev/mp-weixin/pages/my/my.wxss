@@ -1,0 +1,16 @@
+
+.top {
+	background-color:  #F5F5F4;
+	padding: 30rpx 0rpx;
+}
+.top >  view {
+	background-color: #FFFFFF;
+}
+.sub   uni-list-item {
+	margin-top: 5rpx;
+}
+.sub > uni-list-item {
+	border-bottom: 1px solid  #A9A5A0;
+}
+
+

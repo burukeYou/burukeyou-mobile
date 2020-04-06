@@ -1,0 +1,23 @@
+
+.selectStyle {
+	color: #1a73e8;
+	font-size: 35rpx;
+	font-weight: 500;
+	
+	border-bottom-width: 4rpx;
+	border-bottom-style: solid;
+	border-bottom-color: #007AFF;
+}
+
+/* 解决view默认line-height问题 */
+van-tabs view {
+	line-height: 3;
+}
+uni-list-item view {
+	line-height: 1.8;
+}
+.uni-list-item__container {
+	padding: 0rpx 20rpx;
+}
+
+

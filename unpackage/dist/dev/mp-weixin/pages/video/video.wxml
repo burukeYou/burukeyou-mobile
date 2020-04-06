@@ -1,0 +1,1 @@
+<view class="flex flex-wrap justify-aroud align-center"><block wx:for="{{videoList}}" wx:for-item="e" wx:for-index="__i0__" wx:key="*this"><block><video-card style="margin-top:50rpx;" vue-id="{{'cc049370-1-'+__i0__}}" video="{{e}}" bind:__l="__l"></video-card></block></block></view>

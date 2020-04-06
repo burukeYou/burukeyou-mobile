@@ -1,0 +1,7 @@
+
+image {
+	border-top-left-radius: 10rpx;
+	border-top-right-radius: 10rpx;
+	/*opacity: 0.5; */
+}	
+

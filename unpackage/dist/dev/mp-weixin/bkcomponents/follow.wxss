@@ -1,0 +1,10 @@
+
+.focus > view {
+	border-width: 1px;
+	border-style: solid;
+	width: 90rpx;
+	height: 50rpx;
+	border-radius: 5rpx;
+	padding:0rpx 2rpx;
+}
+

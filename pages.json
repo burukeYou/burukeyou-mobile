@@ -1,0 +1,219 @@
+{
+	// 1- 页面路由配置
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationStyle":"custom"
+			}
+		}
+	    ,{
+            "path" : "pages/boiling/boiling",
+            "style" : {
+				"navigationBarTitleText":"广场"
+				// "usingComponents":{
+				// 	"van-tab": "/wxcomponents/vant-weapp/tab/index",
+				// 	"van-tabs": "/wxcomponents/vant-weapp/tabs/index"
+				// }
+			}
+        },
+		{
+		    "path" : "pages/my/my",
+		    "style" : {
+				"navigationBarTitleText": "我的"
+			}
+		},
+		{
+		    "path" : "pages/found/found",
+		    "style" : {
+				"navigationStyle":"custom"
+			}
+		}
+        ,{
+            "path" : "pages/message/message",
+            "style" : {
+				"navigationStyle":"custom",
+				"enablePullDownRefresh":true
+			}
+        }
+        ,{
+            "path" : "pages/video/video",
+            "style" : {
+				"navigationBarTitleText":"小视频"
+			}
+        },
+		{
+		    "path" : "pages/video/video-detail",
+		    "style" : {
+				
+			}
+		}
+        ,{
+            "path" : "pages/my/setting/setting",
+            "style" : {
+				"navigationBarTitleText":"设置"
+			}
+        }
+        ,{
+            "path" : "pages/search/search",
+            "style" : {
+				"navigationBarTitleText":"全网搜索"
+			}
+        }
+        ,{
+            "path" : "pages/detail/articleDetail",
+            "style" : {
+				"navigationBarTitleText":"文章详情"
+			}
+        }
+        ,{
+            "path" : "pages/my/feedback/feedback",
+            "style" : {
+				"navigationBarTitleText":"意见反馈·"
+			}
+        }
+        ,{
+            "path" : "pages/my/login/login",
+            "style" : {
+				"navigationBarTitleText":"登陆"
+			}
+        },
+		{
+		    "path" : "pages/my/login/register",
+		    "style" : {
+				"navigationBarTitleText":"注册"
+			}
+		}
+        ,{
+            "path" : "pages/my/user-home/user-home",
+            "style" : {
+				"navigationBarTitleText":"个人主页"
+			}
+        }
+        ,{
+            "path" : "pages/message/chat/chat",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/message/more/more",
+            "style" : {
+				"navigationBarTitleText":"好友列表"
+			}
+        },
+		{
+		    "path" : "pages/message/more/friend-list",
+		    "style" : {}
+		}
+        ,{
+            "path" : "pages/topic/topic",
+            "style" : {
+				"navigationBarTitleText":"话题广场"
+			}
+        },
+		{
+		    "path" : "pages/topic/topic-detail",
+		    "style" : {
+				"navigationBarTitleText":"话题详情"
+			}
+		}
+        ,{
+            "path" : "pages/my/notification/notification",
+            "style" : {
+				"navigationBarTitleText":"消息通知"
+			}
+        },
+		{
+		    "path" : "pages/my/user-home/favorites",
+		    "style" : {
+				"navigationBarTitleText":"收藏"
+			}
+		},
+		{
+		    "path" : "pages/my/user-home/favorites-detail",
+		    "style" : {
+				"navigationBarTitleText":"收藏主页"
+			}
+		},
+		{
+		    "path" : "pages/my/user-home/column-detail",
+		    "style" : {
+				"navigationBarTitleText":"专栏主页"
+			}
+		}
+        ,{
+            "path" : "pages/focus/focus",
+            "style" : {
+				"navigationBarTitleText":"关注用户"
+			}
+        },
+		{
+		    "path" : "pages/focus/focus-label",
+		    "style" : {
+				"navigationBarTitleText":"标签管理"
+			}
+		},
+		{
+		    "path" : "pages/focus/fan",
+		    "style" : {
+				"navigationBarTitleText":"粉丝"
+			}
+		}
+    ],
+	
+	// 2 - 全局样式配置 (如果在路由pages下的style配置了重复默认会被覆盖)
+	"globalStyle": {
+		//顶部栏目配置
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "burukeYou社区",
+		"navigationBarBackgroundColor": "#FFFFFF",
+		"backgroundColor": "#FFFFFF",
+		"usingComponents":{
+			"van-icon":"/wxcomponents/vant-weapp/icon/index"
+		}
+	},
+	//3- 底部栏配置
+	"tabBar":{
+		"color":"white",
+		"selectedColor":"#409eff",
+		"backgroundColor":"#FFFFFF",
+		"borderStyle":"black",
+		"list":[
+			{
+				"pagePath":"pages/index/index",
+				"text":"首页",
+				"iconPath":"./static/img/home.png",
+				"selectedIconPath":"static/img/homeed.png"  
+			},
+			{
+				"pagePath":"pages/boiling/boiling",
+				"text":"广场",
+				"iconPath":"./static/img/boliing.png",
+				"selectedIconPath":"./static/img/boilinged.png" 
+			},
+			{
+				"pagePath":"pages/found/found",
+				"text":"发现",
+				"iconPath":"/static/img/found.png",
+				"selectedIconPath":"static/img/founded.png"
+			},
+			{
+				"pagePath":"pages/message/message",
+				"text":"消息",
+				"iconPath":"./static/img/message.png",
+				"selectedIconPath":"/static/img/messageed.png"
+			},
+			// {
+			// 	"pagePath":"pages/video/video",
+			// 	"text":"视频",
+			// 	"iconPath":"/static/img/video.png",
+			// 	"selectedIconPath":"static/img/videoed.png"
+			// },
+			{
+				"pagePath":"pages/my/my",
+				"text":"我的",
+				"iconPath":"static/img/my.png",
+				"selectedIconPath":"static/img/myed.png"
+			}
+		]
+	}
+}

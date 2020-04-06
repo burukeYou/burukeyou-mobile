@@ -1,0 +1,80 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/boiling/boiling",
+    "pages/my/my",
+    "pages/found/found",
+    "pages/message/message",
+    "pages/video/video",
+    "pages/video/video-detail",
+    "pages/my/setting/setting",
+    "pages/search/search",
+    "pages/detail/articleDetail",
+    "pages/my/feedback/feedback",
+    "pages/my/login/login",
+    "pages/my/login/register",
+    "pages/my/user-home/user-home",
+    "pages/message/chat/chat",
+    "pages/message/more/more",
+    "pages/message/more/friend-list",
+    "pages/topic/topic",
+    "pages/topic/topic-detail",
+    "pages/my/notification/notification",
+    "pages/my/user-home/favorites",
+    "pages/my/user-home/favorites-detail",
+    "pages/my/user-home/column-detail",
+    "pages/focus/focus",
+    "pages/focus/focus-label",
+    "pages/focus/fan"
+  ],
+  "subPackages": [],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "burukeYou社区",
+    "navigationBarBackgroundColor": "#FFFFFF",
+    "backgroundColor": "#FFFFFF"
+  },
+  "tabBar": {
+    "color": "white",
+    "selectedColor": "#409eff",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "./static/img/home.png",
+        "selectedIconPath": "static/img/homeed.png"
+      },
+      {
+        "pagePath": "pages/boiling/boiling",
+        "text": "广场",
+        "iconPath": "./static/img/boliing.png",
+        "selectedIconPath": "./static/img/boilinged.png"
+      },
+      {
+        "pagePath": "pages/found/found",
+        "text": "发现",
+        "iconPath": "/static/img/found.png",
+        "selectedIconPath": "static/img/founded.png"
+      },
+      {
+        "pagePath": "pages/message/message",
+        "text": "消息",
+        "iconPath": "./static/img/message.png",
+        "selectedIconPath": "/static/img/messageed.png"
+      },
+      {
+        "pagePath": "pages/my/my",
+        "text": "我的",
+        "iconPath": "static/img/my.png",
+        "selectedIconPath": "static/img/myed.png"
+      }
+    ]
+  },
+  "usingComponents": {
+    "van-icon": "/wxcomponents/vant-weapp/icon/index",
+    "divider": "/bkcomponents/divider"
+  },
+  "sitemapLocation": "sitemap31.json"
+}

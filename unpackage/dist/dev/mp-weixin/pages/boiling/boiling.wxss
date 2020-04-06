@@ -1,0 +1,10 @@
+
+.nav-class {
+	background-color: #117A8B;
+	font-size: 100px;
+}
+view {
+	font-size:28rpx;
+	line-height:3;
+}
+

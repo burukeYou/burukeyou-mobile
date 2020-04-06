@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "广场",
+  "usingComponents": {
+    "boiling-card": "/bkcomponents/boilingCard",
+    "bk-tabs": "/bkcomponents/bk-tabs"
+  }
+}

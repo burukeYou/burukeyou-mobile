@@ -1,0 +1,14 @@
+
+.header {
+	width:300rpx;
+	height:80rpx;
+	padding-top: 27rpx;
+	margin: 38rpx auto;
+}
+.register > input {
+	border-bottom-width: 1rpx;
+	border-bottom-style: solid;
+	border-bottom-color: #dee2e6;
+	padding: 20rpx;
+}
+

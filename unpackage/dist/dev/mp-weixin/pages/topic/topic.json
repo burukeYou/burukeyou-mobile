@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "话题广场",
+  "usingComponents": {
+    "follow": "/bkcomponents/follow"
+  }
+}

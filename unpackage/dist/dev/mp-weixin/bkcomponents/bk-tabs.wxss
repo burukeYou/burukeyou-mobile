@@ -1,0 +1,12 @@
+
+.selectStyle {
+	color: #1a73e8;
+	font-size: 35rpx;
+	font-weight: 500;
+	
+	border-bottom-width: 4rpx;
+	border-bottom-style: solid;
+	border-bottom-color: #007AFF;
+}
+
+

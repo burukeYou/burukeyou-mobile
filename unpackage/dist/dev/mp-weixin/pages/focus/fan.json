@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "粉丝",
+  "usingComponents": {
+    "user-card": "/bkcomponents/user-card"
+  }
+}
