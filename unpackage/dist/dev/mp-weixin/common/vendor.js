@@ -9347,19 +9347,136 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ 34:
+/***/ 381:
+/*!**********************************************************************************************************!*\
+  !*** /Users/mac/Documents/code/burukeyou-web/burukeyou-mobile/components/uni-swipe-action-item/mpwxs.js ***!
+  \**********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = {
+  data: function data() {
+    return {
+      position: [],
+      button: [] };
+
+  },
+  computed: {
+    pos: function pos() {
+      return JSON.stringify(this.position);
+    },
+    btn: function btn() {
+      return JSON.stringify(this.button);
+    } },
+
+  watch: {
+    show: function show(newVal) {
+      if (this.autoClose) return;
+      var valueObj = this.position[0];
+      if (!valueObj) {
+        this.init();
+        return;
+      }
+      valueObj.show = newVal;
+      this.$set(this.position, 0, valueObj);
+    } },
+
+  created: function created() {
+    if (this.swipeaction.children !== undefined) {
+      this.swipeaction.children.push(this);
+    }
+  },
+  mounted: function mounted() {
+    this.init();
+
+  },
+  beforeDestroy: function beforeDestroy() {var _this = this;
+    this.swipeaction.children.forEach(function (item, index) {
+      if (item === _this) {
+        _this.swipeaction.children.splice(index, 1);
+      }
+    });
+  },
+  methods: {
+    init: function init() {var _this2 = this;
+
+      setTimeout(function () {
+        _this2.getSize();
+        _this2.getButtonSize();
+      }, 50);
+    },
+    closeSwipe: function closeSwipe(e) {
+      if (!this.autoClose) return;
+      this.swipeaction.closeOther(this);
+    },
+
+    change: function change(e) {
+      this.$emit('change', e.open);
+      var valueObj = this.position[0];
+      if (valueObj.show !== e.open) {
+        valueObj.show = e.open;
+        this.$set(this.position, 0, valueObj);
+      }
+    },
+    onClick: function onClick(index, item) {
+      this.$emit('click', {
+        content: item,
+        index: index });
+
+    },
+    getSize: function getSize() {var _this3 = this;
+      var views = uni.createSelectorQuery().in(this);
+      views.
+      selectAll('.selector-query-hock').
+      boundingClientRect(function (data) {
+        if (_this3.autoClose) {
+          data[0].show = false;
+        } else {
+          data[0].show = _this3.show;
+        }
+        _this3.position = data;
+      }).
+      exec();
+    },
+    getButtonSize: function getButtonSize() {var _this4 = this;
+      var views = uni.createSelectorQuery().in(this);
+      views.
+      selectAll('.button-hock').
+      boundingClientRect(function (data) {
+        _this4.button = data;
+      }).
+      exec();
+    } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+
+/***/ }),
+
+/***/ 39:
 /*!**********************************************************!*\
   !*** ./node_modules/@babel/runtime/regenerator/index.js ***!
   \**********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! regenerator-runtime */ 35);
+module.exports = __webpack_require__(/*! regenerator-runtime */ 40);
 
 
 /***/ }),
 
-/***/ 35:
+/***/ 4:
+/*!***************************************************************************!*\
+  !*** /Users/mac/Documents/code/burukeyou-web/burukeyou-mobile/pages.json ***!
+  \***************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/***/ }),
+
+/***/ 40:
 /*!************************************************************!*\
   !*** ./node_modules/regenerator-runtime/runtime-module.js ***!
   \************************************************************/
@@ -9390,7 +9507,7 @@ var oldRuntime = hadRuntime && g.regeneratorRuntime;
 // Force reevalutation of runtime.js.
 g.regeneratorRuntime = undefined;
 
-module.exports = __webpack_require__(/*! ./runtime */ 36);
+module.exports = __webpack_require__(/*! ./runtime */ 41);
 
 if (hadRuntime) {
   // Restore the original runtime.
@@ -9407,7 +9524,7 @@ if (hadRuntime) {
 
 /***/ }),
 
-/***/ 36:
+/***/ 41:
 /*!*****************************************************!*\
   !*** ./node_modules/regenerator-runtime/runtime.js ***!
   \*****************************************************/
@@ -10135,123 +10252,6 @@ if (hadRuntime) {
     return this || (typeof self === "object" && self);
   })() || Function("return this")()
 );
-
-
-/***/ }),
-
-/***/ 381:
-/*!**********************************************************************************************************!*\
-  !*** /Users/mac/Documents/code/burukeyou-web/burukeyou-mobile/components/uni-swipe-action-item/mpwxs.js ***!
-  \**********************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = {
-  data: function data() {
-    return {
-      position: [],
-      button: [] };
-
-  },
-  computed: {
-    pos: function pos() {
-      return JSON.stringify(this.position);
-    },
-    btn: function btn() {
-      return JSON.stringify(this.button);
-    } },
-
-  watch: {
-    show: function show(newVal) {
-      if (this.autoClose) return;
-      var valueObj = this.position[0];
-      if (!valueObj) {
-        this.init();
-        return;
-      }
-      valueObj.show = newVal;
-      this.$set(this.position, 0, valueObj);
-    } },
-
-  created: function created() {
-    if (this.swipeaction.children !== undefined) {
-      this.swipeaction.children.push(this);
-    }
-  },
-  mounted: function mounted() {
-    this.init();
-
-  },
-  beforeDestroy: function beforeDestroy() {var _this = this;
-    this.swipeaction.children.forEach(function (item, index) {
-      if (item === _this) {
-        _this.swipeaction.children.splice(index, 1);
-      }
-    });
-  },
-  methods: {
-    init: function init() {var _this2 = this;
-
-      setTimeout(function () {
-        _this2.getSize();
-        _this2.getButtonSize();
-      }, 50);
-    },
-    closeSwipe: function closeSwipe(e) {
-      if (!this.autoClose) return;
-      this.swipeaction.closeOther(this);
-    },
-
-    change: function change(e) {
-      this.$emit('change', e.open);
-      var valueObj = this.position[0];
-      if (valueObj.show !== e.open) {
-        valueObj.show = e.open;
-        this.$set(this.position, 0, valueObj);
-      }
-    },
-    onClick: function onClick(index, item) {
-      this.$emit('click', {
-        content: item,
-        index: index });
-
-    },
-    getSize: function getSize() {var _this3 = this;
-      var views = uni.createSelectorQuery().in(this);
-      views.
-      selectAll('.selector-query-hock').
-      boundingClientRect(function (data) {
-        if (_this3.autoClose) {
-          data[0].show = false;
-        } else {
-          data[0].show = _this3.show;
-        }
-        _this3.position = data;
-      }).
-      exec();
-    },
-    getButtonSize: function getButtonSize() {var _this4 = this;
-      var views = uni.createSelectorQuery().in(this);
-      views.
-      selectAll('.button-hock').
-      boundingClientRect(function (data) {
-        _this4.button = data;
-      }).
-      exec();
-    } } };exports.default = _default;
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
-
-/***/ }),
-
-/***/ 4:
-/*!***************************************************************************!*\
-  !*** /Users/mac/Documents/code/burukeyou-web/burukeyou-mobile/pages.json ***!
-  \***************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
 
 
 /***/ }),
@@ -11162,7 +11162,7 @@ module.exports = {"_from":"@dcloudio/uni-stat@next","_id":"@dcloudio/uni-stat@2.
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/index/index": { "navigationStyle": "custom" }, "pages/boiling/boiling": { "navigationBarTitleText": "广场" }, "pages/my/my": { "navigationBarTitleText": "我的" }, "pages/found/found": { "navigationStyle": "custom" }, "pages/message/message": { "navigationStyle": "custom", "enablePullDownRefresh": true }, "pages/video/video": { "navigationBarTitleText": "小视频" }, "pages/video/video-detail": {}, "pages/my/setting/setting": { "navigationBarTitleText": "设置" }, "pages/search/search": { "navigationBarTitleText": "全网搜索" }, "pages/detail/articleDetail": { "navigationBarTitleText": "文章详情" }, "pages/my/feedback/feedback": { "navigationBarTitleText": "意见反馈·" }, "pages/my/login/login": { "navigationBarTitleText": "登陆" }, "pages/my/login/register": { "navigationBarTitleText": "注册" }, "pages/my/user-home/user-home": { "navigationBarTitleText": "个人主页" }, "pages/message/chat/chat": {}, "pages/message/more/more": { "navigationBarTitleText": "好友列表" }, "pages/message/more/friend-list": {}, "pages/topic/topic": { "navigationBarTitleText": "话题广场" }, "pages/topic/topic-detail": { "navigationBarTitleText": "话题详情" }, "pages/my/notification/notification": { "navigationBarTitleText": "消息通知" }, "pages/my/user-home/favorites": { "navigationBarTitleText": "收藏" }, "pages/my/user-home/favorites-detail": { "navigationBarTitleText": "收藏主页" }, "pages/my/user-home/column-detail": { "navigationBarTitleText": "专栏主页" }, "pages/focus/focus": { "navigationBarTitleText": "关注用户" }, "pages/focus/focus-label": { "navigationBarTitleText": "标签管理" }, "pages/focus/fan": { "navigationBarTitleText": "粉丝" } }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "burukeYou社区", "navigationBarBackgroundColor": "#FFFFFF", "backgroundColor": "#FFFFFF" } };exports.default = _default;
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/index/index": { "navigationStyle": "custom", "usingComponents": { "uni-nav-bar": "/components/uni-nav-bar/uni-nav-bar", "uni-search-bar": "/components/uni-search-bar/uni-search-bar", "bk-tabs": "/bkcomponents/bk-tabs", "article-card": "/bkcomponents/articleCard" }, "usingAutoImportComponents": { "uni-nav-bar": "/components/uni-nav-bar/uni-nav-bar", "uni-search-bar": "/components/uni-search-bar/uni-search-bar" } }, "pages/boiling/boiling": { "navigationBarTitleText": "广场", "usingComponents": { "boiling-card": "/bkcomponents/boilingCard", "bk-tabs": "/bkcomponents/bk-tabs" }, "usingAutoImportComponents": {} }, "pages/my/my": { "navigationBarTitleText": "我的", "usingComponents": { "uni-list-item": "/components/uni-list-item/uni-list-item" }, "usingAutoImportComponents": { "uni-list-item": "/components/uni-list-item/uni-list-item" } }, "pages/found/found": { "navigationStyle": "custom", "usingComponents": { "header-swiper": "/pages/found/header-swiper", "nav-bar": "/bkcomponents/nav-bar", "article-card": "/bkcomponents/articleCard", "bk-list": "/bkcomponents/bk-list", "article-card-mini": "/bkcomponents/articleCard-mini" }, "usingAutoImportComponents": {} }, "pages/message/message": { "navigationStyle": "custom", "enablePullDownRefresh": true, "usingComponents": { "uni-nav-bar": "/components/uni-nav-bar/uni-nav-bar", "uni-badge": "/components/uni-badge/uni-badge", "chat-card": "/bkcomponents/chatCard", "uni-popup": "/components/uni-popup/uni-popup" }, "usingAutoImportComponents": { "uni-nav-bar": "/components/uni-nav-bar/uni-nav-bar", "uni-popup": "/components/uni-popup/uni-popup" } }, "pages/video/video": { "navigationBarTitleText": "小视频", "usingComponents": { "video-card": "/bkcomponents/video-card" }, "usingAutoImportComponents": {} }, "pages/video/video-detail": { "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/my/setting/setting": { "navigationBarTitleText": "设置", "usingComponents": { "uni-list-item": "/components/uni-list-item/uni-list-item" }, "usingAutoImportComponents": { "uni-list-item": "/components/uni-list-item/uni-list-item" } }, "pages/search/search": { "navigationBarTitleText": "全网搜索", "usingComponents": { "uni-search-bar": "/components/uni-search-bar/uni-search-bar" }, "usingAutoImportComponents": { "uni-search-bar": "/components/uni-search-bar/uni-search-bar", "uni-icons": "/components/uni-icons/uni-icons" } }, "pages/detail/articleDetail": { "navigationBarTitleText": "文章详情", "usingComponents": { "follow": "/bkcomponents/follow" }, "usingAutoImportComponents": {} }, "pages/my/feedback/feedback": { "navigationBarTitleText": "意见反馈·", "usingComponents": { "uni-collapse": "/components/uni-collapse/uni-collapse", "uni-collapse-item": "/components/uni-collapse-item/uni-collapse-item" }, "usingAutoImportComponents": { "uni-collapse": "/components/uni-collapse/uni-collapse", "uni-collapse-item": "/components/uni-collapse-item/uni-collapse-item" } }, "pages/my/login/login": { "navigationBarTitleText": "登陆", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/my/login/register": { "navigationBarTitleText": "注册", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/my/user-home/user-home": { "navigationBarTitleText": "个人主页", "usingComponents": { "uni-list-item": "/components/uni-list-item/uni-list-item", "favorites": "/pages/my/user-home/favorites", "bk-tabs": "/bkcomponents/bk-tabs" }, "usingAutoImportComponents": { "uni-list-item": "/components/uni-list-item/uni-list-item" } }, "pages/message/chat/chat": { "usingComponents": { "chat-detail": "/pages/message/chat/chatDetail" }, "usingAutoImportComponents": {} }, "pages/message/more/more": { "navigationBarTitleText": "", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/message/more/friend-list": { "navigationBarTitleText": "好友列表", "usingComponents": { "uni-indexed-list": "/components/uni-indexed-list/uni-indexed-list" }, "usingAutoImportComponents": {} }, "pages/topic/topic": { "navigationBarTitleText": "话题广场", "usingComponents": { "follow": "/bkcomponents/follow" }, "usingAutoImportComponents": {} }, "pages/topic/topic-detail": { "navigationBarTitleText": "话题详情", "usingComponents": { "follow": "/bkcomponents/follow", "bk-tabs": "/bkcomponents/bk-tabs", "boiling-card": "/bkcomponents/boilingCard" }, "usingAutoImportComponents": {} }, "pages/my/notification/notification": { "navigationBarTitleText": "消息通知", "usingComponents": { "bk-tabs": "/bkcomponents/bk-tabs" }, "usingAutoImportComponents": {} }, "pages/my/user-home/favorites": { "navigationBarTitleText": "收藏", "usingComponents": { "bk-tabs": "/bkcomponents/bk-tabs" }, "usingAutoImportComponents": {} }, "pages/my/user-home/favorites-detail": { "navigationBarTitleText": "收藏主页", "usingComponents": { "article-card-mini": "/bkcomponents/articleCard-mini" }, "usingAutoImportComponents": {} }, "pages/my/user-home/column-detail": { "navigationBarTitleText": "专栏主页", "usingComponents": { "article-card-mini": "/bkcomponents/articleCard-mini" }, "usingAutoImportComponents": {} }, "pages/focus/focus": { "navigationBarTitleText": "关注用户", "usingComponents": { "user-card": "/bkcomponents/user-card" }, "usingAutoImportComponents": {} }, "pages/focus/focus-label": { "navigationBarTitleText": "标签管理", "usingComponents": { "follow": "/bkcomponents/follow" }, "usingAutoImportComponents": {} }, "pages/focus/fan": { "navigationBarTitleText": "粉丝", "usingComponents": { "user-card": "/bkcomponents/user-card" }, "usingAutoImportComponents": {} } }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "burukeYou社区", "navigationBarBackgroundColor": "#FFFFFF", "backgroundColor": "#FFFFFF" } };exports.default = _default;
 
 /***/ }),
 

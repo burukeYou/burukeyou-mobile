@@ -4625,6 +4625,18 @@ to {
   -webkit-flex-direction: row;
           flex-direction: row;
 }
+.bk-card {
+	padding: 20px;
+	color: #606266;
+	box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
+	border: 1px solid #EBEEF5;
+	-webkit-transition: .3s;
+	transition: .3s;
+	border-radius: 4px;overflow: hidden;
+	width:100%;
+	background-color:#ffffff;
+	margin: 5px 0px;
+}
 .col-1,
 .col-2,
 .col-3,

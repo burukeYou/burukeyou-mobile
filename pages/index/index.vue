@@ -12,7 +12,9 @@
 		-->
 		<view style="padding: 2rpx;">
 			<bk-tabs :tabList="tabList" :loadMoreStatus="loadMoreStatus" @changeTab="changeTab" @loadMore="loadMore">
-				 <view slot="推荐" ><view v-for="i in 100" :key="i">{{i}}</view></view>
+				 <view slot="推荐" >
+					 <article-card v-for="(item,j) in articleList" :key="j" :article="item"></article-card>	 
+				 </view>
 				 <view slot="后端"><view v-for="i in 100" :key="i">{{i}}</view></view>
 				 <view slot="热榜"><view v-for="i in 100" :key="i">{{i}}</view></view>
 				 <view slot="right" style="margin-left: 10rpx;" class="iconfont icongengduo1"></view>
@@ -31,11 +33,12 @@
 	import uniSearchBar from '@/components/uni-search-bar/uni-search-bar.vue'
 	
 	import BkTabs from "@/bkcomponents/bk-tabs.vue"
+	import articleCard from "@/bkcomponents/articleCard"
 	
 	
 	export default {
 		components:{
-			uniNavBar,uniSearchBar,BkTabs
+			uniNavBar,uniSearchBar,BkTabs,articleCard
 		},
 		data(){
 			return{
@@ -52,8 +55,29 @@
 					{id:"9",name:"阅读",isshow:false}
 				],
 				
-				dataList:[
-					 
+			
+				articleList:[
+					{id:"1",user_avatar:"/static/img/boilinged.png",user_nickname:"发送到家",label:"后端",
+					title:"java实现云计算大叔平花",image:"/static/logo.png",
+					description:"法律上的纠纷卡拉斯京费拉达斯福利看到撒了;副 发考试的纠纷剋拉基舍夫的快乐;撒",
+					thumbup_count:20,comment_count:20,visits_count:"23",
+					createTime:"2020-10-23",isThumbup:false},
+					
+					{id:"2",user_avatar:"/static/img/boilinged.png",user_nickname:"李白",label:"后端",
+					title:"java实现云计算大叔平花",image:"",
+					description:"法律上的纠纷卡拉斯京费拉达斯福利看到撒了;副 发考试的纠纷剋拉基舍夫的快乐;撒",
+					thumbup_count:20,comment_count:20,visits_count:"23",
+					createTime:"2020-10-23",isThumbup:true},
+					{id:"2",user_avatar:"/static/img/boilinged.png",user_nickname:"李白",label:"后端",
+					title:"java实现云计算大叔平花",image:"",
+					description:"法律上的纠纷卡拉斯京费拉达斯福利看到撒了;副 发考试的纠纷剋拉基舍夫的快乐;撒",
+					thumbup_count:20,comment_count:20,visits_count:"23",
+					createTime:"2020-10-23",isThumbup:false},
+					{id:"2",user_avatar:"/static/img/boilinged.png",user_nickname:"李白",label:"后端",
+					title:"java实现云计算大叔平花",image:"",
+					description:"法律上的纠纷卡拉斯京费拉达斯福利看到撒了;副 发考试的纠纷剋拉基舍夫的快乐;撒",
+					thumbup_count:20,comment_count:20,visits_count:"23",
+					createTime:"2020-10-23",isThumbup:true}		
 				]
 			
 			

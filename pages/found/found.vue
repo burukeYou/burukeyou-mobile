@@ -43,9 +43,11 @@
 		
 		
 		<view style="margin-top: 20rpx;">
-			<scroll-view scroll-y="true" style="height: 1000rpx" @scrolltolower="loadMore"	>
-				<view v-for="e in 100">{{e}}</view>
-			</scroll-view>
+			<bk-list :loadMoreStatus="loadMoreStatus" @loadMore="loadMore">
+				<block v-for="(e,i) in articleList">
+					<article-card-mini :article="e" :key="i"></article-card-mini>
+				</block>
+			</bk-list>
 		</view>
 		
 		
@@ -56,14 +58,40 @@
 	import NavBar from "@/bkcomponents/nav-bar.vue"
 	import HeaderSwiper from "@/pages/found/header-swiper.vue"
 	import articleCard from "@/bkcomponents/articleCard"
+	import articleCardMini from "@/bkcomponents/articleCard-mini"
+	import BkList from "@/bkcomponents/bk-list.vue"
 	
 	export default {
 		components: {
-			HeaderSwiper,NavBar,articleCard
+			HeaderSwiper,NavBar,articleCard,BkList,articleCardMini
 		},
 		data() {
 			return {
-				scrollH:500
+				scrollH:500,
+				loadMoreStatus:"more",
+				articleList:[
+					{id:"1",user_avatar:"/static/img/boilinged.png",user_nickname:"发送到家",label:"后端",
+					title:"java实现云计算大叔平花",image:"/static/logo.png",
+					description:"法律上的纠纷卡拉斯京费拉达斯福利看到撒了;副 发考试的纠纷剋拉基舍夫的快乐;撒",
+					thumbup_count:20,comment_count:20,visits_count:"23",
+					createTime:"2020-10-23",isThumbup:false},
+					
+					{id:"2",user_avatar:"/static/img/boilinged.png",user_nickname:"李白",label:"后端",
+					title:"java实现云计算大叔平花",image:"",
+					description:"法律上的纠纷卡拉斯京费拉达斯福利看到撒了;副 发考试的纠纷剋拉基舍夫的快乐;撒",
+					thumbup_count:20,comment_count:20,visits_count:"23",
+					createTime:"2020-10-23",isThumbup:true},
+					{id:"2",user_avatar:"/static/img/boilinged.png",user_nickname:"李白",label:"后端",
+					title:"java实现云计算大叔平花",image:"",
+					description:"法律上的纠纷卡拉斯京费拉达斯福利看到撒了;副 发考试的纠纷剋拉基舍夫的快乐;撒",
+					thumbup_count:20,comment_count:20,visits_count:"23",
+					createTime:"2020-10-23",isThumbup:false},
+					{id:"2",user_avatar:"/static/img/boilinged.png",user_nickname:"李白",label:"后端",
+					title:"java实现云计算大叔平花",image:"",
+					description:"法律上的纠纷卡拉斯京费拉达斯福利看到撒了;副 发考试的纠纷剋拉基舍夫的快乐;撒",
+					thumbup_count:20,comment_count:20,visits_count:"23",
+					createTime:"2020-10-23",isThumbup:true}		
+				]
 			}
 		},
 		onLoad() {
@@ -77,6 +105,7 @@
 			// 加载更多
 			loadMore(){
 				console.log("加载更多:");
+				this.loadMoreStatus = loading;
 			},
 			// 打开path页面
 			open(path){

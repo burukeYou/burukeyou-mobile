@@ -2,6 +2,7 @@
   "navigationBarTitleText": "话题详情",
   "usingComponents": {
     "follow": "/bkcomponents/follow",
-    "bk-tabs": "/bkcomponents/bk-tabs"
+    "bk-tabs": "/bkcomponents/bk-tabs",
+    "boiling-card": "/bkcomponents/boilingCard"
   }
 }

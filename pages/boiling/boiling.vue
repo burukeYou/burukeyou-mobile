@@ -1,7 +1,10 @@
 <template>
 	<view>
 		<bk-tabs :tabList="tabList" :loadMoreStatus="loadMoreStatus" @changeTab="changeTab" @loadMore="loadMore">
-			<view slot="开源推荐" ></view>
+			<view slot="开源推荐" >
+					<boiling-card v-for="(e,i) in boilingList" :key="i" :boiling="e"></boiling-card>
+				
+			</view>
 			<view slot="内退招聘" ></view>
 			<view slot="相亲视角"></view>
 			<view slot="上班墨鱼"></view>
@@ -9,7 +12,7 @@
 		</bk-tabs>
 		
 		
-		<boiling-card v-for="(e,i) in boilingList" :key="i" :boiling="e"></boiling-card>
+	
 	</view>
 </template>
 

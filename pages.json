@@ -97,12 +97,14 @@
         ,{
             "path" : "pages/message/more/more",
             "style" : {
-				"navigationBarTitleText":"好友列表"
+				"navigationBarTitleText":""
 			}
         },
 		{
 		    "path" : "pages/message/more/friend-list",
-		    "style" : {}
+		    "style" : {
+				"navigationBarTitleText":"好友列表"
+			}
 		}
         ,{
             "path" : "pages/topic/topic",

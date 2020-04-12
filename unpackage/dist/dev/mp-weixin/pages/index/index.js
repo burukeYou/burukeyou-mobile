@@ -93,10 +93,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
 var components = {
   "uni-nav-bar": function() {
-    return __webpack_require__.e(/*! import() | components/uni-nav-bar/uni-nav-bar */ "components/uni-nav-bar/uni-nav-bar").then(__webpack_require__.bind(null, /*! @/components/uni-nav-bar/uni-nav-bar.vue */ 206))
+    return __webpack_require__.e(/*! import() | components/uni-nav-bar/uni-nav-bar */ "components/uni-nav-bar/uni-nav-bar").then(__webpack_require__.bind(null, /*! @/components/uni-nav-bar/uni-nav-bar.vue */ 211))
   },
   "uni-search-bar": function() {
-    return __webpack_require__.e(/*! import() | components/uni-search-bar/uni-search-bar */ "components/uni-search-bar/uni-search-bar").then(__webpack_require__.bind(null, /*! @/components/uni-search-bar/uni-search-bar.vue */ 213))
+    return __webpack_require__.e(/*! import() | components/uni-search-bar/uni-search-bar */ "components/uni-search-bar/uni-search-bar").then(__webpack_require__.bind(null, /*! @/components/uni-search-bar/uni-search-bar.vue */ 218))
   }
 }
 var render = function() {
@@ -136,7 +136,10 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var uniNavBar = function uniNavBar() {__webpack_require__.e(/*! require.ensure | components/uni-nav-bar/uni-nav-bar */ "components/uni-nav-bar/uni-nav-bar").then((function () {return resolve(__webpack_require__(/*! @/components/uni-nav-bar/uni-nav-bar.vue */ 206));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var uniSearchBar = function uniSearchBar() {__webpack_require__.e(/*! require.ensure | components/uni-search-bar/uni-search-bar */ "components/uni-search-bar/uni-search-bar").then((function () {return resolve(__webpack_require__(/*! @/components/uni-search-bar/uni-search-bar.vue */ 213));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var BkTabs = function BkTabs() {__webpack_require__.e(/*! require.ensure | bkcomponents/bk-tabs */ "bkcomponents/bk-tabs").then((function () {return resolve(__webpack_require__(/*! @/bkcomponents/bk-tabs.vue */ 220));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var uniNavBar = function uniNavBar() {__webpack_require__.e(/*! require.ensure | components/uni-nav-bar/uni-nav-bar */ "components/uni-nav-bar/uni-nav-bar").then((function () {return resolve(__webpack_require__(/*! @/components/uni-nav-bar/uni-nav-bar.vue */ 211));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var uniSearchBar = function uniSearchBar() {__webpack_require__.e(/*! require.ensure | components/uni-search-bar/uni-search-bar */ "components/uni-search-bar/uni-search-bar").then((function () {return resolve(__webpack_require__(/*! @/components/uni-search-bar/uni-search-bar.vue */ 218));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var BkTabs = function BkTabs() {__webpack_require__.e(/*! require.ensure | bkcomponents/bk-tabs */ "bkcomponents/bk-tabs").then((function () {return resolve(__webpack_require__(/*! @/bkcomponents/bk-tabs.vue */ 225));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var articleCard = function articleCard() {__webpack_require__.e(/*! require.ensure | bkcomponents/articleCard */ "bkcomponents/articleCard").then((function () {return resolve(__webpack_require__(/*! @/bkcomponents/articleCard */ 28));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+
+
+
 
 
 
@@ -173,7 +176,7 @@ __webpack_require__.r(__webpack_exports__);
 
 {
   components: {
-    uniNavBar: uniNavBar, uniSearchBar: uniSearchBar, BkTabs: BkTabs },
+    uniNavBar: uniNavBar, uniSearchBar: uniSearchBar, BkTabs: BkTabs, articleCard: articleCard },
 
   data: function data() {
     return {
@@ -190,8 +193,29 @@ __webpack_require__.r(__webpack_exports__);
       { id: "9", name: "阅读", isshow: false }],
 
 
-      dataList: [] };
 
+      articleList: [
+      { id: "1", user_avatar: "/static/img/boilinged.png", user_nickname: "发送到家", label: "后端",
+        title: "java实现云计算大叔平花", image: "/static/logo.png",
+        description: "法律上的纠纷卡拉斯京费拉达斯福利看到撒了;副 发考试的纠纷剋拉基舍夫的快乐;撒",
+        thumbup_count: 20, comment_count: 20, visits_count: "23",
+        createTime: "2020-10-23", isThumbup: false },
+
+      { id: "2", user_avatar: "/static/img/boilinged.png", user_nickname: "李白", label: "后端",
+        title: "java实现云计算大叔平花", image: "",
+        description: "法律上的纠纷卡拉斯京费拉达斯福利看到撒了;副 发考试的纠纷剋拉基舍夫的快乐;撒",
+        thumbup_count: 20, comment_count: 20, visits_count: "23",
+        createTime: "2020-10-23", isThumbup: true },
+      { id: "2", user_avatar: "/static/img/boilinged.png", user_nickname: "李白", label: "后端",
+        title: "java实现云计算大叔平花", image: "",
+        description: "法律上的纠纷卡拉斯京费拉达斯福利看到撒了;副 发考试的纠纷剋拉基舍夫的快乐;撒",
+        thumbup_count: 20, comment_count: 20, visits_count: "23",
+        createTime: "2020-10-23", isThumbup: false },
+      { id: "2", user_avatar: "/static/img/boilinged.png", user_nickname: "李白", label: "后端",
+        title: "java实现云计算大叔平花", image: "",
+        description: "法律上的纠纷卡拉斯京费拉达斯福利看到撒了;副 发考试的纠纷剋拉基舍夫的快乐;撒",
+        thumbup_count: 20, comment_count: 20, visits_count: "23",
+        createTime: "2020-10-23", isThumbup: true }] };
 
 
 

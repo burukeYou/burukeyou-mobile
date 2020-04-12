@@ -6,7 +6,7 @@
 		</view>
 		
 		<!-- 2- 注册表单 -->
-		<view class="register" style="border: 1px solid black;margin-top: 100rpx;padding: 0px 10px;">
+		<view class="register" style="margin-top: 100rpx;padding: 0px 10px;">
 			<input focus type="number" placeholder="手机号"/>
 			<input type="text" placeholder="用户名"/>
 			<input type="text" password   placeholder="密码"/>

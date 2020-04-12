@@ -3,6 +3,8 @@
   "usingComponents": {
     "header-swiper": "/pages/found/header-swiper",
     "nav-bar": "/bkcomponents/nav-bar",
-    "article-card": "/bkcomponents/articleCard"
+    "article-card": "/bkcomponents/articleCard",
+    "bk-list": "/bkcomponents/bk-list",
+    "article-card-mini": "/bkcomponents/articleCard-mini"
   }
 }

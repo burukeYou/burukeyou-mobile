@@ -32,7 +32,10 @@
 		<!-- 3 -热门最新 -->
 		<bk-tabs :listHeight="height" :loadMoreStatus="loadMoreStatus"
 				 :tabList="tabs"  @changeTab="changeTab" @loadMore="loadMore">
-				<view slot="最热">2</view>
+				<view slot="最热">
+					<boiling-card v-for="(e,i) in boilingList" :key="i" :boiling="e"></boiling-card>
+					
+				</view>
 				<view slot="最新">3</view>
 		</bk-tabs>
 		
@@ -42,6 +45,7 @@
 <script>
 	import follow from "@/bkcomponents/follow.vue"
 	import BkTabs from "@/bkcomponents/bk-tabs.vue"
+	import BoilingCard from "@/bkcomponents/boilingCard"
 	
 	export default {
 		data(){
@@ -67,6 +71,25 @@
 				
 				isShowSticky: false ,// 是否悬浮
 				navTop: null, // nav距离到顶部的距离 (如计算不准确,可直接写死某个值)
+				boilingList:[
+					{
+							"id":"22",
+						   "userId":"998",
+							userNickname:"小芙蓉100",
+							userAvatar:"/static/img/home.png",
+							createdTime:"2020-10-22",
+							content:"闪避不能看发就是看到好风景",
+							contentPic:[
+							],
+							topicName:"提问回答",
+							visitsCount:"20",
+							thumbupCount:"10",
+							commentCount: "30",
+							url:"",
+							isFollow:true,
+							isThumbup:false	
+					}
+				],		
 			}
 		},
 		onLoad(options) {
@@ -98,7 +121,7 @@
 		
 		},
 		components: {
-			follow,BkTabs
+			follow,BkTabs,BoilingCard
 		}
 	}
 </script>
