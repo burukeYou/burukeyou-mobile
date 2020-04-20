@@ -75,6 +75,5 @@
   "usingComponents": {
     "van-icon": "/wxcomponents/vant-weapp/icon/index",
     "divider": "/bkcomponents/divider"
-  },
-  "sitemapLocation": "sitemap61.json"
+  }
 }

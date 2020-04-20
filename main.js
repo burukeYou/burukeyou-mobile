@@ -17,8 +17,9 @@ Vue.prototype.$config =  $config
 import $global from "@/utils/Global.js"
 Vue.prototype.$global =  $config
 
-import request from "@/utils/request.js"
-Vue.prototype.$http =  request
+//import request from "@/utils/request.js"
+import api from "@/api/index.js"
+Vue.prototype.$http =  api
 
 // ===========================3 - Vuex=========================================
 import store from "@/vuex/index.js"

@@ -12,11 +12,11 @@
 		-->
 		<view style="padding: 2rpx;">
 			<bk-tabs :tabList="tabList" :loadMoreStatus="loadMoreStatus" @changeTab="changeTab" @loadMore="loadMore">
-				 <view slot="推荐" >
+				 <view slot="0" >
 					 <article-card v-for="(item,j) in articleList" :key="j" :article="item"></article-card>	 
 				 </view>
-				 <view slot="后端"><view v-for="i in 100" :key="i">{{i}}</view></view>
-				 <view slot="热榜"><view v-for="i in 100" :key="i">{{i}}</view></view>
+				 <view slot="1"><view v-for="i in 100" :key="i">{{i}}</view></view>
+				 <view slot="2"><view v-for="i in 100" :key="i">{{i}}</view></view>
 				 <view slot="right" style="margin-left: 10rpx;" class="iconfont icongengduo1"></view>
 			</bk-tabs>
 		</view>
@@ -44,15 +44,7 @@
 			return{
 				loadMoreStatus: "more",
 				tabList:[
-					{id:"1",name:"推荐",isshow:true},
-					{id:"2",name:"热榜",isshow:true},
-					{id:"3",name:"后端",isshow:true},
-					{id:"4",name:"android",isshow:true},
-					{id:"5",name:"ios",isshow:true},
-					{id:"6",name:"人工智能",isshow:true},
-					{id:"7",name:"开发工具",isshow:true},
-					{id:"8",name:"代码人生",isshow:true},
-					{id:"9",name:"阅读",isshow:false}
+					{id:"1",name:"推荐",isshow:true}
 				],
 				
 			
@@ -84,10 +76,20 @@
 			}
 		},
 		onLoad() {
-				this.getData();
+			this.initChannel();
+		},
+		onShow() {
+			
+			
 		},
 		methods:{
 			//
+			initChannel(){
+				this.$http.channel.getAll().then(res => {
+					 this.tabList = res.data;
+					 console.log(JSON.stringify(this.tabList));
+				}).catch(err => console.log(err));
+			},
 			toSearch(){
 				uni.navigateTo({
 					url:"/pages/search/search"

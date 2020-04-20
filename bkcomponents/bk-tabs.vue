@@ -5,8 +5,7 @@
 			<view style="width: 90%;text-align: center;">
 				<scroll-view :scroll-into-view="scrollIntoView"  scroll-x="true" scroll-with-animation
 							 style="height: 80rpx;white-space: nowrap;">
-					<view v-if="e.isshow"   class="ml-4 "  v-for="(e,i) in tabList" :key="i" 
-							 :id="'tab'+i"  style="display: inline-block;"
+					<view   class="ml-4 "  v-for="(e,i) in tabList" :key="i"  :id="'tab'+i"  style="display: inline-block;"
 							:class="tabIndex === i ? 'selectStyle' : ''" @click="changeTab(i)">
 							{{e.name }}
 					</view>
@@ -23,10 +22,10 @@
 			<swiper :style="{'height':listHeight}" :duration="150" 
 					:current="tabIndex" 
 					@change="onSwiperChange">
-				<swiper-item  v-if="e.isshow"  v-for="(e,i) in tabList" :key="i">	
+				<swiper-item   v-for="(e,i) in tabList" :key="i">	
 					 <bk-list @loadMore="loadMore" :loadMoreStatus="loadMoreStatus"> 
 						 <!-- 动态绑定name不可以用 :形式 -->
-						 <slot name="{{e.name}}"></slot>	 			 
+						 <slot name="{{i}}"></slot>	 			 
 					 </bk-list>		 
 				</swiper-item>
 			</swiper>

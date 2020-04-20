@@ -1,13 +1,12 @@
 <template>
 	<view>
 		<bk-tabs :tabList="tabList" :loadMoreStatus="loadMoreStatus" @changeTab="changeTab" @loadMore="loadMore">
-			<view slot="开源推荐" >
-					<boiling-card v-for="(e,i) in boilingList" :key="i" :boiling="e"></boiling-card>
-				
+			<view slot="0" >
+					<boiling-card v-for="(e,i) in boilingList" :key="i" :boiling="e"></boiling-card>			
 			</view>
-			<view slot="内退招聘" ></view>
-			<view slot="相亲视角"></view>
-			<view slot="上班墨鱼"></view>
+			<view slot="1" >2</view>
+			<view slot="2">3</view>
+			<view slot="3">4</view>
 			<view slot="right" style="margin-left: 10rpx;" class="iconfont icongengduo1"></view>
 		</bk-tabs>
 		
@@ -58,12 +57,7 @@
 				page:0,
 				size:10,
 				
-				tabList:[
-					{id:"1",name:"开源推荐",isshow:true},
-					{id:"2",name:"内退招聘",isshow:true},
-					{id:"3",name:"相亲视角",isshow:true},
-					{id:"4",name:"上班墨鱼",isshow:true},
-				],
+				tabList:[],
 				loadMoreStatus: "more",
 			
 			}
@@ -71,13 +65,14 @@
 		// ===================生命周期================================================
 		onLoad() {
 			this.initHeight();
-			this.getData();
+			this.initTabList();
 		},
 		mounted() {
 			
 		},
 		// ===================Methods================================================
 		methods: {
+			
 			//1- 初始化高度
 			initHeight(){
 				// 110px;
@@ -89,12 +84,18 @@
 					}
 				});
 			},
-			// 2-初始化数据  async + await 相当于实现了同步调用. await得定义在async方法里面
-			async getData(){
-				await this.$http.get('/boilling/102',{page:this.page,size:this.size}).then(res => {
-					console.log("getData:"+JSON.stringify(res));
-				});				
+			// 初始化tabs
+			initTabList(){
+				this.$http.topic.getTop10Topic().then(res => {
+					this.tabList = res.data.records;
+				}).catch(err => console.log(err));
 			},
+			// 2-初始化数据  async + await 相当于实现了同步调用. await得定义在async方法里面
+			// async getData(){
+			// 	await this.$http.get('/boilling/102',{page:this.page,size:this.size}).then(res => {
+			// 		console.log("getData:"+JSON.stringify(res));
+			// 	});				
+			// },
 			//
 			changeTab(e){
 				this.loadMoreStatus = "more";
