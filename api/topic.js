@@ -5,7 +5,7 @@ let baseUrl = '/system'
 
 const topic = {
 	/**
-	 * 		
+	 * 	 	
 	 */
 	getTop10Topic(){
 		return request({
@@ -18,7 +18,19 @@ const topic = {
 			  order:"Desc"
 			}
 		});		
+	},
+	
+	/**
+	 * 	 分页获取话题
+	 */
+	getTopicPage(condition){
+		return request({
+			url: baseUrl + '/topic/app/page',
+			method:"Get",
+			data:condition
+		});
 	}
+	
 }
 
 

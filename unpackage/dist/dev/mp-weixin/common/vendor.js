@@ -8988,6 +8988,16 @@ internalMixin(Vue);
     uni.navigateTo({
       url: p });
 
+  },
+
+  initHeight: function initHeight() {
+    console.log("初始化列表高度");
+    uni.getSystemInfo({
+      success: function success(res) {
+        console.log("高度为:" + res.windowHeight);
+        return res.windowHeight; //- uni.upx2px(100);
+      } });
+
   } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
@@ -9002,14 +9012,16 @@ internalMixin(Vue);
 
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _article = _interopRequireDefault(__webpack_require__(/*! ./article */ 22));
-var _channel = _interopRequireDefault(__webpack_require__(/*! ./channel */ 427));
-var _topic = _interopRequireDefault(__webpack_require__(/*! ./topic */ 428));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var _default =
+var _channel = _interopRequireDefault(__webpack_require__(/*! ./channel */ 24));
+var _topic = _interopRequireDefault(__webpack_require__(/*! ./topic */ 25));
+var _label = _interopRequireDefault(__webpack_require__(/*! ./label */ 426));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var _default =
 
 
 {
   article: _article.default,
   channel: _channel.default,
-  topic: _topic.default };exports.default = _default;
+  topic: _topic.default,
+  label: _label.default };exports.default = _default;
 
 /***/ }),
 
@@ -9087,6 +9099,82 @@ function request() {var options = arguments.length > 0 && arguments[0] !== undef
 
 /***/ }),
 
+/***/ 24:
+/*!*******************************************************************************!*\
+  !*** /Users/mac/Documents/code/burukeyou-web/burukeyou-mobile/api/channel.js ***!
+  \*******************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _request = __webpack_require__(/*! @/utils/request.js */ 23);
+
+var baseUrl = '/system';
+
+var channel = {
+  /**
+                 * 	获得所有频道
+                 */
+  getAll: function getAll() {
+    return (0, _request.request)({
+      url: baseUrl + '/channel',
+      method: 'GET' });
+
+  } };var _default =
+
+
+channel;exports.default = _default;
+
+/***/ }),
+
+/***/ 25:
+/*!*****************************************************************************!*\
+  !*** /Users/mac/Documents/code/burukeyou-web/burukeyou-mobile/api/topic.js ***!
+  \*****************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _request = __webpack_require__(/*! @/utils/request.js */ 23);
+
+
+var baseUrl = '/system';
+
+var topic = {
+  /**
+               * 	 	
+               */
+  getTop10Topic: function getTop10Topic() {
+    return (0, _request.request)({
+      url: baseUrl + '/topic/page',
+      method: 'GET',
+      data: {
+        page: 0,
+        size: 10,
+        orderField: "boiling_count",
+        order: "Desc" } });
+
+
+  },
+
+  /**
+      * 	 分页获取话题
+      */
+  getTopicPage: function getTopicPage(condition) {
+    return (0, _request.request)({
+      url: baseUrl + '/topic/app/page',
+      method: "Get",
+      data: condition });
+
+  } };var _default =
+
+
+
+
+topic;exports.default = _default;
+
+/***/ }),
+
 /***/ 3:
 /*!***********************************!*\
   !*** (webpack)/buildin/global.js ***!
@@ -9118,7 +9206,7 @@ module.exports = g;
 
 /***/ }),
 
-/***/ 303:
+/***/ 302:
 /*!**********************************************************************************************!*\
   !*** /Users/mac/Documents/code/burukeyou-web/burukeyou-mobile/components/uni-icons/icons.js ***!
   \**********************************************************************************************/
@@ -9260,7 +9348,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ 332:
+/***/ 331:
 /*!*******************************************************************************!*\
   !*** /Users/mac/Documents/code/burukeyou-web/burukeyou-mobile/common/time.js ***!
   \*******************************************************************************/
@@ -9359,7 +9447,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ 383:
+/***/ 382:
 /*!**********************************************************************************************************!*\
   !*** /Users/mac/Documents/code/burukeyou-web/burukeyou-mobile/components/uni-swipe-action-item/mpwxs.js ***!
   \**********************************************************************************************************/
@@ -9475,37 +9563,9 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ 427:
-/*!*******************************************************************************!*\
-  !*** /Users/mac/Documents/code/burukeyou-web/burukeyou-mobile/api/channel.js ***!
-  \*******************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _request = __webpack_require__(/*! @/utils/request.js */ 23);
-
-var baseUrl = '/system';
-
-var channel = {
-  /**
-                 * 	获得所有频道
-                 */
-  getAll: function getAll() {
-    return (0, _request.request)({
-      url: baseUrl + '/channel',
-      method: 'GET' });
-
-  } };var _default =
-
-
-channel;exports.default = _default;
-
-/***/ }),
-
-/***/ 428:
+/***/ 426:
 /*!*****************************************************************************!*\
-  !*** /Users/mac/Documents/code/burukeyou-web/burukeyou-mobile/api/topic.js ***!
+  !*** /Users/mac/Documents/code/burukeyou-web/burukeyou-mobile/api/label.js ***!
   \*****************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
@@ -9513,29 +9573,26 @@ channel;exports.default = _default;
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _request = __webpack_require__(/*! @/utils/request.js */ 23);
 
-
 var baseUrl = '/system';
 
-var topic = {
+var label = {
   /**
-               * 		
+               * 	获取标签列表
                */
-  getTop10Topic: function getTop10Topic() {
+  getPage: function getPage(condition) {
     return (0, _request.request)({
-      url: baseUrl + '/topic/page',
-      method: 'GET',
-      data: {
-        page: 0,
-        size: 10,
-        orderField: "boiling_count",
-        order: "Desc" } });
-
+      url: baseUrl + '/label/app/page',
+      method: "Get",
+      data: condition });
 
   } };var _default =
 
 
 
-topic;exports.default = _default;
+
+
+
+label;exports.default = _default;
 
 /***/ }),
 

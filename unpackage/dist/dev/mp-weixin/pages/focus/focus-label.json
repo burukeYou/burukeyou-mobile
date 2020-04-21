@@ -1,6 +1,7 @@
 {
   "navigationBarTitleText": "标签管理",
   "usingComponents": {
-    "follow": "/bkcomponents/follow"
+    "follow": "/bkcomponents/follow",
+    "bk-tabs": "/bkcomponents/bk-tabs"
   }
 }

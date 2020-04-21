@@ -53,17 +53,17 @@
 		<!-- 2- 选项卡  #A9A5A0 -->
 		<view style="padding: 2rpx;">
 			<bk-tabs :listHeight="listHeight" :tabList="tabList" :loadMoreStatus="loadMoreStatus" @changeTab="changeTab" @loadMore="loadMore">
-				 <view slot="专栏">
+				 <view slot="0">
 					 <uni-list-item @click="open('my/user-home/column-detail?columnId=45')" title="运维部署" style="border-bottom:1px solid #B7B8C2;" rightText="2篇"></uni-list-item>
 					 <uni-list-item @click="open('my/user-home/column-detail?columnId=4')" title="微服务" rightText="10篇"></uni-list-item>		
 				 </view>
-				 <view slot="说说">
+				 <view slot="1">
 					 3
 				 </view>
-				 <view slot="收藏">
+				 <view slot="2">
 					 <favorites></favorites>
 				 </view>
-				 <view slot="其他"> 
+				 <view slot="3"> 
 					4
 				 </view>
 			</bk-tabs>

@@ -15,7 +15,7 @@ import $config from "@/utils/config.js"
 Vue.prototype.$config =  $config
 
 import $global from "@/utils/Global.js"
-Vue.prototype.$global =  $config
+Vue.prototype.$global =  $global
 
 //import request from "@/utils/request.js"
 import api from "@/api/index.js"

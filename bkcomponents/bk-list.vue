@@ -5,7 +5,7 @@
 			<slot></slot>
 								
 			<!--  上拉加载 -->
-			<uni-load-more :status="loadMoreStatus"></uni-load-more>
+			<uni-load-more :status="lore"></uni-load-more>
 		
 		</scroll-view>
 	</view>
@@ -20,7 +20,7 @@
 		props:{
 			listHeight:{
 				type:String,
-				default:"1022rpx"
+				default:"1200rpx"
 			},
 	
 			loadMoreStatus:{
@@ -30,7 +30,6 @@
 		},
 		data(){
 			return{
-				
 			}
 		},
 		components:{
@@ -41,7 +40,14 @@
 			loadMore(){
 				this.$emit('loadMore');
 			},
+		},
+		//
+		computed:{
+			lore: function() {
+				return this.loadMoreStatus;
+			}
 		}
+		
 	}
 </script>
 
