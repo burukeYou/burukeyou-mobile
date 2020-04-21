@@ -7,14 +7,14 @@
 		
 		<!-- 2- 注册表单 -->
 		<view class="register" style="margin-top: 100rpx;padding: 0px 10px;">
-			<input focus type="number" placeholder="手机号"/>
-			<input type="text" placeholder="用户名"/>
-			<input type="text" password   placeholder="密码"/>
+			<input  v-model="condition.username" type="text" placeholder="账号"/>
+			<input  v-model="condition.nickname" type="text" placeholder="昵称"/>
+			<input  v-model="condition.password" type="password" password   placeholder="密码"/>
 		</view>
 		
 		<!-- 3 -- 注册按钮 -->
 		<!-- 3-登陆按钮 -->
-		<button class="bk-background-color " 
+		<button @click="register" class="bk-background-color " 
 				type="primary" style="border-radius: 2.5rem;background-color: #007BFF;width: 86%
 									box-shadow: 0 0 60rpx 0 rgba(0,0,0,.2);margin-top: 90rpx;">
 			 注册
@@ -26,11 +26,40 @@
 	export default {
 		data() {
 			return {
-				
+				condition:{
+					username:"",
+					nickname:"",
+					password:""
+				}
 			}
 		},
 		methods: {
-			
+			register(){
+				if(this.validationInput){
+					this.$http.user.register(this.condition).then(res => {
+						if(res.code === "200"){
+							uni.showToast({
+								title:"注册成功"
+							});
+							uni.navigateBack({
+								delta:-1
+							});
+						}
+					}).catch(err => console.log(err));
+				}else{
+					uni.showToast({
+						title:"账号密码不能为空",
+						icon:"none"
+					})
+				}
+			}
+		},
+		computed:{
+			validationInput(){
+				console.log(this.condition)
+				return this.condition.username === '' || this.condition.password === '' 
+						|| this.condition.nickname === '' ? false : true
+			}
 		}
 	}
 	

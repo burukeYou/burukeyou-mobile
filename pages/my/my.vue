@@ -8,8 +8,8 @@
 				class="rounded-circle" @click="open('my/user-home/user-home')"></image>
 				
 				<view style="display: flex;flex-direction: column;padding-left: 20rpx;flex: 1;">
-					<text style="font-size: 30rpx;font-weight: 600;text: #343a40">李白的手机</text>
-					<text style="color: #6c757d;">简介....</text>
+					<text style="font-size: 30rpx;font-weight: 600;text: #343a40">{{user.nickname}}</text>
+					<text style="color: #6c757d;">{{user.description}}</text>
 				</view>
 				
 			</block>
@@ -49,7 +49,7 @@
 			<uni-list-item  @click="open('my/feedback/feedback')"   title="意见反馈" showExtraIcon>
 				<text slot="icon" class="iconfont iconyijianfankui1" ></text>
 			</uni-list-item>
-			<uni-list-item @click="open('my/setting/setting')"   title="设置" showExtraIcon>
+			<uni-list-item v-if="loginStatus" @click="open('my/setting/setting')"   title="设置" showExtraIcon>
 				<text slot="icon" class="iconfont iconshezhi" ></text>
 			</uni-list-item>
 		</view>
@@ -63,16 +63,30 @@
 	export default {
 		data() {
 			return {
-				loginStatus: this.$store.state.loginStatus
+				loginStatus: this.$store.state.loginStatus,
+				user:{}
 			}
 		}, 
 		onLoad() {
 				console.log("onLoad:"+this.loginStatus)
 		},
 		onShow() {
+			if(!this.loginStatus){
+				let token = uni.getStorageSync('token');
+				if(token !== null || token !== ''){
+					let user = uni.getStorageSync('user');
+					
+					if(user !== null && user !== '')
+						user = JSON.parse(user);
+					console.log("重新:"+JSON.stringify(user));	
+					this.$store.commit('login',{user:user,access_token:token})
+				}
+			}
+			this.user = this.$store.state.loginUser;
 			this.loginStatus = this.$store.state.loginStatus;
-		    console.log("onShow:"+this.loginStatus)
+		    console.log("当前用户信息:"+this.loginStatus)
 		    console.log("当前用户信息:"+  JSON.stringify(this.$store.state.loginUser));
+		    console.log("当前token:"+ this.$store.state.token);
 			
 			
 		},

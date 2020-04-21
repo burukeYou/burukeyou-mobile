@@ -1644,6 +1644,7 @@ new _vuex.default.Store({
     // user info
     loginStatus: false,
     loginUser: {},
+    token: "",
 
     // socket
     isConnect: false,
@@ -1664,15 +1665,19 @@ new _vuex.default.Store({
   // =======================mutations============this.$store.commit('login',user);============================
   mutations: {
     // 登陆
-    login: function login(state, user) {
+    login: function login(state, res) {
       state.loginStatus = true;
-      state.loginUser = user;
-      //uni.setStorageSync('user', JSON.stringify(user)); 将用户信息缓存	
+      state.loginUser = res.user;
+      state.token = res.access_token;
+      uni.setStorageSync('user', JSON.stringify(res.user)); //将用户信息缓存
+      uni.setStorageSync('token', res.access_token); //将用户信息缓存	
     },
     // 注销
     logout: function logout(state) {
       state.loginStatus = false;
       state.loginUser = {};
+      uni.removeStorageSync('user');
+      uni.removeStorageSync('token');
     } },
 
   // =======================actions(异步方法)======	this.$store.dispatch('openSocket');============
@@ -9014,14 +9019,16 @@ internalMixin(Vue);
 Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _article = _interopRequireDefault(__webpack_require__(/*! ./article */ 22));
 var _channel = _interopRequireDefault(__webpack_require__(/*! ./channel */ 24));
 var _topic = _interopRequireDefault(__webpack_require__(/*! ./topic */ 25));
-var _label = _interopRequireDefault(__webpack_require__(/*! ./label */ 426));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var _default =
+var _label = _interopRequireDefault(__webpack_require__(/*! ./label */ 26));
+var _user = _interopRequireDefault(__webpack_require__(/*! ./user */ 27));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var _default =
 
 
 {
   article: _article.default,
   channel: _channel.default,
   topic: _topic.default,
-  label: _label.default };exports.default = _default;
+  label: _label.default,
+  user: _user.default };exports.default = _default;
 
 /***/ }),
 
@@ -9175,6 +9182,84 @@ topic;exports.default = _default;
 
 /***/ }),
 
+/***/ 26:
+/*!*****************************************************************************!*\
+  !*** /Users/mac/Documents/code/burukeyou-web/burukeyou-mobile/api/label.js ***!
+  \*****************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _request = __webpack_require__(/*! @/utils/request.js */ 23);
+
+var baseUrl = '/system';
+
+var label = {
+  /**
+               * 	获取标签列表
+               */
+  getPage: function getPage(condition) {
+    return (0, _request.request)({
+      url: baseUrl + '/label/app/page',
+      method: "Get",
+      data: condition });
+
+  } };var _default =
+
+
+
+
+
+
+label;exports.default = _default;
+
+/***/ }),
+
+/***/ 27:
+/*!****************************************************************************!*\
+  !*** /Users/mac/Documents/code/burukeyou-web/burukeyou-mobile/api/user.js ***!
+  \****************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _request = __webpack_require__(/*! @/utils/request.js */ 23);
+
+var baseUrl = "/user";
+
+var user = {
+
+  /**		用户登陆
+              * @param {Object} args 登陆参数
+              * 
+              */
+  login: function login(args) {
+    return (0, _request.request)({
+      url: baseUrl + '/user/login',
+      method: "POST",
+      data: args });
+
+  },
+
+  /**
+      *   用户注册
+      * @param {Object} args	
+      */
+  register: function register(args) {
+    return (0, _request.request)({
+      url: baseUrl + '/user/save',
+      method: "POST",
+      data: args });
+
+  } };var _default =
+
+
+
+
+user;exports.default = _default;
+
+/***/ }),
+
 /***/ 3:
 /*!***********************************!*\
   !*** (webpack)/buildin/global.js ***!
@@ -9206,7 +9291,7 @@ module.exports = g;
 
 /***/ }),
 
-/***/ 302:
+/***/ 304:
 /*!**********************************************************************************************!*\
   !*** /Users/mac/Documents/code/burukeyou-web/burukeyou-mobile/components/uni-icons/icons.js ***!
   \**********************************************************************************************/
@@ -9348,7 +9433,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ 331:
+/***/ 333:
 /*!*******************************************************************************!*\
   !*** /Users/mac/Documents/code/burukeyou-web/burukeyou-mobile/common/time.js ***!
   \*******************************************************************************/
@@ -9447,7 +9532,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ 382:
+/***/ 384:
 /*!**********************************************************************************************************!*\
   !*** /Users/mac/Documents/code/burukeyou-web/burukeyou-mobile/components/uni-swipe-action-item/mpwxs.js ***!
   \**********************************************************************************************************/
@@ -9560,39 +9645,6 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 /***/ (function(module, exports) {
 
 
-
-/***/ }),
-
-/***/ 426:
-/*!*****************************************************************************!*\
-  !*** /Users/mac/Documents/code/burukeyou-web/burukeyou-mobile/api/label.js ***!
-  \*****************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _request = __webpack_require__(/*! @/utils/request.js */ 23);
-
-var baseUrl = '/system';
-
-var label = {
-  /**
-               * 	获取标签列表
-               */
-  getPage: function getPage(condition) {
-    return (0, _request.request)({
-      url: baseUrl + '/label/app/page',
-      method: "Get",
-      data: condition });
-
-  } };var _default =
-
-
-
-
-
-
-label;exports.default = _default;
 
 /***/ }),
 

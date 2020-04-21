@@ -12,6 +12,7 @@ export default new Vuex.Store({
 		// user info
 		loginStatus: false,
 		loginUser:{}, 
+		token:"",
 		
 		// socket
 		isConnect: false ,
@@ -32,15 +33,19 @@ export default new Vuex.Store({
 	// =======================mutations============this.$store.commit('login',user);============================
 	mutations:{
 		// 登陆
-		login(state,user){
+		login(state,res){
 			state.loginStatus = true;
-			state.loginUser = user
-			//uni.setStorageSync('user', JSON.stringify(user)); 将用户信息缓存	
+			state.loginUser = res.user
+			state.token = res.access_token
+			uni.setStorageSync('user', JSON.stringify(res.user)); //将用户信息缓存
+			uni.setStorageSync('token',res.access_token); //将用户信息缓存	
 		},
 		// 注销
 		logout:(state) => {
 			state.loginStatus = false;
 			state.loginUser = {}
+			uni.removeStorageSync('user')
+			uni.removeStorageSync('token')
 		}
 	},
 	// =======================actions(异步方法)======	this.$store.dispatch('openSocket');============
