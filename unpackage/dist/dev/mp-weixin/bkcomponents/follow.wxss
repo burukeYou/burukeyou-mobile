@@ -7,4 +7,13 @@
 	border-radius: 5rpx;
 	padding:0rpx 2rpx;
 }
+.focus-color {
+	color: #09BB07;
+	border-color:  #09BB07;
+}
+.unfocus-color {
+	color: #46A0FC;
+	border-color:  #46A0FC;
+}
+
 

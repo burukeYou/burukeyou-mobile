@@ -9020,7 +9020,8 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 var _channel = _interopRequireDefault(__webpack_require__(/*! ./channel */ 24));
 var _topic = _interopRequireDefault(__webpack_require__(/*! ./topic */ 25));
 var _label = _interopRequireDefault(__webpack_require__(/*! ./label */ 26));
-var _user = _interopRequireDefault(__webpack_require__(/*! ./user */ 27));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var _default =
+var _user = _interopRequireDefault(__webpack_require__(/*! ./user */ 27));
+var _focus = _interopRequireDefault(__webpack_require__(/*! ./focus */ 428));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var _default =
 
 
 {
@@ -9028,7 +9029,8 @@ var _user = _interopRequireDefault(__webpack_require__(/*! ./user */ 27));functi
   channel: _channel.default,
   topic: _topic.default,
   label: _label.default,
-  user: _user.default };exports.default = _default;
+  user: _user.default,
+  focus: _focus.default };exports.default = _default;
 
 /***/ }),
 
@@ -9074,6 +9076,13 @@ function request() {var options = arguments.length > 0 && arguments[0] !== undef
   options.url = _config.default.URL + options.url;
   options.method = options.method || "GET";
   options.header = options.header || { "content-type": "application/json;charset=UTF-8" };
+
+  var token = uni.getStorageSync('token');
+  if (token !== null && token !== '') {
+    console.log("请求之前从缓存中加载token: " + token);
+    options.header['Authorization'] = 'Bearer ' + token;
+  }
+
 
   // 验证权限
 
@@ -9645,6 +9654,53 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 /***/ (function(module, exports) {
 
 
+
+/***/ }),
+
+/***/ 428:
+/*!*****************************************************************************!*\
+  !*** /Users/mac/Documents/code/burukeyou-web/burukeyou-mobile/api/focus.js ***!
+  \*****************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _request = __webpack_require__(/*! @/utils/request.js */ 23);
+
+var baseUrl = "/focus";
+
+var focus = {
+  /**
+               * 	关注
+               * @param {Object} condition
+               */
+  postFocus: function postFocus(condition) {
+    return (0, _request.request)({
+      url: baseUrl + '/focus',
+      method: "POST",
+      data: condition,
+      header: { 'content-type': 'application/x-www-form-urlencoded' } });
+
+  },
+
+  /**
+      * 	取消关注
+      * @param {Object} condition
+      */
+  cancelFocus: function cancelFocus(condition) {
+    return (0, _request.request)({
+      url: baseUrl + '/focus/' + condition.type + '/' + condition.id,
+      method: "Delete" });
+
+  } };var _default =
+
+
+
+
+
+
+
+focus;exports.default = _default;
 
 /***/ }),
 

@@ -73,7 +73,7 @@
 		onShow() {
 			if(!this.loginStatus){
 				let token = uni.getStorageSync('token');
-				if(token !== null || token !== ''){
+				if(token !== null && token !== ''){
 					let user = uni.getStorageSync('user');
 					
 					if(user !== null && user !== '')

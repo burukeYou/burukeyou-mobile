@@ -210,7 +210,7 @@ __webpack_require__.r(__webpack_exports__);
   onShow: function onShow() {
     if (!this.loginStatus) {
       var token = uni.getStorageSync('token');
-      if (token !== null || token !== '') {
+      if (token !== null && token !== '') {
         var user = uni.getStorageSync('user');
 
         if (user !== null && user !== '')

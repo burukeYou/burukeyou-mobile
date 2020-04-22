@@ -6,6 +6,13 @@ export function request(options = {}){
 		options.method = options.method || "GET"
 		options.header = options.header || {"content-type":"application/json;charset=UTF-8"}
 		
+		let token = uni.getStorageSync('token');
+		if(token !== null && token !== ''){
+			console.log("请求之前从缓存中加载token: "+token)
+			options.header['Authorization'] = 'Bearer ' + token;
+		}
+		
+		
 		// 验证权限
 		
 		// 不设置 success,fail之类回调函数,默认已 执行

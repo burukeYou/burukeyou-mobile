@@ -195,6 +195,17 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
     // 跟新关注状态
     postOrCanelFollow: function postOrCanelFollow(args) {
       console.log("关注沸点" + args.parentId + "---现在的值:" + args.isFollow);
+      if (args.isFollow) {
+        this.$http.focus.postFocus({ targetId: args.parentId, targetType: "LABEL" }).then(function (res) {
+
+        }).catch(function (err) {return console.log(err);});
+      } else {
+        this.$http.focus.cancelFocus({ type: "LABEL", id: args.parentId }).then(function (res) {
+
+        }).catch(function (err) {return console.log(err);});
+      }
+
+
     },
     //
     search: function search() {var _this = this;

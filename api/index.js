@@ -3,6 +3,7 @@ import channel from "./channel"
 import topic from "./topic"
 import label from "./label"
 import user from "./user"
+import focus from "./focus"
 
 
 export default {
@@ -10,5 +11,6 @@ export default {
 	channel,
 	topic,
 	label,
-	user
+	user,
+	focus
 }

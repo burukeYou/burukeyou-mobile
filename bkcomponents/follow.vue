@@ -1,9 +1,9 @@
 <template>
 	<!--  关注按钮 -->
-	<view class="focus animated" :style="{color:color,'border-color': color}" @click="reverseFollow" hover-class="bounceIn">
-		<view  v-if="localIsFollow" class="flex-all-center animated" hover-class="bounceIn">
+	<view class="focus animated"  @click="reverseFollow" hover-class="bounceIn">
+		<view :style="{color:colored,'border-color': colored}"  v-if="localIsFollow" class="flex-all-center animated" hover-class="bounceIn">
 			 已关注</view>
-		<view v-else class="flex-all-center animated" hover-class="bounceIn">+ 关注</view>
+		<view :style="{color:color,'border-color': color}"  v-else class="flex-all-center animated" hover-class="bounceIn">+ 关注</view>
 	</view>
 </template>
 
@@ -19,6 +19,9 @@
 			},
 			color:{
 				default:"#09BB07"
+			},
+			colored:{
+				default: "#46A0FC"
 			}
 		},
 		data() {
@@ -51,4 +54,15 @@
 		border-radius: 5rpx;
 		padding:0rpx 2rpx;
 	}
+	
+	.focus-color {
+		color: #09BB07;
+		border-color:  #09BB07;
+	}
+	
+	.unfocus-color {
+		color: #46A0FC;
+		border-color:  #46A0FC;
+	}
+	
 </style>

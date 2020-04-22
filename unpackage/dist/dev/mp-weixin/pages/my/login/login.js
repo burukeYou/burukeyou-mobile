@@ -204,28 +204,31 @@ var _default =
         // console.log("登陆成功,跟新本地缓存:"+this.$store.state.loginStatus);	
 
         this.$http.user.login(this.condition).then(function (res) {
-          uni.showToast({
-            title: "登陆成功" });
+          if (res.code === "200") {
+            uni.showToast({
+              title: "登陆成功" });
 
-          var data = res.data;
-          var user = {
-            id: data.id,
-            nickname: data.nickname,
-            avatar: data.avatar,
-            description: data.description,
-            blog_address: data.blog_address };
-
-
-          _this.$store.commit('login', { user: user, access_token: data.access_token });
-
-          uni.navigateBack({
-            delta: 1 });
+            var data = res.data;
+            var user = {
+              id: data.id,
+              nickname: data.nickname,
+              avatar: data.avatar,
+              description: data.description,
+              blog_address: data.blog_address };
 
 
+            _this.$store.commit('login', { user: user, access_token: data.access_token });
+
+            uni.navigateBack({
+              delta: 1 });
+
+          } else {
+            uni.showToast({
+              title: res.message,
+              icon: "none" });
+
+          }
         }).catch(function (err) {return console.log(err);});
-
-
-
       } else {
         uni.showToast({
           title: "账号密码不能为空",

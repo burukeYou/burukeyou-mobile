@@ -12,7 +12,7 @@
 						 <view class="text-light-muted">{{e.focusCount}}人 关注    {{e.articleCount}} 篇文章</view>
 					 </view>
 					 <view>
-						<follow :parentId="3" @reverseFollow="postOrCanelFollow" :isFollow="e.follow"></follow>
+						<follow :parentId="e.id" @reverseFollow="postOrCanelFollow" :isFollow="e.follow"></follow>
 					 </view>
 				</view>
 			</view>			
@@ -27,7 +27,7 @@
 						 <view class="text-light-muted">{{e.focusCount}}人 关注    {{e.articleCount}} 篇文章</view>
 					 </view>
 					 <view>
-						<follow :parentId="3" @reverseFollow="postOrCanelFollow" :isFollow="e.follow"></follow>
+						<follow :parentId="e.id" @reverseFollow="postOrCanelFollow" :isFollow="e.follow"></follow>
 					 </view>
 				</view>
 			</view>		
@@ -63,7 +63,18 @@
 		methods: {
 			// 跟新关注状态
 			postOrCanelFollow(args) {
-				console.log("关注沸点" + args.parentId + "---现在的值:" + args.isFollow)
+				console.log("关注沸点" + args.parentId + "---现在的值:" + args.isFollow);
+				if(args.isFollow){
+					this.$http.focus.postFocus({targetId:args.parentId,targetType:"LABEL"}).then(res => {
+						
+					}).catch(err => console.log(err));
+				}else{
+					this.$http.focus.cancelFocus({type:"LABEL",id:args.parentId}).then(res => {
+						
+					}).catch(err => console.log(err));
+				}
+				
+			
 			},
 			//
 			search(){

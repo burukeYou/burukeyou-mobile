@@ -71,28 +71,31 @@
 					// console.log("登陆成功,跟新本地缓存:"+this.$store.state.loginStatus);	
 					
 					this.$http.user.login(this.condition).then(res => {
-						uni.showToast({
-							title:"登陆成功"
-						});
-						let data = res.data;
-						let user = {
-							id:data.id,
-							nickname:data.nickname,
-							avatar:data.avatar,
-							description:data.description,
-							blog_address:data.blog_address
-						};
-						
-						this.$store.commit('login',{user:user,access_token:data.access_token});
-						
-						uni.navigateBack({
-						    delta: 1
-						});
-					
+						if(res.code === "200"){
+							uni.showToast({
+								title:"登陆成功"
+							});
+							let data = res.data;
+							let user = {
+								id:data.id,
+								nickname:data.nickname,
+								avatar:data.avatar,
+								description:data.description,
+								blog_address:data.blog_address
+							};
+							
+							this.$store.commit('login',{user:user,access_token:data.access_token});
+							
+							uni.navigateBack({
+							    delta: 1
+							});
+						}else {
+							uni.showToast({
+								title:res.message,
+								icon:"none"
+							});
+						}
 					}).catch(err => console.log(err))
-					
-					
-				
 				}else{
 					uni.showToast({
 						title:"账号密码不能为空",

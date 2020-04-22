@@ -134,7 +134,10 @@ var _default =
       require: false },
 
     color: {
-      default: "#09BB07" } },
+      default: "#09BB07" },
+
+    colored: {
+      default: "#46A0FC" } },
 
 
   data: function data() {
