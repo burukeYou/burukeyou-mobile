@@ -99,6 +99,8 @@
 			this.height = uni.getSystemInfoSync().windowHeight + 'px'
 			console.log(":  "+this.height);
 			
+			//
+			this.getTopicInfo(options.topidId);	
 		},
 		methods:{
 			// 更新关注状态
@@ -116,8 +118,12 @@
 					console.log("加载数据完成");
 					this.loadMoreStatus = "noMore";
 				},3000);
+			},
+			getTopicInfo(id){
+				this.$http.topic.getById(id).then(res => {
+					this.topic = res.data;
+				}).catch(err => console.log(err));
 			}
-			
 		
 		},
 		components: {

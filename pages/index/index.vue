@@ -12,18 +12,22 @@
 		-->
 		<view style="padding: 2rpx;">
 			<bk-tabs :tabList="tabList" :loadMoreStatus="loadMoreStatus" @changeTab="changeTab" @loadMore="loadMore">
-				 <view slot="0" >
+				 <view :slot="i" v-for="(e,i) in tabList" :key="i">
 					 <article-card v-for="(item,j) in articleList" :key="j" :article="item"></article-card>	 
 				 </view>
-				 <view slot="1"><view v-for="i in 100" :key="i">{{i}}</view></view>
-				 <view slot="2"><view v-for="i in 100" :key="i">{{i}}</view></view>
+				
+				
 				 <view slot="right" style="margin-left: 10rpx;" class="iconfont icongengduo1"></view>
 			</bk-tabs>
 		</view>
 	
 		
+		<view @click="toPublicArticle" class="iconfont iconcombinedshape"
+			style="position: fixed;right: 20px;bottom: 0;z-index: 1030;
+			color: #2376E5;font-size: 38px;opacity:1.0">		
+		</view>
 			
-		
+	
 		
 	</view>
 </template>
@@ -43,43 +47,22 @@
 		data(){
 			return{
 				loadMoreStatus: "more",
-				tabList:[
-					{id:"1",name:"推荐",isshow:true}
-				],
+				tabList:[],
 				
-			
-				articleList:[
-					{id:"1",user_avatar:"/static/img/boilinged.png",user_nickname:"发送到家",label:"后端",
-					title:"java实现云计算大叔平花",image:"/static/logo.png",
-					description:"法律上的纠纷卡拉斯京费拉达斯福利看到撒了;副 发考试的纠纷剋拉基舍夫的快乐;撒",
-					thumbup_count:20,comment_count:20,visits_count:"23",
-					createTime:"2020-10-23",isThumbup:false},
-					
-					{id:"2",user_avatar:"/static/img/boilinged.png",user_nickname:"李白",label:"后端",
-					title:"java实现云计算大叔平花",image:"",
-					description:"法律上的纠纷卡拉斯京费拉达斯福利看到撒了;副 发考试的纠纷剋拉基舍夫的快乐;撒",
-					thumbup_count:20,comment_count:20,visits_count:"23",
-					createTime:"2020-10-23",isThumbup:true},
-					{id:"2",user_avatar:"/static/img/boilinged.png",user_nickname:"李白",label:"后端",
-					title:"java实现云计算大叔平花",image:"",
-					description:"法律上的纠纷卡拉斯京费拉达斯福利看到撒了;副 发考试的纠纷剋拉基舍夫的快乐;撒",
-					thumbup_count:20,comment_count:20,visits_count:"23",
-					createTime:"2020-10-23",isThumbup:false},
-					{id:"2",user_avatar:"/static/img/boilinged.png",user_nickname:"李白",label:"后端",
-					title:"java实现云计算大叔平花",image:"",
-					description:"法律上的纠纷卡拉斯京费拉达斯福利看到撒了;副 发考试的纠纷剋拉基舍夫的快乐;撒",
-					thumbup_count:20,comment_count:20,visits_count:"23",
-					createTime:"2020-10-23",isThumbup:true}		
-				]
-			
-			
+				condition:{
+					page:1,
+					size:10,
+					channelId:""
+				},
+				articleList:[]
 			}
 		},
 		onLoad() {
-			this.initChannel();
+		
 		},
 		onShow() {
-			
+			this.initChannel();
+			this.search();
 			
 		},
 		methods:{
@@ -87,6 +70,7 @@
 			initChannel(){
 				this.$http.channel.getAll().then(res => {
 					 this.tabList = res.data;
+					 this.tabList.unshift({id:"",name:"全部"})
 					 console.log(JSON.stringify(this.tabList));
 				}).catch(err => console.log(err));
 			},
@@ -96,22 +80,39 @@
 				})
 			},
 			// 4- get data
-			getData(){
-				for(let e of this.tabList){
-					
-				}
+			search(){
+				this.loadMoreStatus = "loading";
+				this.$http.article.getArticlePage(this.condition).then(res => {
+					if(res.data.records.length <= 0){
+						this.loadMoreStatus = "noMore";
+						return;
+					}
+					res.data.records.forEach(e => this.articleList.push(e));
+						this.loadMoreStatus = "more";
+				}).catch(err => console.log(err));
 			},
 			//
 			changeTab(e){
+				this.articleList = []
 				this.loadMoreStatus = "more";
+				this.condition = {
+					page:1,
+					size:10,
+					channelId: e.id
+				}
 				console.log("切换:"+JSON.stringify(e));
+				this.search();
 			},
 			loadMore(){		
+				if(this.loadMoreStatus === "noMore")
+					return;
+				
 				this.loadMoreStatus = "loading";
-				setTimeout(()=>{
-					console.log("加载数据完成");
-					this.loadMoreStatus = "noMore";
-				},3000);
+				this.condition.page += 1;
+				this.search();
+			},
+			toPublicArticle(){
+					this.$global.open("index/public-article")
 			}
 		}
 	}

@@ -29,6 +29,16 @@ const topic = {
 			method:"Get",
 			data:condition
 		});
+	},
+	
+	/**
+	 * 	
+	 */
+	getById(id){
+		return request({
+			url: baseUrl + '/topic/'+id,
+			method:"Get",
+		});
 	}
 	
 }

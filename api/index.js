@@ -4,6 +4,8 @@ import topic from "./topic"
 import label from "./label"
 import user from "./user"
 import focus from "./focus"
+import column from "./column"
+import boiling from "./boiling"
 
 
 export default {
@@ -12,5 +14,7 @@ export default {
 	topic,
 	label,
 	user,
-	focus
+	focus,
+	column,
+	boiling
 }

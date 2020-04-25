@@ -3,11 +3,16 @@
 		<!-- 1-头像名字标签 -->
 		<view class="flex-center-between">
 			<view class="flex" style="flex-start;">
-				<image  @click="open('my/user-home/user-home')" :src="article.user_avatar" class="rounded-circle" 
+				<image  @click="open('my/user-home/user-home')" :src="article.userAvatar" class="rounded-circle" 
 				style="height: 65rpx;width: 65rpx;margin-right: 10rpx;" lazy-load></image>
-				<view style="font-size: 30rpx;font-weight: 600;">{{article.user_nickname}}</view>
+				<view style="font-size: 30rpx;font-weight: 600;">
+					<view>{{article.userNickname}}</view>
+					<view class="font-small text-light-muted">{{convertTime}}</view>
+				</view>
 			</view>
-			<view class="text-light-muted">{{article.label}}</view>
+			<view v-if="article.channelName" class="text-light-muted">
+				{{article.channelName}}
+			</view>
 		</view>
 		<!-- 2- 标题简介,图片 -->
 		<view style="display: flex;justify-content: space-between;" @click="toArticleDetail(article.id)">
@@ -29,28 +34,31 @@
 			<view @click="postThump" style="flex: 1;"  class="flex-all-center animated" hover-class="bounceIn">
 				<text v-if="localIsThumbup"   class="iconfont iconzan" style="color: #007BFF;margin-right: 20rpx;"></text>
 				<text v-else  class="iconfont iconzan" style="margin-right: 20rpx;"></text>	
-				<text>{{article.thumbup_count}}</text>
+				<text>{{article.thumbupCount}}</text>
 			</view>
 			
 			<view style="flex: 1;"  class="flex-all-center" >
 				<text class="iconfont iconpinglun" style="margin-right: 20rpx;"></text>	
-				<text>{{article.comment_count}}</text>
+				<text>{{article.commentCount}}</text>
 			</view>
 			
 			<view style="flex: 1;"  class="flex-all-center" >
 				<text class="iconfont iconweibiaoti3" style="margin-right: 20rpx;"></text>	
-				<text>{{article.visits_count}}</text>
+				<text>{{article.visitsCount}}</text>
 			</view>
 			
-			<view style="flex: 1;"  class="flex-all-center" >
-				<text>{{article.createTime}}</text>
-			</view>
+			<!-- <view style="flex: 1;"  class="flex-all-center" >
+				<text class="text-light-muted"></text>
+			</view> -->
 		</view>
 	</view>
 
 </template>
 
 <script>
+	import {formatTime} from "@/utils/Time.js"
+		
+	
 	export default {
 		props:{
 			'article' :{
@@ -60,7 +68,7 @@
 		},
 		data() {
 			return {
-			localIsThumbup: this.article.isThumbup
+			localIsThumbup: this.article.thumbup
 			}
 		},
 		methods: {
@@ -85,6 +93,12 @@
 				uni.navigateTo({
 					url: p
 				});
+			}
+		},
+		//====================================================
+		computed:{
+			convertTime: function () {
+				return formatTime(new Date(this.article.createdTime));
 			}
 		}
 	}

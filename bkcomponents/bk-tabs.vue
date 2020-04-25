@@ -22,7 +22,7 @@
 			<swiper :style="{'height':listHeight}" :duration="150" :current="tabIndex" @change="onSwiperChange">
 				<!-- 2 - -->	
 				<swiper-item   v-for="(e,i) in tabList" :key="i">	
-					 <bk-list @loadMore="loadMore" :listHeight="listHeight"  :loadMoreStatus="loadMoreStatus"> 
+					 <bk-list @loadMore="loadMore" :listHeight="listHeight"  :loadMoreStatus="loreMore"> 
 						 <!-- 动态绑定name不可以用 :形式 -->
 						 <slot name="{{i}}"></slot>	 			 
 					 </bk-list>		 
@@ -115,6 +115,11 @@
 		},
 		components:{
 			uniLoadMore,BkList
+		},
+		computed:{
+			loreMore(){
+				return this.loadMoreStatus
+			}
 		}
 	}
 	

@@ -54,16 +54,16 @@
 		<view style="padding: 2rpx;">
 			<bk-tabs :listHeight="listHeight" :tabList="tabList" :loadMoreStatus="loadMoreStatus" @changeTab="changeTab" @loadMore="loadMore">
 				 <view slot="0">
-					 <uni-list-item @click="open('my/user-home/column-detail?columnId=45')" title="运维部署" style="border-bottom:1px solid #B7B8C2;" rightText="2篇"></uni-list-item>
-					 <uni-list-item @click="open('my/user-home/column-detail?columnId=4')" title="微服务" rightText="10篇"></uni-list-item>		
+					 <block v-for="(e,i) in columnDataList" :key="i">
+						 <uni-list-item @click="open('my/user-home/column-detail?columnId='+e.id)" :title="e.name"
+						 								style="border-bottom:1px solid #B7B8C2;" :rightText="e.count+'篇'">	 
+						 </uni-list-item>
+					 </block>
 				 </view>
 				 <view slot="1">
 					 3
 				 </view>
-				 <view slot="2">
-					 <favorites></favorites>
-				 </view>
-				 <view slot="3"> 
+				 <view slot="2"> 
 					4
 				 </view>
 			</bk-tabs>
@@ -84,13 +84,25 @@
 				tabList:[
 					{id:"1",name:"专栏",isshow:true},
 					{id:"2",name:"说说",isshow:true},
-					{id:"3",name:"收藏",isshow:true},
-					{id:"4",name:"其他",isshow:true},
+					{id:"3",name:"其他",isshow:true},
 				],
+				//
+				currentTab:"",
+				
+				// 专栏
+				columnArgs:{
+					page:1,
+					size:10,
+					userId:""
+				},
+				columnDataList:[]
+				
+				
 			}
 		},
-		onLoad() {
+		onLoad(options) {
 			this.intitHeight();
+			this.intitUserInfo(options.userId);
 		},
 		components: {
 			uniListItem,favorites,BkTabs
@@ -99,6 +111,14 @@
 			//
 			intitHeight(){
 				this.listHeight = "600rpx";
+			},
+			intitUserInfo(userId){
+				console.log("用户ID为：{}",userId);
+				// 1 - 查找用户信息
+				this.getUserDetail(userId);
+				// 2- 
+				this.columnArgs.userId = userId;
+				this.searchColumn();
 			},
 			// 打开path页面
 			open(path){
@@ -112,6 +132,10 @@
 			changeTab(e){
 				this.loadMoreStatus = "more";
 				console.log("切换:"+JSON.stringify(e));
+				this.currentTab = e.name;
+				if(this.currentTab === "专栏"){
+					this.searchColumn();	
+				}
 			},
 			loadMore(){		
 				this.loadMoreStatus = "loading";
@@ -119,6 +143,15 @@
 					console.log("加载数据完成");
 					this.loadMoreStatus = "noMore";
 				},3000);
+			},
+			getUserDetail(userId){
+				
+			},
+			//=========================Column===================================
+			searchColumn(){
+				this.$http.column.getPage(this.columnArgs).then(res => {
+					this.columnDataList = res.data.records;
+				}).catch(err => console.log(err));
 			}
 		}
 	}

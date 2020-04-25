@@ -18,6 +18,21 @@
 			}
         },
 		{
+		    "path" : "pages/boiling/public-boiling",
+		    "style" : {
+				"navigationBarTitleText": "发沸点",
+				"usingComponents":{
+					"van-uploader": "/wxcomponents/vant-weapp/uploader/index"
+				}
+			}
+		},
+		{
+			"path": "pages/index/public-article",
+			"style": {
+				"navigationBarTitleText": "发文章"
+			}
+		},
+		{
 		    "path" : "pages/my/my",
 		    "style" : {
 				"navigationBarTitleText": "我的"

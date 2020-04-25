@@ -21,6 +21,7 @@ Vue.prototype.$global =  $global
 import api from "@/api/index.js"
 Vue.prototype.$http =  api
 
+
 // ===========================3 - Vuex=========================================
 import store from "@/vuex/index.js"
 Vue.prototype.$store = store;

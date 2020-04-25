@@ -1,3 +1,5 @@
+import store from "@/vuex/index.js"
+
 export default {
 	
 	open(path){
@@ -16,5 +18,19 @@ export default {
 				return res.windowHeight //- uni.upx2px(100);
 			}
 		});
+	},
+	
+	restoreUserState(){
+		if(!store.state.loginStatus){
+			let token = uni.getStorageSync('token');
+			if(token !== null && token !== ''){
+				let user = uni.getStorageSync('user');
+				
+				if(user !== null && user !== '')
+					user = JSON.parse(user);
+				console.log("重新:"+JSON.stringify(user));	
+				store.commit('login',{user:user,access_token:token})
+			}
+		}
 	}
 }

@@ -5111,6 +5111,7 @@ to {
 .border-white {border-color: #FFFFFF;}
 /* 圆角 */
 .rounded { border-radius: 8rpx;}
+.rounded-16 { border-radius: 16rpx;}
 .rounded-top {
   border-top-left-radius: 8rpx;
   border-top-right-radius: 8rpx;
@@ -5191,6 +5192,9 @@ to {
 }
 .bg-color2 {
 	background-color: #EEEEEE;
+}
+.bg-blue{
+	background-color: #1a73e8;
 }
 
 

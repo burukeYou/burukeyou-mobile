@@ -2,6 +2,8 @@
   "pages": [
     "pages/index/index",
     "pages/boiling/boiling",
+    "pages/boiling/public-boiling",
+    "pages/index/public-article",
     "pages/my/my",
     "pages/found/found",
     "pages/message/message",

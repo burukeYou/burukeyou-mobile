@@ -1,12 +1,17 @@
 <template>
 	<view>
+		<view @click="toPublicBoiling" class="iconfont iconcombinedshape"
+			style="position: fixed;right: 20px;bottom: -30px;z-index: 1030;
+			color: #2376E5;font-size: 38px;opacity:1.0">		
+		</view>
+		
+		
 		<bk-tabs :tabList="tabList" :loadMoreStatus="loadMoreStatus" @changeTab="changeTab" @loadMore="loadMore">
-			<view slot="0" >
-					<boiling-card v-for="(e,i) in boilingList" :key="i" :boiling="e"></boiling-card>			
+			<view :slot="index" v-for="(item,index) in tabList">
+				<block v-for="(e,i) in boilingList"	>
+					<boiling-card :key="i" :boiling="e"></boiling-card>		
+				</block>	
 			</view>
-			<view slot="1" >2</view>
-			<view slot="2">3</view>
-			<view slot="3">4</view>
 			<view slot="right" style="margin-left: 10rpx;" class="iconfont icongengduo1"></view>
 		</bk-tabs>
 		
@@ -22,49 +27,29 @@
 		data() {
 			return {
 				// about style
-				active: 1,
-				scrollHight:400,
-				boilingList:[
-					{
-							"id":"22",
-						   "userId":"998",
-							userNickname:"小芙蓉100",
-							userAvatar:"/static/img/home.png",
-							createdTime:"2020-10-22",
-							content:"闪避不能看发就是看到好风景",
-							contentPic:[
-								"/static/img/content.jpg",
-								"/static/img/content.jpg",
-								"/static/img/content.jpg",
-								"/static/img/content.jpg",
-								"/static/img/content.jpg",
-								"/static/img/content.jpg",
-								"/static/img/content.jpg",
-								"/static/img/content.jpg",
-								"/static/img/content.jpg"
-							],
-							topicName:"提问回答",
-							visitsCount:"20",
-							thumbupCount:"10",
-							commentCount: "30",
-							url:"",
-							isFollow:true,
-							isThumbup:false	
-					}
-				],				
+				boilingList:[],				
 				
 				// about data
-				page:0,
-				size:10,
-				
 				tabList:[],
 				loadMoreStatus: "more",
+				
+				// about query condition
+				condition:{
+					page:1,
+					size:10,
+					topicId:""
+				}
 			
 			}
 		},
 		// ===================生命周期================================================
 		onLoad() {
-			this.initHeight();
+			
+		},
+		onShow() {
+			this.condition = {page:1,size:10,topicId:""}
+			this.loadMoreStatus = "more";
+			this.boilingList = [];
 			this.initTabList();
 		},
 		mounted() {
@@ -72,22 +57,14 @@
 		},
 		// ===================Methods================================================
 		methods: {
-			
-			//1- 初始化高度
-			initHeight(){
-				// 110px;
-				uni.getSystemInfo({
-					success:res=>{
-						console.log("windowHeight: "+res.windowHeight);// px
-						this.scrollHight =  res.windowHeight - 44;
-						console.log("scrollHight: "+this.scrollHight);// px
-					}
-				});
-			},
 			// 初始化tabs
 			initTabList(){
-				this.$http.topic.getTop10Topic().then(res => {
+				 this.$http.topic.getTop10Topic().then(res => {
 					this.tabList = res.data.records;
+					this.tabList.unshift({id:"",name:"全部"});
+					this.condition.topicId = this.tabList[0].id;
+					
+					this.search();
 				}).catch(err => console.log(err));
 			},
 			// 2-初始化数据  async + await 相当于实现了同步调用. await得定义在async方法里面
@@ -100,13 +77,32 @@
 			changeTab(e){
 				this.loadMoreStatus = "more";
 				console.log("切换:"+JSON.stringify(e));
+				this.condition.topicId = e.id;
+				this.boilingList = [];
+				this.condition.page = 1;
+				this.search();
 			},
 			loadMore(){		
+				if(this.loadMoreStatus === "noMore")
+					return;
+				
+				this.condition.page += 1;
 				this.loadMoreStatus = "loading";
-				setTimeout(()=>{
-					console.log("加载数据完成");
-					this.loadMoreStatus = "noMore";
-				},3000);
+				this.search()
+			},
+			search(){
+				console.log(JSON.stringify(this.condition))
+				this.$http.boiling.getPageCondition(this.condition).then(res =>{
+					if(res.data.records.length <= 0){
+						this.loadMoreStatus = "noMore"
+						return;
+					}
+					
+					res.data.records.forEach(e => this.boilingList.push(e));
+				}).catch(err => console.log(err));
+			},
+			toPublicBoiling(){
+				this.$global.open("boiling/public-boiling")
 			}
 		},
 		// ===================components================================================

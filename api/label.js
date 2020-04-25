@@ -12,8 +12,22 @@ const label = {
 			method:"Get",
 			data:condition
 		});
-	}
+	},
 	
+	/**
+	 * 	 搜索前10条标签
+	 */
+	getSelectLabel(arg){
+		return request({
+			url: baseUrl + '/label/page',
+			method:"Get",
+			data:{
+				name:arg,
+				page:0,
+				size:10
+			}
+		});
+	}
 	
 	
 }

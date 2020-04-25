@@ -8985,7 +8985,9 @@ internalMixin(Vue);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = {
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _index = _interopRequireDefault(__webpack_require__(/*! @/vuex/index.js */ 13));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var _default =
+
+{
 
   open: function open(path) {
     var p = "/pages/".concat(path);
@@ -9003,6 +9005,20 @@ internalMixin(Vue);
         return res.windowHeight; //- uni.upx2px(100);
       } });
 
+  },
+
+  restoreUserState: function restoreUserState() {
+    if (!_index.default.state.loginStatus) {
+      var token = uni.getStorageSync('token');
+      if (token !== null && token !== '') {
+        var user = uni.getStorageSync('user');
+
+        if (user !== null && user !== '')
+        user = JSON.parse(user);
+        console.log("重新:" + JSON.stringify(user));
+        _index.default.commit('login', { user: user, access_token: token });
+      }
+    }
   } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
@@ -9021,7 +9037,9 @@ var _channel = _interopRequireDefault(__webpack_require__(/*! ./channel */ 24));
 var _topic = _interopRequireDefault(__webpack_require__(/*! ./topic */ 25));
 var _label = _interopRequireDefault(__webpack_require__(/*! ./label */ 26));
 var _user = _interopRequireDefault(__webpack_require__(/*! ./user */ 27));
-var _focus = _interopRequireDefault(__webpack_require__(/*! ./focus */ 428));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var _default =
+var _focus = _interopRequireDefault(__webpack_require__(/*! ./focus */ 28));
+var _column = _interopRequireDefault(__webpack_require__(/*! ./column */ 29));
+var _boiling = _interopRequireDefault(__webpack_require__(/*! ./boiling */ 30));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var _default =
 
 
 {
@@ -9030,7 +9048,9 @@ var _focus = _interopRequireDefault(__webpack_require__(/*! ./focus */ 428));fun
   topic: _topic.default,
   label: _label.default,
   user: _user.default,
-  focus: _focus.default };exports.default = _default;
+  focus: _focus.default,
+  column: _column.default,
+  boiling: _boiling.default };exports.default = _default;
 
 /***/ }),
 
@@ -9045,16 +9065,33 @@ var _focus = _interopRequireDefault(__webpack_require__(/*! ./focus */ 428));fun
 Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _request = __webpack_require__(/*! @/utils/request.js */ 23);
 
 
-var baseUrl = '/system';
+var baseUrl = '/article';
 
 
 var article = {
-  getAll: function getAll() {
+  /**
+                 * 	发布文章
+                 * @param {Object} data
+                 */
+  publicArticle: function publicArticle(data) {
     return (0, _request.request)({
-      url: baseUrl + '/channel',
-      method: 'GET' });
+      url: baseUrl + '/article',
+      method: "POST",
+      data: data });
+
+  },
+
+  /**
+      * 	分页获取
+      */
+  getArticlePage: function getArticlePage(args) {
+    return (0, _request.request)({
+      url: baseUrl + '/article/page',
+      method: "Get",
+      data: args });
 
   } };var _default =
+
 
 
 article;exports.default = _default;
@@ -9182,6 +9219,16 @@ var topic = {
       method: "Get",
       data: condition });
 
+  },
+
+  /**
+      * 	
+      */
+  getById: function getById(id) {
+    return (0, _request.request)({
+      url: baseUrl + '/topic/' + id,
+      method: "Get" });
+
   } };var _default =
 
 
@@ -9213,8 +9260,22 @@ var label = {
       method: "Get",
       data: condition });
 
-  } };var _default =
+  },
 
+  /**
+      * 	 搜索前10条标签
+      */
+  getSelectLabel: function getSelectLabel(arg) {
+    return (0, _request.request)({
+      url: baseUrl + '/label/page',
+      method: "Get",
+      data: {
+        name: arg,
+        page: 0,
+        size: 10 } });
+
+
+  } };var _default =
 
 
 
@@ -9269,6 +9330,114 @@ user;exports.default = _default;
 
 /***/ }),
 
+/***/ 28:
+/*!*****************************************************************************!*\
+  !*** /Users/mac/Documents/code/burukeyou-web/burukeyou-mobile/api/focus.js ***!
+  \*****************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _request = __webpack_require__(/*! @/utils/request.js */ 23);
+
+var baseUrl = "/focus";
+
+var focus = {
+  /**
+               * 	关注
+               * @param {Object} condition
+               */
+  postFocus: function postFocus(condition) {
+    return (0, _request.request)({
+      url: baseUrl + '/focus',
+      method: "POST",
+      data: condition,
+      header: { 'content-type': 'application/x-www-form-urlencoded' } });
+
+  },
+
+  /**
+      * 	取消关注
+      * @param {Object} condition
+      */
+  cancelFocus: function cancelFocus(condition) {
+    return (0, _request.request)({
+      url: baseUrl + '/focus/' + condition.type + '/' + condition.id,
+      method: "Delete" });
+
+  } };var _default =
+
+
+
+
+
+
+
+focus;exports.default = _default;
+
+/***/ }),
+
+/***/ 29:
+/*!******************************************************************************!*\
+  !*** /Users/mac/Documents/code/burukeyou-web/burukeyou-mobile/api/column.js ***!
+  \******************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _request = __webpack_require__(/*! @/utils/request.js */ 23);
+
+var baseUrl = "/user/column";
+
+var column = {
+  /**
+                *  	查找用户专栏
+                * @param {Object} userId	
+                */
+  getPage: function getPage(args) {
+    return (0, _request.request)({
+      url: baseUrl + "/page/" + args.userId,
+      method: "GET",
+      data: {
+        page: args.page,
+        size: args.size } });
+
+
+  },
+
+  /**
+      *  	查找用户所有专栏
+      * @param {Object} userId	
+      */
+  getAllByUserId: function getAllByUserId(userId) {
+    return (0, _request.request)({
+      url: baseUrl + "/all/" + userId,
+      method: "GET" });
+
+  },
+
+
+
+  /**	查找专栏详情
+      * 
+      * @param {Object} id	
+      */
+  getOne: function getOne(id) {
+    return (0, _request.request)({
+      url: baseUrl + "/" + id,
+      method: "GET" });
+
+  } };var _default =
+
+
+
+
+
+
+column;exports.default = _default;
+
+/***/ }),
+
 /***/ 3:
 /*!***********************************!*\
   !*** (webpack)/buildin/global.js ***!
@@ -9300,7 +9469,51 @@ module.exports = g;
 
 /***/ }),
 
-/***/ 304:
+/***/ 30:
+/*!*******************************************************************************!*\
+  !*** /Users/mac/Documents/code/burukeyou-web/burukeyou-mobile/api/boiling.js ***!
+  \*******************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _request = __webpack_require__(/*! @/utils/request.js */ 23);
+
+var baseUrl = "/boiling";
+
+var boiling = {
+  /**
+                 *   多条件分页获取
+                 */
+  getPageCondition: function getPageCondition(args) {
+    return (0, _request.request)({
+      url: baseUrl + "/boiling/page",
+      method: "GET",
+      data: args });
+
+  },
+
+  /**
+      * 	发表沸点
+      */
+  publishBoilling: function publishBoilling(args) {
+    return (0, _request.request)({
+      url: baseUrl + "/boiling",
+      method: "POST",
+      data: args
+      //header: {'content-type': 'multipart/form-data'},
+    });
+  } };var _default =
+
+
+
+
+
+boiling;exports.default = _default;
+
+/***/ }),
+
+/***/ 321:
 /*!**********************************************************************************************!*\
   !*** /Users/mac/Documents/code/burukeyou-web/burukeyou-mobile/components/uni-icons/icons.js ***!
   \**********************************************************************************************/
@@ -9442,7 +9655,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ 333:
+/***/ 350:
 /*!*******************************************************************************!*\
   !*** /Users/mac/Documents/code/burukeyou-web/burukeyou-mobile/common/time.js ***!
   \*******************************************************************************/
@@ -9541,7 +9754,18 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ 384:
+/***/ 4:
+/*!***************************************************************************!*\
+  !*** /Users/mac/Documents/code/burukeyou-web/burukeyou-mobile/pages.json ***!
+  \***************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+
+
+/***/ }),
+
+/***/ 401:
 /*!**********************************************************************************************************!*\
   !*** /Users/mac/Documents/code/burukeyou-web/burukeyou-mobile/components/uni-swipe-action-item/mpwxs.js ***!
   \**********************************************************************************************************/
@@ -9646,61 +9870,117 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ 4:
-/*!***************************************************************************!*\
-  !*** /Users/mac/Documents/code/burukeyou-web/burukeyou-mobile/pages.json ***!
-  \***************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-
-
-/***/ }),
-
-/***/ 428:
-/*!*****************************************************************************!*\
-  !*** /Users/mac/Documents/code/burukeyou-web/burukeyou-mobile/api/focus.js ***!
-  \*****************************************************************************/
+/***/ 446:
+/*!******************************************************************************!*\
+  !*** /Users/mac/Documents/code/burukeyou-web/burukeyou-mobile/utils/Time.js ***!
+  \******************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _request = __webpack_require__(/*! @/utils/request.js */ 23);
+Object.defineProperty(exports, "__esModule", { value: true });exports.parseTime = parseTime;exports.formatTime = formatTime;exports.param2Obj = param2Obj; /**
+                                                                                                                                                                         * Parse the time to string
+                                                                                                                                                                         * @param {(Object|string|number)} time
+                                                                                                                                                                         * @param {string} cFormat
+                                                                                                                                                                         * @returns {string | null}
+                                                                                                                                                                         */
+function parseTime(time, cFormat) {
+  if (arguments.length === 0) {
+    return null;
+  }
+  var format = cFormat || '{y}-{m}-{d} {h}:{i}:{s}';
+  var date;
+  if (typeof time === 'object') {
+    date = time;
+  } else {
+    if (typeof time === 'string' && /^[0-9]+$/.test(time)) {
+      time = parseInt(time);
+    }
+    if (typeof time === 'number' && time.toString().length === 10) {
+      time = time * 1000;
+    }
+    date = new Date(time);
+  }
+  var formatObj = {
+    y: date.getFullYear(),
+    m: date.getMonth() + 1,
+    d: date.getDate(),
+    h: date.getHours(),
+    i: date.getMinutes(),
+    s: date.getSeconds(),
+    a: date.getDay() };
 
-var baseUrl = "/focus";
+  var time_str = format.replace(/{([ymdhisa])+}/g, function (result, key) {
+    var value = formatObj[key];
+    // Note: getDay() returns 0 on Sunday
+    if (key === 'a') {return ['日', '一', '二', '三', '四', '五', '六'][value];}
+    return value.toString().padStart(2, '0');
+  });
+  return time_str;
+}
 
-var focus = {
-  /**
-               * 	关注
-               * @param {Object} condition
-               */
-  postFocus: function postFocus(condition) {
-    return (0, _request.request)({
-      url: baseUrl + '/focus',
-      method: "POST",
-      data: condition,
-      header: { 'content-type': 'application/x-www-form-urlencoded' } });
+/**
+   * @param {number} time
+   * @param {string} option
+   * @returns {string}
+   */
+function formatTime(time, option) {
+  if (('' + time).length === 10) {
+    time = parseInt(time) * 1000;
+  } else {
+    time = +time;
+  }
+  var d = new Date(time);
+  var now = Date.now();
 
-  },
+  var diff = (now - d) / 1000;
 
-  /**
-      * 	取消关注
-      * @param {Object} condition
-      */
-  cancelFocus: function cancelFocus(condition) {
-    return (0, _request.request)({
-      url: baseUrl + '/focus/' + condition.type + '/' + condition.id,
-      method: "Delete" });
+  if (diff < 30) {
+    return '刚刚';
+  } else if (diff < 3600) {
+    // less 1 hour
+    return Math.ceil(diff / 60) + '分钟前';
+  } else if (diff < 3600 * 24) {
+    return Math.ceil(diff / 3600) + '小时前';
+  } else if (diff < 3600 * 24 * 2) {
+    return '1天前';
+  }
+  if (option) {
+    return parseTime(time, option);
+  } else {
+    return (
+      d.getMonth() +
+      1 +
+      '月' +
+      d.getDate() +
+      '日' +
+      d.getHours() +
+      '时' +
+      d.getMinutes() +
+      '分');
 
-  } };var _default =
+  }
+}
 
+/**
+   * @param {string} url
+   * @returns {Object}
+   */
+function param2Obj(url) {
+  var search = url.split('?')[1];
+  if (!search) {
+    return {};
+  }
+  return JSON.parse(
+  '{"' +
+  decodeURIComponent(search).
+  replace(/"/g, '\\"').
+  replace(/&/g, '","').
+  replace(/=/g, '":"').
+  replace(/\+/g, ' ') +
+  '"}');
 
-
-
-
-
-
-focus;exports.default = _default;
+}
 
 /***/ }),
 
@@ -10610,7 +10890,7 @@ module.exports = {"_from":"@dcloudio/uni-stat@next","_id":"@dcloudio/uni-stat@2.
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/index/index": { "navigationStyle": "custom" }, "pages/boiling/boiling": { "navigationBarTitleText": "广场" }, "pages/my/my": { "navigationBarTitleText": "我的" }, "pages/found/found": { "navigationStyle": "custom" }, "pages/message/message": { "navigationStyle": "custom", "enablePullDownRefresh": true }, "pages/video/video": { "navigationBarTitleText": "小视频" }, "pages/video/video-detail": {}, "pages/my/setting/setting": { "navigationBarTitleText": "设置" }, "pages/search/search": { "navigationBarTitleText": "全网搜索" }, "pages/detail/articleDetail": { "navigationBarTitleText": "文章详情" }, "pages/my/feedback/feedback": { "navigationBarTitleText": "意见反馈·" }, "pages/my/login/login": { "navigationBarTitleText": "登陆" }, "pages/my/login/register": { "navigationBarTitleText": "注册" }, "pages/my/user-home/user-home": { "navigationBarTitleText": "个人主页" }, "pages/message/chat/chat": {}, "pages/message/more/more": { "navigationBarTitleText": "" }, "pages/message/more/friend-list": { "navigationBarTitleText": "好友列表" }, "pages/topic/topic": { "navigationBarTitleText": "话题广场" }, "pages/topic/topic-detail": { "navigationBarTitleText": "话题详情" }, "pages/my/notification/notification": { "navigationBarTitleText": "消息通知" }, "pages/my/user-home/favorites": { "navigationBarTitleText": "收藏" }, "pages/my/user-home/favorites-detail": { "navigationBarTitleText": "收藏主页" }, "pages/my/user-home/column-detail": { "navigationBarTitleText": "专栏主页" }, "pages/focus/focus": { "navigationBarTitleText": "关注用户" }, "pages/focus/focus-label": { "navigationBarTitleText": "标签管理" }, "pages/focus/fan": { "navigationBarTitleText": "粉丝" } }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "burukeYou社区", "navigationBarBackgroundColor": "#FFFFFF", "backgroundColor": "#FFFFFF" } };exports.default = _default;
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/index/index": { "navigationStyle": "custom" }, "pages/boiling/boiling": { "navigationBarTitleText": "广场" }, "pages/boiling/public-boiling": { "navigationBarTitleText": "发沸点" }, "pages/index/public-article": { "navigationBarTitleText": "发文章" }, "pages/my/my": { "navigationBarTitleText": "我的" }, "pages/found/found": { "navigationStyle": "custom" }, "pages/message/message": { "navigationStyle": "custom", "enablePullDownRefresh": true }, "pages/video/video": { "navigationBarTitleText": "小视频" }, "pages/video/video-detail": {}, "pages/my/setting/setting": { "navigationBarTitleText": "设置" }, "pages/search/search": { "navigationBarTitleText": "全网搜索" }, "pages/detail/articleDetail": { "navigationBarTitleText": "文章详情" }, "pages/my/feedback/feedback": { "navigationBarTitleText": "意见反馈·" }, "pages/my/login/login": { "navigationBarTitleText": "登陆" }, "pages/my/login/register": { "navigationBarTitleText": "注册" }, "pages/my/user-home/user-home": { "navigationBarTitleText": "个人主页" }, "pages/message/chat/chat": {}, "pages/message/more/more": { "navigationBarTitleText": "" }, "pages/message/more/friend-list": { "navigationBarTitleText": "好友列表" }, "pages/topic/topic": { "navigationBarTitleText": "话题广场" }, "pages/topic/topic-detail": { "navigationBarTitleText": "话题详情" }, "pages/my/notification/notification": { "navigationBarTitleText": "消息通知" }, "pages/my/user-home/favorites": { "navigationBarTitleText": "收藏" }, "pages/my/user-home/favorites-detail": { "navigationBarTitleText": "收藏主页" }, "pages/my/user-home/column-detail": { "navigationBarTitleText": "专栏主页" }, "pages/focus/focus": { "navigationBarTitleText": "关注用户" }, "pages/focus/focus-label": { "navigationBarTitleText": "标签管理" }, "pages/focus/fan": { "navigationBarTitleText": "粉丝" } }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "burukeYou社区", "navigationBarBackgroundColor": "#FFFFFF", "backgroundColor": "#FFFFFF" } };exports.default = _default;
 
 /***/ }),
 

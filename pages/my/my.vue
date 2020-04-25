@@ -4,7 +4,7 @@
 		<view style="display: flex;align-items: center;padding: 20rpx;">
 			<!-- 已登陆 -->
 			<block v-if="loginStatus">
-				<image src="/static/img/boilinged.png" style="width: 80rpx;height: 80rpx;"
+				<image :src="user.avatar" style="width: 80rpx;height: 80rpx;"
 				class="rounded-circle" @click="open('my/user-home/user-home')"></image>
 				
 				<view style="display: flex;flex-direction: column;padding-left: 20rpx;flex: 1;">
@@ -114,7 +114,7 @@
 				let p = `/pages/${path}`;
 				console.log(p)
 				uni.navigateTo({
-					url: p
+					url: p+'?userId='+this.$store.state.loginUser.id
 				})
 			},
 		}

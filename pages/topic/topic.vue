@@ -49,6 +49,9 @@
 				console.log("关注沸点" + args.parentId + "---现在的值:" + args.isFollow)
 			},
 			loadMore() {
+				if(this.loadMoreStatus === "noMore")
+					return;
+				
 				console.log("加载更多");
 				this.condition.page += 1;
 				this.loadMoreStatus = "loading";
