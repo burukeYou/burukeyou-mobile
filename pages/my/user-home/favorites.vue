@@ -2,44 +2,32 @@
 	<view>
 		<bk-tabs :borderBottom="true" :loadMoreStatus="loadMoreStatus" :tabList="tabList"  @changeTab="changeTab">
 			
-			<view  slot="文章">
-				<view @click="open('my/user-home/favorites-detail?id=4')" class="flex justify-between align-center border-bottom" style="padding: 20rpx;">
-					<view class="flex">
+			<view  slot="0">
+				<block v-for="(e,i) in dataList">
+					<view :key="i" @click="open('my/user-home/favorites-detail?id='+e.id+'&type='+e.type)" class="flex justify-between align-center border-bottom" style="padding: 20rpx;">
+						<view class="flex">
+							<view>
+								<image :src="e.background" style="height: 80rpx;width: 80rpx;"></image>
+							</view>
+							<view style="margin-left: 20rpx;">
+								 <view>{{e.name}}</view>
+								 <view class="text-light-muted">{{e.count}}篇 {{e.userNickname}}</view>
+							</view>
+						</view>
 						<view>
-							<image src="../../../static/logo.png" style="height: 80rpx;width: 80rpx;"></image>
-						</view>
-						<view style="margin-left: 20rpx;">
-							 <view>java并发</view>
-							 <view class="text-light-muted">3篇 李白的手机</view>
+							<text class="iconfont iconarrow-right"></text>
 						</view>
 					</view>
-					<view>
-						<text class="iconfont iconarrow-right"></text>
-					</view>
-				</view>
-				
-				
-				<view class="flex justify-between align-center border-bottom" style="padding: 20rpx;">
-					<view class="flex">
-						<view>
-							<image src="../../../static/logo.png" style="height: 80rpx;width: 80rpx;"></image>
-						</view>
-						<view style="margin-left: 20rpx;">
-							 <view>默认</view>
-							 <view class="text-light-muted">3篇 李白的手机</view>
-						</view>
-					</view>
-					<view>
-						<text class="iconfont iconarrow-right"></text>
-					</view>
-				</view>
-								
+					
+				</block>
 			</view>
-			<view  slot="视频">
+			<view  slot="1">
 					4
 			</view>
 		
-			
+			<view @click="open('my/user-home/favorites-add')" slot="right" style="font-size: 40rpx;color: #2376E5;"
+					class="iconfont icontianjiajiahaowubiankuang">
+			</view>
 			
 		</bk-tabs>
 		
@@ -55,9 +43,15 @@
 			return{
 				loadMoreStatus: "more",
 				tabList:[
-					{id:"1",name:"文章",isshow:true},
-					{id:"2",name:"视频",isshow:true}
+					{id:"1",name:"文章",value:'Article'},
+					{id:"2",name:"视频",value:'Video'}
 				],
+				condition:{
+					type: 'Article',
+					userId:''
+				},
+				
+				dataList:[]
 			}
 		},
 		methods:{
@@ -73,10 +67,22 @@
 			changeTab(e){
 				this.loadMoreStatus = "more";
 				console.log("切换:"+JSON.stringify(e));
+				this.condition.type = e.value
 			}
 		},
 		components:{
 			BkTabs
+		},
+		onLoad(options) {
+			console.log("当前收藏夹用户id:"+options.userId);
+			this.condition.userId = options.userId;
+		},
+		onShow() {
+			if(this.condition.userId === '')
+				return;
+			this.$http.favorities.getAll(this.condition).then(res => {
+				this.dataList  =res.data;
+			}).catch(err => console.log(err));
 		}
 	}
 	

@@ -30,10 +30,12 @@ Vue.prototype.$store = store;
 Vue.prototype.$auth = (callback) =>{
 	// 
 	if(!store.state.loginStatus){
-		uni.navigateTo({
-			url:"/pages/my/login/login"
-		});
-		return;
+		if(!$global.restoreUserState()){
+			uni.navigateTo({
+				url:"/pages/my/login/login"
+			});
+			return;
+		}
 	}
 	
 	callback();	

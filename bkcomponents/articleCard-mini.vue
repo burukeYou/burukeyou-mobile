@@ -2,16 +2,18 @@
 	<view class="flex align-center justify-between border-bottom" style="background-color: #FFFFFF;padding: 20rpx;">
 		<view style="margin-right: 5rpx;">
 			<text>{{article.title}}</text>
-			<view class="text-light-muted">{{article.thumbupCount}} 人点赞  {{article.userNickname}}  {{article.createTime}}</view>
+			<view class="text-light-muted">{{article.thumbupCount}} 人点赞  {{article.userNickname}}  {{convertTime}}</view>
 		</view>
 		<view>
-			<image :src="article.image" style="width: 120rpx;height: 120rpx;"></image>
+			<image v-if="article.image" :src="article.image" style="width: 120rpx;height: 120rpx;"></image>
 		</view>
 	</view>
 
 </template>
 
 <script>
+	import {formatTime} from "@/utils/Time.js"
+	
 	export default {
 		props:{
 			'article' :{
@@ -37,6 +39,11 @@
 				uni.navigateTo({
 					url: p
 				});
+			}
+		},
+		computed:{
+			convertTime:function(){
+				return formatTime(new Date(this.article.createdTime));
 			}
 		}
 	}

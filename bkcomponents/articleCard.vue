@@ -68,7 +68,7 @@
 		},
 		data() {
 			return {
-			localIsThumbup: this.article.thumbup
+				localIsThumbup: this.article.thumbup
 			}
 		},
 		methods: {

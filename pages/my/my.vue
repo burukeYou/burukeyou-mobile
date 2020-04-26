@@ -33,7 +33,7 @@
 			<uni-list-item title="我赞过的" showExtraIcon>
 				<text slot="icon" class="iconfont icondianzan1-copy" style="color: #09BB07;"></text>
 			</uni-list-item>
-			<uni-list-item title="收藏"  showExtraIcon rightText="2个"  @click="open('my/user-home/favorites')" :show-arrow="false">
+			<uni-list-item title="收藏"  showExtraIcon rightText="2个"  @click="open('my/user-home/favorites?userId='+user.id)" :show-arrow="false">
 				<text slot="icon" class="iconfont iconshoucang2" style="color:#FFC107;"></text>
 			</uni-list-item>
 			<uni-list-item title="浏览历史" showExtraIcon>

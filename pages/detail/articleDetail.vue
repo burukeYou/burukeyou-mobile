@@ -3,14 +3,14 @@
 		<!-- 1-头像昵称关注 -->
 		<view class="flex-center-between">
 				<view class="flex align-center" @click="toUserHome">
-					<image class="rounded " :src="article.user_avatar" style="margin-right: 20rpx;height: 65rpx;width: 65rpx;" lazy-load>
+					<image class="rounded " :src="article.userAvatar" style="margin-right: 20rpx;height: 65rpx;width: 65rpx;" lazy-load>
 					<view>
-						<view style="font-size: 30rpx;line-height: 1.2">{{article.user_nickname}}</view>
-						<text style="color: #909399;font-size: 25rpx;">{{article.createTime}}</text>
+						<view style="font-size: 30rpx;line-height: 1.2">{{article.userNickname}}</view>
+						<text style="color: #909399;font-size: 25rpx;">{{article.createdTime}}</text>
 					</view>
 				</view>
 				<view>	
-					<follow @reverseFollow="postOrCanelFollow" :isFollow="article.isFollow"></follow>
+					<follow @reverseFollow="postOrCanelFollow" :isFollow="article.focusUser"></follow>
 				</view> 
 		</view>
 		
@@ -20,27 +20,35 @@
 		</view>
 		
 		<!-- 3-图片 -->
-		<view>
+	<!-- 	<view>
 			<image src="../../static/img/content.jpg" @click="preview('/static/img/content.jpg')" class="w-100"></image>
-		</view>
+		</view> -->
 		
 		<!-- 4 -内容 -->
-		<view>
-			<rich-text v-html="article.content"></rich-text>
+		<view class="mt-2">
+			<rich-text v-html="article.htmlContent"></rich-text>
 		</view>
 		
 		<!-- 5 -标签 -->
-		<view class="flex">
-			<view class="border">java</view>
-			<view  class="border">后端</view>
+		<view class="flex mt-2">
+			<view style="color: #FFFFFF;padding: 3rpx 15rpx;" class="border rounded-16  ml-1 bg-blue font-small" v-for="(e,i) in article.labels" :key="i">
+				{{e}}
+			</view>
 		</view>
 		
 		
 		<!-- ˜6 - 点赞量 ,访问量 -->
-		<view>
-			<text>赞  20</text>
-			<text>阅读  130</text>
-			<text>评论  2</text>
+		<view class="text-light-muted mt-2 flex align-center justify-between">
+			<view>
+				<text>赞  {{article.thumbupCount}}</text>
+				<text>阅读  {{article.visitsCount}}</text>
+				<text>评论  {{article.commentCount}}</text>
+			</view>
+			<view @click="toOpenFavorities" class="animated" hover-class="bounceIn">
+				<view  v-if="article.favorities" class="iconfont iconshoucang2  bg-orign" ></view>
+				<view  v-else class="iconfont iconshoucang2 " ></view>
+			</view>
+			
 		</view>
 		
 		<divider></divider>
@@ -84,6 +92,42 @@
 			
 		</view>
 		
+		
+		<!-- 8 发表评论 -->
+		<view class="fixed-bottom flex justify-aroud align-center border-top bg-white" 
+				style="height: 80rpx;padding: 4rpx;">
+			<input disabled class="rounded-16" @confirm="sendMsg" v-model="message" type="text" placeholder="输入评论..."
+			style="flex: 1;margin: 0px 10rpx;background-color: #EEEEEE;padding: 5rpx;"/>
+			<!-- <view style="font-size: 24px;color: #BBBBBB;" class="iconfont iconfasong">
+				
+			</view>
+			 -->
+			<view @click="postThump" class="flex-all-center animated" hover-class="bounceIn">
+				<text v-if="article.like"   class="iconfont iconzan" style="color: #007BFF;margin-right: 5rpx;"></text>
+				<text v-else  class="iconfont iconzan" style="margin-right: 5rpx;"></text>	
+				<text>{{article.thumbupCount}}</text>
+			</view>
+			
+			<view  class="flex-all-center" >
+				<text class="iconfont iconpinglun" style="margin-right: 5rpx;"></text>	
+				<text>{{article.commentCount}}</text>
+			</view>	
+		</view>
+		
+		<!-- 9 - 底部弹出框 -->
+		<van-popup :show="selectVisable" position="bottom" custom-style="height: 20%;" @close="onBottomCardClose">
+			<van-radio-group :value="radio" @change="onSelectChange">
+			  <van-cell-group>
+					<block v-for="(e,i) in favoritiesOptions">
+						<van-cell :title="e.name" clickable :data-name="i" @click="postFavorities(e)">
+							<van-radio slot="right-icon" :name="i" />
+						</van-cell>
+					</block>
+			  </van-cell-group>
+			</van-radio-group>		
+			
+		</van-popup>
+		
 	</view>
 </template>
 
@@ -94,32 +138,29 @@
 		data() {
 			return {
 				article:{
-					id:"1",
-					"user_id":"101",
-					user_avatar:"/static/img/boilinged.png",
-					user_nickname:"发送到家",
-					label:"后端",
-					title:"java实现云计算大叔平花",image:"/static/logo.png",
-					description:"法律上的纠纷卡拉斯京费拉达斯福利看到撒了;副 发考试的纠纷剋拉基舍夫的快乐;撒",
-					content:"<h1>-<em>- coding: utf-8 -</em>-</h1><p>from PyQt5 import QtCore, QtGui, QtWidgets</p>",
-					thumbup_count:20,
-					comment_count:20,
-					visits_count:"23",
-					createTime:"2020-10-23",isThumbup:true,
-					isFollow:true
+					favorities:false
 				},
-					
+				
+				//
+				favoritiesOptions:[],
+				selectVisable: false,
+				radio: null
+			
 			}
 		},
 		onLoad: function (option) {
 		     console.log(option.id); //打印出上个页面传递的参数。
-			 
-			 
+			 this.initArticleDetail(option.id);
 		},
 		components:{
 			follow
 		},
 		methods: {
+			initArticleDetail(id){
+				this.$http.article.getDetailById(id).then(res => {
+					this.article = res.data;
+				}).catch(err => console.log(err));
+			},
 			// 跟新关注状态
 			postOrCanelFollow(value){
 				console.log("关注用户"+this.article.user_id+"---现在的值:"+value)
@@ -135,11 +176,81 @@
 			toUserHome(){
 				 console.log("去用户主页");
 			},
+			// 更改收藏状态 
+			toOpenFavorities(){
+				this.$auth(() => {
+					//
+					if(!this.article.favorities){			
+						let args = {type: 'Article',userId:this.$store.state.loginUser.id}
+						this.$http.favorities.getAll(args).then(res => {
+							this.favoritiesOptions  =res.data;
+							this.selectVisable = true;
+						}).catch(err => console.log(err));	
+					}else{			
+						let args = {
+							favoritiesId : this.article.favoritiesId,
+							collectionType : "Article",
+							collectionId : this.article.id,
+						}
+						this.$http.favorities.cancelCollection(args).then(res => {
+							if(res.code === "200"){
+								uni.showToast({
+									title:"取消收藏成功"
+								})
+								this.selectVisable = false;
+								this.article.favorities = false;
+							}else{
+								uni.showToast({
+									title:"取消收藏失败",
+									icon:"none"
+								})
+							}
+						}).catch(err => console.log(err));
+					}
+				});
+
+				//this.article.favorities = !this.article.favorities;
+				//console.log(this.article.favorities);
+			},
+			onBottomCardClose(){
+				this.selectVisable = false;
+			},
+			onSelectChange(event){
+				this.radio = event.detail;
+			},
+			// 收藏
+			postFavorities(event){
+				//let name =  event.currentTarget.dataset;
+				console.log("选择了:"+JSON.stringify(event))
+				let args = {
+					favoritiesId : event.id,
+					collectionType : "Article",
+					collectionId : this.article.id,
+				}
+				this.$http.favorities.addCollection(args).then(res => {
+					if(res.code === "200"){
+						uni.showToast({
+							title:"收藏成功"
+						})
+						this.selectVisable = false;
+						this.article.favorities = true;
+					}else{
+						uni.showToast({
+							title:args.message,
+							icon:"none"
+						})
+					}
+				}).catch(err => console.log(err));
+			}
+		
 		},
 		
 	}
 </script>
 
 <style>
+	.bg-orign{
+		color: #FDA429;
+	}
 
 </style>

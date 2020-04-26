@@ -30,7 +30,9 @@ export default {
 					user = JSON.parse(user);
 				console.log("重新:"+JSON.stringify(user));	
 				store.commit('login',{user:user,access_token:token})
+				return true;
 			}
 		}
+		return false;
 	}
 }

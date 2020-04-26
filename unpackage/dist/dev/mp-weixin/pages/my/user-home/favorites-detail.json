@@ -1,6 +1,7 @@
 {
   "navigationBarTitleText": "收藏主页",
   "usingComponents": {
-    "article-card-mini": "/bkcomponents/articleCard-mini"
+    "article-card-mini": "/bkcomponents/articleCard-mini",
+    "bk-list": "/bkcomponents/bk-list"
   }
 }

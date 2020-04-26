@@ -9017,8 +9017,10 @@ internalMixin(Vue);
         user = JSON.parse(user);
         console.log("重新:" + JSON.stringify(user));
         _index.default.commit('login', { user: user, access_token: token });
+        return true;
       }
     }
+    return false;
   } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
@@ -9039,7 +9041,8 @@ var _label = _interopRequireDefault(__webpack_require__(/*! ./label */ 26));
 var _user = _interopRequireDefault(__webpack_require__(/*! ./user */ 27));
 var _focus = _interopRequireDefault(__webpack_require__(/*! ./focus */ 28));
 var _column = _interopRequireDefault(__webpack_require__(/*! ./column */ 29));
-var _boiling = _interopRequireDefault(__webpack_require__(/*! ./boiling */ 30));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var _default =
+var _boiling = _interopRequireDefault(__webpack_require__(/*! ./boiling */ 30));
+var _favorities = _interopRequireDefault(__webpack_require__(/*! ./favorities */ 31));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var _default =
 
 
 {
@@ -9050,7 +9053,8 @@ var _boiling = _interopRequireDefault(__webpack_require__(/*! ./boiling */ 30));
   user: _user.default,
   focus: _focus.default,
   column: _column.default,
-  boiling: _boiling.default };exports.default = _default;
+  boiling: _boiling.default,
+  favorities: _favorities.default };exports.default = _default;
 
 /***/ }),
 
@@ -9089,6 +9093,16 @@ var article = {
       url: baseUrl + '/article/page',
       method: "Get",
       data: args });
+
+  },
+
+  /**
+      * 	获取文章详情
+      */
+  getDetailById: function getDetailById(id) {
+    return (0, _request.request)({
+      url: baseUrl + '/article/' + id,
+      method: "Get" });
 
   } };var _default =
 
@@ -9235,6 +9249,120 @@ var topic = {
 
 
 topic;exports.default = _default;
+
+/***/ }),
+
+/***/ 259:
+/*!******************************************************************************!*\
+  !*** /Users/mac/Documents/code/burukeyou-web/burukeyou-mobile/utils/Time.js ***!
+  \******************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.parseTime = parseTime;exports.formatTime = formatTime;exports.param2Obj = param2Obj; /**
+                                                                                                                                                                         * Parse the time to string
+                                                                                                                                                                         * @param {(Object|string|number)} time
+                                                                                                                                                                         * @param {string} cFormat
+                                                                                                                                                                         * @returns {string | null}
+                                                                                                                                                                         */
+function parseTime(time, cFormat) {
+  if (arguments.length === 0) {
+    return null;
+  }
+  var format = cFormat || '{y}-{m}-{d} {h}:{i}:{s}';
+  var date;
+  if (typeof time === 'object') {
+    date = time;
+  } else {
+    if (typeof time === 'string' && /^[0-9]+$/.test(time)) {
+      time = parseInt(time);
+    }
+    if (typeof time === 'number' && time.toString().length === 10) {
+      time = time * 1000;
+    }
+    date = new Date(time);
+  }
+  var formatObj = {
+    y: date.getFullYear(),
+    m: date.getMonth() + 1,
+    d: date.getDate(),
+    h: date.getHours(),
+    i: date.getMinutes(),
+    s: date.getSeconds(),
+    a: date.getDay() };
+
+  var time_str = format.replace(/{([ymdhisa])+}/g, function (result, key) {
+    var value = formatObj[key];
+    // Note: getDay() returns 0 on Sunday
+    if (key === 'a') {return ['日', '一', '二', '三', '四', '五', '六'][value];}
+    return value.toString().padStart(2, '0');
+  });
+  return time_str;
+}
+
+/**
+   * @param {number} time
+   * @param {string} option
+   * @returns {string}
+   */
+function formatTime(time, option) {
+  if (('' + time).length === 10) {
+    time = parseInt(time) * 1000;
+  } else {
+    time = +time;
+  }
+  var d = new Date(time);
+  var now = Date.now();
+
+  var diff = (now - d) / 1000;
+
+  if (diff < 30) {
+    return '刚刚';
+  } else if (diff < 3600) {
+    // less 1 hour
+    return Math.ceil(diff / 60) + '分钟前';
+  } else if (diff < 3600 * 24) {
+    return Math.ceil(diff / 3600) + '小时前';
+  } else if (diff < 3600 * 24 * 2) {
+    return '1天前';
+  }
+  if (option) {
+    return parseTime(time, option);
+  } else {
+    return (
+      d.getMonth() +
+      1 +
+      '月' +
+      d.getDate() +
+      '日' +
+      d.getHours() +
+      '时' +
+      d.getMinutes() +
+      '分');
+
+  }
+}
+
+/**
+   * @param {string} url
+   * @returns {Object}
+   */
+function param2Obj(url) {
+  var search = url.split('?')[1];
+  if (!search) {
+    return {};
+  }
+  return JSON.parse(
+  '{"' +
+  decodeURIComponent(search).
+  replace(/"/g, '\\"').
+  replace(/&/g, '","').
+  replace(/=/g, '":"').
+  replace(/\+/g, ' ') +
+  '"}');
+
+}
 
 /***/ }),
 
@@ -9513,7 +9641,110 @@ boiling;exports.default = _default;
 
 /***/ }),
 
-/***/ 321:
+/***/ 31:
+/*!**********************************************************************************!*\
+  !*** /Users/mac/Documents/code/burukeyou-web/burukeyou-mobile/api/favorities.js ***!
+  \**********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _request = __webpack_require__(/*! @/utils/request.js */ 23);
+
+
+var baseUrl = "/user/collection";
+
+var favorities = {
+  /**
+                    * 	创建收藏夹
+                    * @param {Object} args	
+                    */
+  save: function save(args) {
+    return (0, _request.request)({
+      url: baseUrl,
+      method: "POST",
+      data: args });
+
+  },
+
+  /**
+      * 	根据类型获得所有的收藏夹
+      */
+  getAll: function getAll(args) {
+    return (0, _request.request)({
+      url: baseUrl + '/' + args.type + '/' + args.userId,
+      method: "GET" });
+
+  },
+
+  /**	获取收藏夹下所有target
+      * @param {Object} args
+      */
+  getTargetListByFavoritiesId: function getTargetListByFavoritiesId(args) {
+    return (0, _request.request)({
+      url: baseUrl + '/' + args.id,
+      method: "GET",
+      data: {
+        page: args.page,
+        size: args.size,
+        type: args.type } });
+
+
+  },
+
+  /**
+      * 	 获取收藏夹详情
+      */
+  getOne: function getOne(id) {
+    return (0, _request.request)({
+      url: baseUrl + '/getOne',
+      method: "GET",
+      data: {
+        id: id } });
+
+
+  },
+
+  /**
+      *   添加进收藏夹
+      */
+  addCollection: function addCollection(args) {
+    return (0, _request.request)({
+      url: baseUrl + '/' + args.favoritiesId + '/' + args.collectionType + '/' + args.collectionId,
+      method: "POST" });
+
+  },
+
+  /**
+      *   取消进收藏
+      */
+  cancelCollection: function cancelCollection(args) {
+    return (0, _request.request)({
+      url: baseUrl + '/' + args.favoritiesId + '/' + args.collectionType + '/' + args.collectionId,
+      method: "DELETE" });
+
+  },
+
+  /**
+      * 	获取收藏品所属收藏夹id
+      */
+  getFavoritiesByCollection: function getFavoritiesByCollection(args) {
+    return (0, _request.request)({
+      url: baseUrl + '/getFavoritiesId',
+      method: "GET",
+      data: args });
+
+  } };var _default =
+
+
+
+
+
+favorities;exports.default = _default;
+
+/***/ }),
+
+/***/ 329:
 /*!**********************************************************************************************!*\
   !*** /Users/mac/Documents/code/burukeyou-web/burukeyou-mobile/components/uni-icons/icons.js ***!
   \**********************************************************************************************/
@@ -9655,7 +9886,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ 350:
+/***/ 358:
 /*!*******************************************************************************!*\
   !*** /Users/mac/Documents/code/burukeyou-web/burukeyou-mobile/common/time.js ***!
   \*******************************************************************************/
@@ -9765,7 +9996,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ 401:
+/***/ 409:
 /*!**********************************************************************************************************!*\
   !*** /Users/mac/Documents/code/burukeyou-web/burukeyou-mobile/components/uni-swipe-action-item/mpwxs.js ***!
   \**********************************************************************************************************/
@@ -9867,120 +10098,6 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
       exec();
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
-
-/***/ }),
-
-/***/ 446:
-/*!******************************************************************************!*\
-  !*** /Users/mac/Documents/code/burukeyou-web/burukeyou-mobile/utils/Time.js ***!
-  \******************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.parseTime = parseTime;exports.formatTime = formatTime;exports.param2Obj = param2Obj; /**
-                                                                                                                                                                         * Parse the time to string
-                                                                                                                                                                         * @param {(Object|string|number)} time
-                                                                                                                                                                         * @param {string} cFormat
-                                                                                                                                                                         * @returns {string | null}
-                                                                                                                                                                         */
-function parseTime(time, cFormat) {
-  if (arguments.length === 0) {
-    return null;
-  }
-  var format = cFormat || '{y}-{m}-{d} {h}:{i}:{s}';
-  var date;
-  if (typeof time === 'object') {
-    date = time;
-  } else {
-    if (typeof time === 'string' && /^[0-9]+$/.test(time)) {
-      time = parseInt(time);
-    }
-    if (typeof time === 'number' && time.toString().length === 10) {
-      time = time * 1000;
-    }
-    date = new Date(time);
-  }
-  var formatObj = {
-    y: date.getFullYear(),
-    m: date.getMonth() + 1,
-    d: date.getDate(),
-    h: date.getHours(),
-    i: date.getMinutes(),
-    s: date.getSeconds(),
-    a: date.getDay() };
-
-  var time_str = format.replace(/{([ymdhisa])+}/g, function (result, key) {
-    var value = formatObj[key];
-    // Note: getDay() returns 0 on Sunday
-    if (key === 'a') {return ['日', '一', '二', '三', '四', '五', '六'][value];}
-    return value.toString().padStart(2, '0');
-  });
-  return time_str;
-}
-
-/**
-   * @param {number} time
-   * @param {string} option
-   * @returns {string}
-   */
-function formatTime(time, option) {
-  if (('' + time).length === 10) {
-    time = parseInt(time) * 1000;
-  } else {
-    time = +time;
-  }
-  var d = new Date(time);
-  var now = Date.now();
-
-  var diff = (now - d) / 1000;
-
-  if (diff < 30) {
-    return '刚刚';
-  } else if (diff < 3600) {
-    // less 1 hour
-    return Math.ceil(diff / 60) + '分钟前';
-  } else if (diff < 3600 * 24) {
-    return Math.ceil(diff / 3600) + '小时前';
-  } else if (diff < 3600 * 24 * 2) {
-    return '1天前';
-  }
-  if (option) {
-    return parseTime(time, option);
-  } else {
-    return (
-      d.getMonth() +
-      1 +
-      '月' +
-      d.getDate() +
-      '日' +
-      d.getHours() +
-      '时' +
-      d.getMinutes() +
-      '分');
-
-  }
-}
-
-/**
-   * @param {string} url
-   * @returns {Object}
-   */
-function param2Obj(url) {
-  var search = url.split('?')[1];
-  if (!search) {
-    return {};
-  }
-  return JSON.parse(
-  '{"' +
-  decodeURIComponent(search).
-  replace(/"/g, '\\"').
-  replace(/&/g, '","').
-  replace(/=/g, '":"').
-  replace(/\+/g, ' ') +
-  '"}');
-
-}
 
 /***/ }),
 
@@ -10890,7 +11007,7 @@ module.exports = {"_from":"@dcloudio/uni-stat@next","_id":"@dcloudio/uni-stat@2.
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/index/index": { "navigationStyle": "custom" }, "pages/boiling/boiling": { "navigationBarTitleText": "广场" }, "pages/boiling/public-boiling": { "navigationBarTitleText": "发沸点" }, "pages/index/public-article": { "navigationBarTitleText": "发文章" }, "pages/my/my": { "navigationBarTitleText": "我的" }, "pages/found/found": { "navigationStyle": "custom" }, "pages/message/message": { "navigationStyle": "custom", "enablePullDownRefresh": true }, "pages/video/video": { "navigationBarTitleText": "小视频" }, "pages/video/video-detail": {}, "pages/my/setting/setting": { "navigationBarTitleText": "设置" }, "pages/search/search": { "navigationBarTitleText": "全网搜索" }, "pages/detail/articleDetail": { "navigationBarTitleText": "文章详情" }, "pages/my/feedback/feedback": { "navigationBarTitleText": "意见反馈·" }, "pages/my/login/login": { "navigationBarTitleText": "登陆" }, "pages/my/login/register": { "navigationBarTitleText": "注册" }, "pages/my/user-home/user-home": { "navigationBarTitleText": "个人主页" }, "pages/message/chat/chat": {}, "pages/message/more/more": { "navigationBarTitleText": "" }, "pages/message/more/friend-list": { "navigationBarTitleText": "好友列表" }, "pages/topic/topic": { "navigationBarTitleText": "话题广场" }, "pages/topic/topic-detail": { "navigationBarTitleText": "话题详情" }, "pages/my/notification/notification": { "navigationBarTitleText": "消息通知" }, "pages/my/user-home/favorites": { "navigationBarTitleText": "收藏" }, "pages/my/user-home/favorites-detail": { "navigationBarTitleText": "收藏主页" }, "pages/my/user-home/column-detail": { "navigationBarTitleText": "专栏主页" }, "pages/focus/focus": { "navigationBarTitleText": "关注用户" }, "pages/focus/focus-label": { "navigationBarTitleText": "标签管理" }, "pages/focus/fan": { "navigationBarTitleText": "粉丝" } }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "burukeYou社区", "navigationBarBackgroundColor": "#FFFFFF", "backgroundColor": "#FFFFFF" } };exports.default = _default;
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/index/index": { "navigationStyle": "custom", "usingComponents": { "uni-nav-bar": "/components/uni-nav-bar/uni-nav-bar", "uni-search-bar": "/components/uni-search-bar/uni-search-bar", "bk-tabs": "/bkcomponents/bk-tabs", "article-card": "/bkcomponents/articleCard" }, "usingAutoImportComponents": { "uni-nav-bar": "/components/uni-nav-bar/uni-nav-bar", "uni-search-bar": "/components/uni-search-bar/uni-search-bar" } }, "pages/boiling/boiling": { "navigationBarTitleText": "广场", "usingComponents": { "boiling-card": "/bkcomponents/boilingCard", "bk-tabs": "/bkcomponents/bk-tabs" }, "usingAutoImportComponents": {} }, "pages/boiling/public-boiling": { "navigationBarTitleText": "发沸点", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/index/public-article": { "navigationBarTitleText": "发文章", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/my/my": { "navigationBarTitleText": "我的", "usingComponents": { "uni-list-item": "/components/uni-list-item/uni-list-item" }, "usingAutoImportComponents": { "uni-list-item": "/components/uni-list-item/uni-list-item" } }, "pages/found/found": { "navigationStyle": "custom", "usingComponents": { "header-swiper": "/pages/found/header-swiper", "nav-bar": "/bkcomponents/nav-bar", "article-card": "/bkcomponents/articleCard", "bk-list": "/bkcomponents/bk-list", "article-card-mini": "/bkcomponents/articleCard-mini" }, "usingAutoImportComponents": {} }, "pages/message/message": { "navigationStyle": "custom", "enablePullDownRefresh": true, "usingComponents": { "uni-nav-bar": "/components/uni-nav-bar/uni-nav-bar", "uni-badge": "/components/uni-badge/uni-badge", "chat-card": "/bkcomponents/chatCard", "uni-popup": "/components/uni-popup/uni-popup" }, "usingAutoImportComponents": { "uni-nav-bar": "/components/uni-nav-bar/uni-nav-bar", "uni-popup": "/components/uni-popup/uni-popup" } }, "pages/video/video": { "navigationBarTitleText": "小视频", "usingComponents": { "video-card": "/bkcomponents/video-card" }, "usingAutoImportComponents": {} }, "pages/video/video-detail": { "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/my/setting/setting": { "navigationBarTitleText": "设置", "usingComponents": { "uni-list-item": "/components/uni-list-item/uni-list-item" }, "usingAutoImportComponents": { "uni-list-item": "/components/uni-list-item/uni-list-item" } }, "pages/search/search": { "navigationBarTitleText": "全网搜索", "usingComponents": { "uni-search-bar": "/components/uni-search-bar/uni-search-bar" }, "usingAutoImportComponents": { "uni-search-bar": "/components/uni-search-bar/uni-search-bar", "uni-icons": "/components/uni-icons/uni-icons" } }, "pages/detail/articleDetail": { "navigationBarTitleText": "文章详情", "usingComponents": { "follow": "/bkcomponents/follow" }, "usingAutoImportComponents": {} }, "pages/my/feedback/feedback": { "navigationBarTitleText": "意见反馈·", "usingComponents": { "uni-collapse": "/components/uni-collapse/uni-collapse", "uni-collapse-item": "/components/uni-collapse-item/uni-collapse-item" }, "usingAutoImportComponents": { "uni-collapse": "/components/uni-collapse/uni-collapse", "uni-collapse-item": "/components/uni-collapse-item/uni-collapse-item" } }, "pages/my/login/login": { "navigationBarTitleText": "登陆", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/my/login/register": { "navigationBarTitleText": "注册", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/my/user-home/user-home": { "navigationBarTitleText": "个人主页", "usingComponents": { "uni-list-item": "/components/uni-list-item/uni-list-item", "favorites": "/pages/my/user-home/favorites", "bk-tabs": "/bkcomponents/bk-tabs" }, "usingAutoImportComponents": { "uni-list-item": "/components/uni-list-item/uni-list-item" } }, "pages/message/chat/chat": { "usingComponents": { "chat-detail": "/pages/message/chat/chatDetail" }, "usingAutoImportComponents": {} }, "pages/message/more/more": { "navigationBarTitleText": "", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/message/more/friend-list": { "navigationBarTitleText": "好友列表", "usingComponents": { "uni-indexed-list": "/components/uni-indexed-list/uni-indexed-list" }, "usingAutoImportComponents": {} }, "pages/topic/topic": { "navigationBarTitleText": "话题广场", "usingComponents": { "follow": "/bkcomponents/follow", "bk-list": "/bkcomponents/bk-list" }, "usingAutoImportComponents": {} }, "pages/topic/topic-detail": { "navigationBarTitleText": "话题详情", "usingComponents": { "follow": "/bkcomponents/follow", "bk-tabs": "/bkcomponents/bk-tabs", "boiling-card": "/bkcomponents/boilingCard" }, "usingAutoImportComponents": {} }, "pages/my/notification/notification": { "navigationBarTitleText": "消息通知", "usingComponents": { "bk-tabs": "/bkcomponents/bk-tabs" }, "usingAutoImportComponents": {} }, "pages/my/user-home/favorites": { "navigationBarTitleText": "收藏", "usingComponents": { "bk-tabs": "/bkcomponents/bk-tabs" }, "usingAutoImportComponents": {} }, "pages/my/user-home/favorites-add": { "navigationBarTitleText": "新建收藏夹", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/my/user-home/favorites-detail": { "navigationBarTitleText": "收藏主页", "usingComponents": { "article-card-mini": "/bkcomponents/articleCard-mini", "bk-list": "/bkcomponents/bk-list" }, "usingAutoImportComponents": {} }, "pages/my/user-home/column-detail": { "navigationBarTitleText": "专栏主页", "usingComponents": { "article-card-mini": "/bkcomponents/articleCard-mini" }, "usingAutoImportComponents": {} }, "pages/focus/focus": { "navigationBarTitleText": "关注用户", "usingComponents": { "user-card": "/bkcomponents/user-card" }, "usingAutoImportComponents": {} }, "pages/focus/focus-label": { "navigationBarTitleText": "标签管理", "usingComponents": { "follow": "/bkcomponents/follow", "bk-tabs": "/bkcomponents/bk-tabs" }, "usingAutoImportComponents": {} }, "pages/focus/fan": { "navigationBarTitleText": "粉丝", "usingComponents": { "user-card": "/bkcomponents/user-card" }, "usingAutoImportComponents": {} } }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "burukeYou社区", "navigationBarBackgroundColor": "#FFFFFF", "backgroundColor": "#FFFFFF" } };exports.default = _default;
 
 /***/ }),
 

@@ -23,6 +23,7 @@
     "pages/topic/topic-detail",
     "pages/my/notification/notification",
     "pages/my/user-home/favorites",
+    "pages/my/user-home/favorites-add",
     "pages/my/user-home/favorites-detail",
     "pages/my/user-home/column-detail",
     "pages/focus/focus",
@@ -77,5 +78,6 @@
   "usingComponents": {
     "van-icon": "/wxcomponents/vant-weapp/icon/index",
     "divider": "/bkcomponents/divider"
-  }
+  },
+  "sitemapLocation": "sitemap84.json"
 }

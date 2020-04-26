@@ -4,72 +4,95 @@
 			<view style="color: #ffff;font-weight: 500;height: 370rpx;background-color: #5E5E5E;">
 				<view style="position: relative;top: 128rpx;padding: 28rpx;">
 					<view class="flex align-center">
-						 <image src="../../../static/img/boilinged.png" style="width: 60rpx;height: 60rpx;">
+						 <image :src="favoritiesInfo.userAvatar"  style="width: 60rpx;height: 60rpx;border-radius: 100%;">
 						 </image>
-						 <view>李白的手机</view>
+						 <view>{{favoritiesInfo.userNickname}}</view>
 					</view>
 					<view>
-										 MySQL
+										 {{favoritiesInfo.name}}
 					</view>
 					<view class="flex justify-between">
-						 <view>2篇</view>
-						 <view style="border: 1px solid #FFFFFF;padding: 0rpx 20px;border-radius: 8rpx;">编辑</view>
+						 <view>{{favoritiesInfo.count}}篇  {{favoritiesInfo.createdTime}} 创建</view>
+						 <view @click="toAdd" style="border: 1px solid #FFFFFF;padding: 0rpx 20px;border-radius: 8rpx;">
+							 编辑</view>
 					</view>
 				</view>	 
 			</view>
 			
 			<!-- 2 - 数据列表 -->
-			<article-card-mini :article="e" v-for="e in articleList" :key="i"></article-card-mini>
-			<!-- <view  class="flex align-center justify-between border-bottom" style="background-color: #FFFFFF;padding: 20rpx;">
-				<view style="margin-right: 5rpx;">
-					<text>关于微服务下xxx的</text>
-					<view class="text-light-muted">411 人点赞  dff里    2020-02-10</view>
-				</view>
-				<view>
-					<image src="../../../static/img/bg.jpg" style="width: 120rpx;height: 120rpx;"></image>
-				</view>
-			</view>
-			 -->
+			<bk-list :loadMoreStatus="loadMoreStatus" @loadMore="loadMore">
+				<article-card-mini :article="e" v-for="e in articleList" :key="i">
+				</article-card-mini>
+			</bk-list>
+	
 			
 	</view>
 </template>
 
 <script>
 	import articleCardMini from "@/bkcomponents/articleCard-mini"
+	import BkList from "@/bkcomponents/bk-list.vue"
 	
 	export default {
 		data() {
 			return {
-				articleList:[
-					{
-						id:"1",
-						userNickname:"发送到家",
-						title:"java实现云计算大叔平花",image:"/static/logo.png",
-						thumbupCount:20,
-						commentCount:20,
-						visitsCount:"23",
-						createTime:"2020-10-23",
-					},
-					{
-						id:"2",
-						user_nickname:"发送到家",
-						title:"java实现云计算大叔平花",image:"/static/logo.png",
-						thumbup_count:20,
-						comment_count:20,
-						visits_count:"23",
-						createTime:"2020-10-23",
-					}
-					
-				]	
+				favoritiesInfo:{},
+				loadMoreStatus:"more",
+				articleList:[],
+				condition:{
+					id:'',
+					page:1,
+					size:10,
+					type:'Article', // Video
+				}
 			}
 		},
 		
 		onLoad(args) {
 			console.log("当前收藏夹id为:"+ args.id);
+			console.log("当前收藏夹type为:"+ args.type);
+			this.condition.type = args.type;
+			this.condition.id = args.id;
+			this.initFavoritiesInfo();
+			this.search();
+		},
+		
+		onShow() {
+			
 		},
 		
 		components:{
-			articleCardMini
+			articleCardMini,BkList
+		},
+		
+		methods:{
+			initFavoritiesInfo(){
+				this.$http.favorities.getOne(this.condition.id).then(res => {
+					this.favoritiesInfo = res.data;
+				}).catch(err => console.log(err));
+			},
+			search(){
+				this.loadMoreStatus = "loading";
+				console.log(JSON.stringify(this.condition))
+				this.$http.favorities.getTargetListByFavoritiesId(this.condition).then(res => {
+					if(res.data.records === null || res.data.records.length <= 0){
+						this.loadMoreStatus = "noMore"
+						return;
+					}
+					this.articleList = res.data.records
+					this.loadMoreStatus = "more"
+				}).catch(err => console.log(err));
+			},
+			loadMore(){
+				if(this.loadMoreStatus === "noMore")
+					return;
+					
+				this.condition.page += 1;
+				this.search();
+			},
+			toAdd(){
+				this.$global.open('my/user-home/favorites-add?id='+this.condition.id)
+			}
 		}
 		
 		

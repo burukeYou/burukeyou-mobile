@@ -26,6 +26,16 @@ const article = {
 			method:"Get",
 			data:args
 		});
+	},
+	
+	/**
+	 * 	获取文章详情
+	 */
+	getDetailById(id){
+		return request({
+			url: baseUrl + '/article/'+id,
+			method:"Get"
+		});
 	}
 	
 }
