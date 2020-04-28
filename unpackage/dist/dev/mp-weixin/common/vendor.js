@@ -9042,7 +9042,8 @@ var _user = _interopRequireDefault(__webpack_require__(/*! ./user */ 27));
 var _focus = _interopRequireDefault(__webpack_require__(/*! ./focus */ 28));
 var _column = _interopRequireDefault(__webpack_require__(/*! ./column */ 29));
 var _boiling = _interopRequireDefault(__webpack_require__(/*! ./boiling */ 30));
-var _favorities = _interopRequireDefault(__webpack_require__(/*! ./favorities */ 31));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var _default =
+var _favorities = _interopRequireDefault(__webpack_require__(/*! ./favorities */ 31));
+var _comment = _interopRequireDefault(__webpack_require__(/*! ./comment */ 32));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var _default =
 
 
 {
@@ -9054,7 +9055,8 @@ var _favorities = _interopRequireDefault(__webpack_require__(/*! ./favorities */
   focus: _focus.default,
   column: _column.default,
   boiling: _boiling.default,
-  favorities: _favorities.default };exports.default = _default;
+  favorities: _favorities.default,
+  comment: _comment.default };exports.default = _default;
 
 /***/ }),
 
@@ -9130,7 +9132,7 @@ function request() {var options = arguments.length > 0 && arguments[0] !== undef
 
   var token = uni.getStorageSync('token');
   if (token !== null && token !== '') {
-    console.log("请求之前从缓存中加载token: " + token);
+    //console.log("请求之前从缓存中加载token: "+token)
     options.header['Authorization'] = 'Bearer ' + token;
   }
 
@@ -9252,7 +9254,99 @@ topic;exports.default = _default;
 
 /***/ }),
 
-/***/ 259:
+/***/ 26:
+/*!*****************************************************************************!*\
+  !*** /Users/mac/Documents/code/burukeyou-web/burukeyou-mobile/api/label.js ***!
+  \*****************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _request = __webpack_require__(/*! @/utils/request.js */ 23);
+
+var baseUrl = '/system';
+
+var label = {
+  /**
+               * 	获取标签列表
+               */
+  getPage: function getPage(condition) {
+    return (0, _request.request)({
+      url: baseUrl + '/label/app/page',
+      method: "Get",
+      data: condition });
+
+  },
+
+  /**
+      * 	 搜索前10条标签
+      */
+  getSelectLabel: function getSelectLabel(arg) {
+    return (0, _request.request)({
+      url: baseUrl + '/label/page',
+      method: "Get",
+      data: {
+        name: arg,
+        page: 0,
+        size: 10 } });
+
+
+  } };var _default =
+
+
+
+
+
+label;exports.default = _default;
+
+/***/ }),
+
+/***/ 27:
+/*!****************************************************************************!*\
+  !*** /Users/mac/Documents/code/burukeyou-web/burukeyou-mobile/api/user.js ***!
+  \****************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _request = __webpack_require__(/*! @/utils/request.js */ 23);
+
+var baseUrl = "/user";
+
+var user = {
+
+  /**		用户登陆
+              * @param {Object} args 登陆参数
+              * 
+              */
+  login: function login(args) {
+    return (0, _request.request)({
+      url: baseUrl + '/user/login',
+      method: "POST",
+      data: args });
+
+  },
+
+  /**
+      *   用户注册
+      * @param {Object} args	
+      */
+  register: function register(args) {
+    return (0, _request.request)({
+      url: baseUrl + '/user/save',
+      method: "POST",
+      data: args });
+
+  } };var _default =
+
+
+
+
+user;exports.default = _default;
+
+/***/ }),
+
+/***/ 274:
 /*!******************************************************************************!*\
   !*** /Users/mac/Documents/code/burukeyou-web/burukeyou-mobile/utils/Time.js ***!
   \******************************************************************************/
@@ -9363,98 +9457,6 @@ function param2Obj(url) {
   '"}');
 
 }
-
-/***/ }),
-
-/***/ 26:
-/*!*****************************************************************************!*\
-  !*** /Users/mac/Documents/code/burukeyou-web/burukeyou-mobile/api/label.js ***!
-  \*****************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _request = __webpack_require__(/*! @/utils/request.js */ 23);
-
-var baseUrl = '/system';
-
-var label = {
-  /**
-               * 	获取标签列表
-               */
-  getPage: function getPage(condition) {
-    return (0, _request.request)({
-      url: baseUrl + '/label/app/page',
-      method: "Get",
-      data: condition });
-
-  },
-
-  /**
-      * 	 搜索前10条标签
-      */
-  getSelectLabel: function getSelectLabel(arg) {
-    return (0, _request.request)({
-      url: baseUrl + '/label/page',
-      method: "Get",
-      data: {
-        name: arg,
-        page: 0,
-        size: 10 } });
-
-
-  } };var _default =
-
-
-
-
-
-label;exports.default = _default;
-
-/***/ }),
-
-/***/ 27:
-/*!****************************************************************************!*\
-  !*** /Users/mac/Documents/code/burukeyou-web/burukeyou-mobile/api/user.js ***!
-  \****************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _request = __webpack_require__(/*! @/utils/request.js */ 23);
-
-var baseUrl = "/user";
-
-var user = {
-
-  /**		用户登陆
-              * @param {Object} args 登陆参数
-              * 
-              */
-  login: function login(args) {
-    return (0, _request.request)({
-      url: baseUrl + '/user/login',
-      method: "POST",
-      data: args });
-
-  },
-
-  /**
-      *   用户注册
-      * @param {Object} args	
-      */
-  register: function register(args) {
-    return (0, _request.request)({
-      url: baseUrl + '/user/save',
-      method: "POST",
-      data: args });
-
-  } };var _default =
-
-
-
-
-user;exports.default = _default;
 
 /***/ }),
 
@@ -9744,7 +9746,92 @@ favorities;exports.default = _default;
 
 /***/ }),
 
-/***/ 329:
+/***/ 32:
+/*!*******************************************************************************!*\
+  !*** /Users/mac/Documents/code/burukeyou-web/burukeyou-mobile/api/comment.js ***!
+  \*******************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _request = __webpack_require__(/*! @/utils/request.js */ 23);
+
+
+var baseUrl = "/comment";
+
+var comment = {
+  /**
+                 * 	 发表评论
+                 */
+  publishComment: function publishComment(args) {
+    return (0, _request.request)({
+      url: baseUrl + "/comment/publish",
+      method: "POST",
+      data: args });
+
+  },
+
+  /**
+      * 	分页获取最新评论
+      * @param {Object} args
+      */
+  getPageNewly: function getPageNewly(args) {
+    return (0, _request.request)({
+      url: baseUrl + '/comment/' + args.parentType + '/' + args.parentId,
+      method: "GET",
+      data: {
+        page: args.page,
+        size: args.size } });
+
+
+  },
+
+  /**
+      *  
+      * @param {Object} id
+      */
+  getById: function getById(id) {
+    return (0, _request.request)({
+      url: baseUrl + '/comment/' + id,
+      method: "GET" });
+
+
+  },
+
+  /**
+      * 	获取回复列表
+      */
+  getPageReply: function getPageReply(args) {
+    return (0, _request.request)({
+      url: baseUrl + "/reply/" + args.commentId,
+      method: "GET",
+      data: {
+        page: args.page,
+        size: args.size } });
+
+
+  },
+
+  /**
+      *  发表回复
+      * @param {Object} args	
+      */
+  publicReply: function publicReply(args) {
+    return (0, _request.request)({
+      url: baseUrl + "/reply/publish",
+      method: "POST",
+      data: args });
+
+  } };var _default =
+
+
+
+
+comment;exports.default = _default;
+
+/***/ }),
+
+/***/ 344:
 /*!**********************************************************************************************!*\
   !*** /Users/mac/Documents/code/burukeyou-web/burukeyou-mobile/components/uni-icons/icons.js ***!
   \**********************************************************************************************/
@@ -9886,7 +9973,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ 358:
+/***/ 373:
 /*!*******************************************************************************!*\
   !*** /Users/mac/Documents/code/burukeyou-web/burukeyou-mobile/common/time.js ***!
   \*******************************************************************************/
@@ -9996,7 +10083,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ 409:
+/***/ 424:
 /*!**********************************************************************************************************!*\
   !*** /Users/mac/Documents/code/burukeyou-web/burukeyou-mobile/components/uni-swipe-action-item/mpwxs.js ***!
   \**********************************************************************************************************/
@@ -11007,7 +11094,7 @@ module.exports = {"_from":"@dcloudio/uni-stat@next","_id":"@dcloudio/uni-stat@2.
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/index/index": { "navigationStyle": "custom", "usingComponents": { "uni-nav-bar": "/components/uni-nav-bar/uni-nav-bar", "uni-search-bar": "/components/uni-search-bar/uni-search-bar", "bk-tabs": "/bkcomponents/bk-tabs", "article-card": "/bkcomponents/articleCard" }, "usingAutoImportComponents": { "uni-nav-bar": "/components/uni-nav-bar/uni-nav-bar", "uni-search-bar": "/components/uni-search-bar/uni-search-bar" } }, "pages/boiling/boiling": { "navigationBarTitleText": "广场", "usingComponents": { "boiling-card": "/bkcomponents/boilingCard", "bk-tabs": "/bkcomponents/bk-tabs" }, "usingAutoImportComponents": {} }, "pages/boiling/public-boiling": { "navigationBarTitleText": "发沸点", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/index/public-article": { "navigationBarTitleText": "发文章", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/my/my": { "navigationBarTitleText": "我的", "usingComponents": { "uni-list-item": "/components/uni-list-item/uni-list-item" }, "usingAutoImportComponents": { "uni-list-item": "/components/uni-list-item/uni-list-item" } }, "pages/found/found": { "navigationStyle": "custom", "usingComponents": { "header-swiper": "/pages/found/header-swiper", "nav-bar": "/bkcomponents/nav-bar", "article-card": "/bkcomponents/articleCard", "bk-list": "/bkcomponents/bk-list", "article-card-mini": "/bkcomponents/articleCard-mini" }, "usingAutoImportComponents": {} }, "pages/message/message": { "navigationStyle": "custom", "enablePullDownRefresh": true, "usingComponents": { "uni-nav-bar": "/components/uni-nav-bar/uni-nav-bar", "uni-badge": "/components/uni-badge/uni-badge", "chat-card": "/bkcomponents/chatCard", "uni-popup": "/components/uni-popup/uni-popup" }, "usingAutoImportComponents": { "uni-nav-bar": "/components/uni-nav-bar/uni-nav-bar", "uni-popup": "/components/uni-popup/uni-popup" } }, "pages/video/video": { "navigationBarTitleText": "小视频", "usingComponents": { "video-card": "/bkcomponents/video-card" }, "usingAutoImportComponents": {} }, "pages/video/video-detail": { "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/my/setting/setting": { "navigationBarTitleText": "设置", "usingComponents": { "uni-list-item": "/components/uni-list-item/uni-list-item" }, "usingAutoImportComponents": { "uni-list-item": "/components/uni-list-item/uni-list-item" } }, "pages/search/search": { "navigationBarTitleText": "全网搜索", "usingComponents": { "uni-search-bar": "/components/uni-search-bar/uni-search-bar" }, "usingAutoImportComponents": { "uni-search-bar": "/components/uni-search-bar/uni-search-bar", "uni-icons": "/components/uni-icons/uni-icons" } }, "pages/detail/articleDetail": { "navigationBarTitleText": "文章详情", "usingComponents": { "follow": "/bkcomponents/follow" }, "usingAutoImportComponents": {} }, "pages/my/feedback/feedback": { "navigationBarTitleText": "意见反馈·", "usingComponents": { "uni-collapse": "/components/uni-collapse/uni-collapse", "uni-collapse-item": "/components/uni-collapse-item/uni-collapse-item" }, "usingAutoImportComponents": { "uni-collapse": "/components/uni-collapse/uni-collapse", "uni-collapse-item": "/components/uni-collapse-item/uni-collapse-item" } }, "pages/my/login/login": { "navigationBarTitleText": "登陆", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/my/login/register": { "navigationBarTitleText": "注册", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/my/user-home/user-home": { "navigationBarTitleText": "个人主页", "usingComponents": { "uni-list-item": "/components/uni-list-item/uni-list-item", "favorites": "/pages/my/user-home/favorites", "bk-tabs": "/bkcomponents/bk-tabs" }, "usingAutoImportComponents": { "uni-list-item": "/components/uni-list-item/uni-list-item" } }, "pages/message/chat/chat": { "usingComponents": { "chat-detail": "/pages/message/chat/chatDetail" }, "usingAutoImportComponents": {} }, "pages/message/more/more": { "navigationBarTitleText": "", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/message/more/friend-list": { "navigationBarTitleText": "好友列表", "usingComponents": { "uni-indexed-list": "/components/uni-indexed-list/uni-indexed-list" }, "usingAutoImportComponents": {} }, "pages/topic/topic": { "navigationBarTitleText": "话题广场", "usingComponents": { "follow": "/bkcomponents/follow", "bk-list": "/bkcomponents/bk-list" }, "usingAutoImportComponents": {} }, "pages/topic/topic-detail": { "navigationBarTitleText": "话题详情", "usingComponents": { "follow": "/bkcomponents/follow", "bk-tabs": "/bkcomponents/bk-tabs", "boiling-card": "/bkcomponents/boilingCard" }, "usingAutoImportComponents": {} }, "pages/my/notification/notification": { "navigationBarTitleText": "消息通知", "usingComponents": { "bk-tabs": "/bkcomponents/bk-tabs" }, "usingAutoImportComponents": {} }, "pages/my/user-home/favorites": { "navigationBarTitleText": "收藏", "usingComponents": { "bk-tabs": "/bkcomponents/bk-tabs" }, "usingAutoImportComponents": {} }, "pages/my/user-home/favorites-add": { "navigationBarTitleText": "新建收藏夹", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/my/user-home/favorites-detail": { "navigationBarTitleText": "收藏主页", "usingComponents": { "article-card-mini": "/bkcomponents/articleCard-mini", "bk-list": "/bkcomponents/bk-list" }, "usingAutoImportComponents": {} }, "pages/my/user-home/column-detail": { "navigationBarTitleText": "专栏主页", "usingComponents": { "article-card-mini": "/bkcomponents/articleCard-mini" }, "usingAutoImportComponents": {} }, "pages/focus/focus": { "navigationBarTitleText": "关注用户", "usingComponents": { "user-card": "/bkcomponents/user-card" }, "usingAutoImportComponents": {} }, "pages/focus/focus-label": { "navigationBarTitleText": "标签管理", "usingComponents": { "follow": "/bkcomponents/follow", "bk-tabs": "/bkcomponents/bk-tabs" }, "usingAutoImportComponents": {} }, "pages/focus/fan": { "navigationBarTitleText": "粉丝", "usingComponents": { "user-card": "/bkcomponents/user-card" }, "usingAutoImportComponents": {} } }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "burukeYou社区", "navigationBarBackgroundColor": "#FFFFFF", "backgroundColor": "#FFFFFF" } };exports.default = _default;
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/index/index": { "navigationStyle": "custom" }, "pages/boiling/boiling": { "navigationBarTitleText": "广场" }, "pages/boiling/public-boiling": { "navigationBarTitleText": "发沸点" }, "pages/index/public-article": { "navigationBarTitleText": "发文章" }, "pages/my/my": { "navigationBarTitleText": "我的" }, "pages/found/found": { "navigationStyle": "custom" }, "pages/message/message": { "navigationStyle": "custom", "enablePullDownRefresh": true }, "pages/video/video": { "navigationBarTitleText": "小视频" }, "pages/video/video-detail": {}, "pages/my/setting/setting": { "navigationBarTitleText": "设置" }, "pages/search/search": { "navigationBarTitleText": "全网搜索" }, "pages/detail/articleDetail": { "navigationBarTitleText": "文章详情" }, "pages/detail/public-comment": { "navigationBarTitleText": "发评论·" }, "pages/detail/reply": { "navigationBarTitleText": "回复" }, "pages/my/feedback/feedback": { "navigationBarTitleText": "意见反馈·" }, "pages/my/login/login": { "navigationBarTitleText": "登陆" }, "pages/my/login/register": { "navigationBarTitleText": "注册" }, "pages/my/user-home/user-home": { "navigationBarTitleText": "个人主页" }, "pages/message/chat/chat": {}, "pages/message/more/more": { "navigationBarTitleText": "" }, "pages/message/more/friend-list": { "navigationBarTitleText": "好友列表" }, "pages/topic/topic": { "navigationBarTitleText": "话题广场" }, "pages/topic/topic-detail": { "navigationBarTitleText": "话题详情" }, "pages/my/notification/notification": { "navigationBarTitleText": "消息通知" }, "pages/my/user-home/favorites": { "navigationBarTitleText": "收藏" }, "pages/my/user-home/favorites-add": { "navigationBarTitleText": "新建收藏夹" }, "pages/my/user-home/favorites-detail": { "navigationBarTitleText": "收藏主页" }, "pages/my/user-home/column-detail": { "navigationBarTitleText": "专栏主页" }, "pages/focus/focus": { "navigationBarTitleText": "关注用户" }, "pages/focus/focus-label": { "navigationBarTitleText": "标签管理" }, "pages/focus/fan": { "navigationBarTitleText": "粉丝" } }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "burukeYou社区", "navigationBarBackgroundColor": "#FFFFFF", "backgroundColor": "#FFFFFF" } };exports.default = _default;
 
 /***/ }),
 

@@ -12,6 +12,8 @@
     "pages/my/setting/setting",
     "pages/search/search",
     "pages/detail/articleDetail",
+    "pages/detail/public-comment",
+    "pages/detail/reply",
     "pages/my/feedback/feedback",
     "pages/my/login/login",
     "pages/my/login/register",
@@ -78,6 +80,5 @@
   "usingComponents": {
     "van-icon": "/wxcomponents/vant-weapp/icon/index",
     "divider": "/bkcomponents/divider"
-  },
-  "sitemapLocation": "sitemap84.json"
+  }
 }

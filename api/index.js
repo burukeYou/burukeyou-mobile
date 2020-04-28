@@ -7,6 +7,7 @@ import focus from "./focus"
 import column from "./column"
 import boiling from "./boiling"
 import favorities from "./favorities"
+import comment from "./comment"
 
 
 export default {
@@ -18,5 +19,6 @@ export default {
 	focus,
 	column,
 	boiling,
-	favorities
+	favorities,
+	comment
 }

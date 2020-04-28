@@ -8,7 +8,7 @@ export function request(options = {}){
 		
 		let token = uni.getStorageSync('token');
 		if(token !== null && token !== ''){
-			console.log("请求之前从缓存中加载token: "+token)
+			//console.log("请求之前从缓存中加载token: "+token)
 			options.header['Authorization'] = 'Bearer ' + token;
 		}
 		

@@ -6,6 +6,7 @@
     "van-cell": "/wxcomponents/vant-weapp/cell/index",
     "van-radio": "/wxcomponents/vant-weapp/radio/index",
     "van-radio-group": "/wxcomponents/vant-weapp/radio-group/index",
-    "follow": "/bkcomponents/follow"
+    "follow": "/bkcomponents/follow",
+    "bk-list": "/bkcomponents/bk-list"
   }
 }

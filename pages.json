@@ -87,7 +87,19 @@
 					"van-radio-group": "/wxcomponents/vant-weapp/radio-group/index"
 				}
 			}
-        }
+        },
+		{
+		    "path" : "pages/detail/public-comment",
+		    "style" : {
+				"navigationBarTitleText":"发评论·"
+			}
+		},
+		{
+		    "path" : "pages/detail/reply",
+		    "style" : {
+				"navigationBarTitleText":"回复"
+			}
+		}
         ,{
             "path" : "pages/my/feedback/feedback",
             "style" : {

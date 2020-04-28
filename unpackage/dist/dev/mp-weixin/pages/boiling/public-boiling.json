@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "发沸点",
+  "usingComponents": {
+    "van-uploader": "/wxcomponents/vant-weapp/uploader/index"
+  }
+}

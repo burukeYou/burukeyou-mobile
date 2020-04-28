@@ -71,7 +71,7 @@
 				this.$http.channel.getAll().then(res => {
 					 this.tabList = res.data;
 					 this.tabList.unshift({id:"",name:"全部"})
-					 console.log(JSON.stringify(this.tabList));
+					 //console.log(JSON.stringify(this.tabList));
 				}).catch(err => console.log(err));
 			},
 			toSearch(){

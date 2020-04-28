@@ -1,5 +1,5 @@
 <template>
-	<view>
+	<view :style="stys">
 		<!-- 一般需要设置高度 -->
 		<scroll-view  @scrolltolower="loadMore" scroll-y="true" :style="{'height':listHeight}" >
 			<slot></slot>
@@ -26,6 +26,9 @@
 			loadMoreStatus:{
 				type:String,
 				default:"more"   // more（loading前）,loading（loading中）,noMore（没有更多了）
+			},
+			stys:{
+				type:String
 			}
 		},
 		data(){

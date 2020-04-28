@@ -57,38 +57,25 @@
 		<view>
 			<view class="" style="font-size: 30rpx;font-weight: 400;">评论列表: 309</view>
 			
-			<view class="uni-comment-list">
-			    <view class="uni-comment-face">
-			        <image src="https://img-cdn-qiniu.dcloud.net.cn/uniapp/images/uni@2x.png" mode="widthFix"></image>
-			    </view>
-			    <view class="uni-comment-body">
-			        <view class="uni-comment-top">
-			            <text>小猫咪</text>
-			        </view>
-			        <view class="uni-comment-content">支持国产，支持DCloud!</view>
-			        <view class="uni-comment-date">
-			            <view>2天前</view>
-			            <view class="uni-comment-replay-btn">5回复</view>
-			        </view>
-			    </view>
-			</view>
-			 <view class="uni-comment-list-replay">
-			     <view class="uni-comment-face">
-			         <image src="https://img-cdn-qiniu.dcloud.net.cn/uniapp/images/uni@2x.png" mode="widthFix"></image>
-			     </view>
-			     <view class="uni-comment-body">
-			         <view class="uni-comment-top">
-			             <text>小猫咪</text>
-			         </view>
-			         <view class="uni-comment-content">支持国产，支持DCloud!</view>
-			         <view class="uni-comment-date">
-			             <view>2天前</view>
-			             <view class="uni-comment-replay-btn">5回复</view>
-			         </view>
-			     </view>
-			 </view> 
-			 
-			
+			<bk-list :loadMoreStatus="loadMoreStatus" @loadMore="loadMore" stys="margin-bottom: 100rpx;" >
+				<view  class="uni-comment-list" v-for="(e,i) in commentList" :key="i">
+				    <view class="uni-comment-face">
+				        <image :src="e.userAvatar" mode="widthFix"></image>
+				    </view>
+				    <view class="uni-comment-body">
+				        <view class="uni-comment-top">
+				            <text>{{e.userNickname}}</text> 
+				        </view>
+				        <view @click="toReply(e._id)" class="uni-comment-content">{{e.content}}</view>
+				        <view class="uni-comment-date">
+				            <view>{{e.createdTime}}</view>
+				            <view class="uni-comment-replay-btn iconfont iconzan">{{e.thumbupCount}}
+							</view>
+							 {{e.replyCount}}回复
+				        </view>
+				    </view>
+				</view>	
+			</bk-list>
 			
 		</view>
 		
@@ -96,7 +83,7 @@
 		<!-- 8 发表评论 -->
 		<view class="fixed-bottom flex justify-aroud align-center border-top bg-white" 
 				style="height: 80rpx;padding: 4rpx;">
-			<input disabled class="rounded-16" @confirm="sendMsg" v-model="message" type="text" placeholder="输入评论..."
+			<input disabled class="rounded-16" @click="toComment"  v-model="message" type="text" placeholder="输入评论..."
 			style="flex: 1;margin: 0px 10rpx;background-color: #EEEEEE;padding: 5rpx;"/>
 			<!-- <view style="font-size: 24px;color: #BBBBBB;" class="iconfont iconfasong">
 				
@@ -119,7 +106,7 @@
 			<van-radio-group :value="radio" @change="onSelectChange">
 			  <van-cell-group>
 					<block v-for="(e,i) in favoritiesOptions">
-						<van-cell :title="e.name" clickable :data-name="i" @click="postFavorities(e)">
+						<van-cell :title="e.name" clickable :data-name="i" :key="i" @click="postFavorities(e)">
 							<van-radio slot="right-icon" :name="i" />
 						</van-cell>
 					</block>
@@ -134,17 +121,26 @@
 <script>
 	
 	import follow from "@/bkcomponents/follow.vue"
+	import BkList from "@/bkcomponents/bk-list.vue"
 	export default {
 		data() {
 			return {
 				article:{
-					favorities:false
+					//favorities:false
 				},
-				
 				//
 				favoritiesOptions:[],
 				selectVisable: false,
-				radio: null
+				radio: null,
+				//
+				commentList:[],
+				condition:{
+					parentType:'Article',
+					parentId:'',
+					page:0,
+					size:10
+				},
+				loadMoreStatus:"more"
 			
 			}
 		},
@@ -152,14 +148,48 @@
 		     console.log(option.id); //打印出上个页面传递的参数。
 			 this.initArticleDetail(option.id);
 		},
+		onShow() {
+			console.log("评论show"+this.article)
+			this.condition.parentId = this.article.id;
+			this.condition.parentType = 'Article';
+			
+			// if(this.commentList.length <= 0){
+			// 	return;
+			// }
+			this.commentList = [];
+			this.condition.page = 0;
+			 this.initCommentList();
+		},
 		components:{
-			follow
+			follow,BkList
 		},
 		methods: {
 			initArticleDetail(id){
 				this.$http.article.getDetailById(id).then(res => {
 					this.article = res.data;
+					this.condition.parentId = this.article.id;
+					this.initCommentList();
 				}).catch(err => console.log(err));
+			},
+			initCommentList(){
+				this.$http.comment.getPageNewly(this.condition).then(res => {
+					if(res.data.content.length <= 0){
+						this.loadMoreStatus = "noMore";
+						return;
+					}
+					 res.data.content.forEach(e => this.commentList.push(e));
+					//this.commentList = res.data.content;
+					this.loadMoreStatus = "more"
+				}).catch(err => console.log(err));
+			},
+			// 去评论页
+			toComment(){
+				this.$global.open('detail/public-comment?parentType=Article'+'&parentId='+this.article.id+'&isComment=true');
+			},
+			// 去回复列表
+			toReply(commentId){
+				console.log(commentId);
+				this.$global.open('detail/reply?commentId='+commentId+'&parentType=Article'+'&parentId='+this.article.id);
 			},
 			// 跟新关注状态
 			postOrCanelFollow(value){
@@ -241,6 +271,13 @@
 						})
 					}
 				}).catch(err => console.log(err));
+			},
+			loadMore(){
+				if(this.loadMoreStatus === "noMore")
+					return;
+				this.loadMoreStatus = "loading";
+				this.condition.page += 1;
+				this.initCommentList();
 			}
 		
 		},
