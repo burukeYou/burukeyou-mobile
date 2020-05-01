@@ -1,5 +1,5 @@
 <template>
-	<view class="bg-color">
+	<view class="bg-color" style="height: 1500rpx;">
 		<!-- 1- 顶部 -->
 		<view style="height: 500rpx;background-color: #ffff;">
 			<!-- 背景 -->
@@ -52,7 +52,7 @@
 		
 		<!-- 2- 选项卡  #A9A5A0 -->
 		<view style="padding: 2rpx;">
-			<bk-tabs :listHeight="listHeight" :tabList="tabList" :loadMoreStatus="loadMoreStatus" @changeTab="changeTab" @loadMore="loadMore">
+			<bk-tabs :tabList="tabList" :loadMoreStatus="loadMoreStatus" @changeTab="changeTab" @loadMore="loadMore">
 				 <view slot="0">
 					 <block v-for="(e,i) in columnDataList" :key="i">
 						 <uni-list-item @click="open('my/user-home/column-detail?columnId='+e.id)" :title="e.name"
@@ -61,10 +61,12 @@
 					 </block>
 				 </view>
 				 <view slot="1">
-					 3
+					<block v-for="(item,index) in boilingDataList">
+						  <boiling-card :key="index" :boiling="item"></boiling-card>	
+					 </block>
 				 </view>
-				 <view slot="2"> 
-					4
+				 <view slot="2" class="p-5"> 
+					  待实现.......
 				 </view>
 			</bk-tabs>
 		</view>
@@ -75,6 +77,8 @@
 	import uniListItem from '@/components/uni-list-item/uni-list-item.vue';
 	import favorites from "./favorites.vue"
 	import BkTabs from "@/bkcomponents/bk-tabs.vue"
+	import BoilingCard from "@/bkcomponents/boilingCard"
+	
 	
 	export default {
 		data() {
@@ -87,7 +91,7 @@
 					{id:"3",name:"其他",isshow:true},
 				],
 				//
-				currentTab:"",
+				currentTab:"专栏",
 				
 				// 专栏
 				columnArgs:{
@@ -95,17 +99,27 @@
 					size:10,
 					userId:""
 				},
-				columnDataList:[]
+				columnDataList:[],
 				
+				// about boiling
+				boilingArgs:{
+					page:1,
+					size:10,
+					userId:""
+				},
+				boilingDataList:[]
 				
 			}
 		},
 		onLoad(options) {
 			this.intitHeight();
 			this.intitUserInfo(options.userId);
+			this.boilingArgs.userId = options.userId;
+			this.columnArgs.userId = options.userId;
+			
 		},
 		components: {
-			uniListItem,favorites,BkTabs
+			uniListItem,favorites,BkTabs,BoilingCard
 		},
 		methods: {
 			//
@@ -134,23 +148,55 @@
 				console.log("切换:"+JSON.stringify(e));
 				this.currentTab = e.name;
 				if(this.currentTab === "专栏"){
+					//this.columnArgs.page = 1;
 					this.searchColumn();	
+				}else if(this.currentTab === "说说"){
+					//this.boilingArgs.page = 1
+					this.searchBoliling();
 				}
 			},
 			loadMore(){		
-				this.loadMoreStatus = "loading";
-				setTimeout(()=>{
-					console.log("加载数据完成");
-					this.loadMoreStatus = "noMore";
-				},3000);
+				console.log("sahdjk");
+				if(this.loadMoreStatus === "noMore")
+					return;
+						
+				console.log(this.currentTab);		
+				if(this.currentTab === "专栏"){
+					this.columnArgs.page += 1
+					this.searchColumn();	
+				}else if(this.currentTab === "说说"){
+					this.boilingArgs.page += 1
+					this.searchBoliling();
+				}			
 			},
 			getUserDetail(userId){
 				
 			},
 			//=========================Column===================================
 			searchColumn(){
+				this.loadMoreStatus = "loading";
 				this.$http.column.getPage(this.columnArgs).then(res => {
-					this.columnDataList = res.data.records;
+					if(res.data.records.length <= 0){
+							console.log("没了");
+							this.loadMoreStatus = "noMore";
+							return;
+					}
+					res.data.records.forEach(e => this.columnDataList.push(e));
+					//this.columnDataList = res.data.records;
+					this.loadMoreStatus = "more";
+				}).catch(err => console.log(err));
+			},
+			//=========================boiling===================================
+			searchBoliling(){
+				this.loadMoreStatus = "loading";
+				this.$http.boiling.getPageCondition(this.boilingArgs).then(res => {
+					if(res.data.records.length <= 0){
+							this.loadMoreStatus = "noMore";
+							return;
+					}
+					res.data.records.forEach(e => this.boilingDataList.push(e));
+					//this.boilingDataList = res.data.records
+					this.loadMoreStatus = "more";
 				}).catch(err => console.log(err));
 			}
 		}

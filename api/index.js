@@ -8,6 +8,7 @@ import column from "./column"
 import boiling from "./boiling"
 import favorities from "./favorities"
 import comment from "./comment"
+import friend from "./friend"
 
 
 export default {
@@ -20,5 +21,6 @@ export default {
 	column,
 	boiling,
 	favorities,
-	comment
+	comment,
+	friend
 }

@@ -27,6 +27,9 @@
 		
 
 		<view class="sub" style="margin-top: 20rpx;">
+			<uni-list-item title="好友请求" @click="open('message/more/friend-reques')" showExtraIcon :show-arrow="false" :show-badge="true" badge-text="1" badgeType="error" style="border-bottom: 1px solid #A9A5A0">
+				<text slot="icon" class="iconfont iconling" style="color: #007BFF;"></text>
+			</uni-list-item>
 			<uni-list-item title="消息中心" @click="open('my/notification/notification')" showExtraIcon :show-arrow="false" :show-badge="true" badge-text="12" badgeType="error" style="border-bottom: 1px solid #A9A5A0">
 				<text slot="icon" class="iconfont iconling" style="color: #007BFF;"></text>
 			</uni-list-item>

@@ -2947,6 +2947,120 @@ function normalizeComponent (
 
 /***/ }),
 
+/***/ 191:
+/*!******************************************************************************!*\
+  !*** /Users/mac/Documents/code/burukeyou-web/burukeyou-mobile/utils/Time.js ***!
+  \******************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.parseTime = parseTime;exports.formatTime = formatTime;exports.param2Obj = param2Obj; /**
+                                                                                                                                                                         * Parse the time to string
+                                                                                                                                                                         * @param {(Object|string|number)} time
+                                                                                                                                                                         * @param {string} cFormat
+                                                                                                                                                                         * @returns {string | null}
+                                                                                                                                                                         */
+function parseTime(time, cFormat) {
+  if (arguments.length === 0) {
+    return null;
+  }
+  var format = cFormat || '{y}-{m}-{d} {h}:{i}:{s}';
+  var date;
+  if (typeof time === 'object') {
+    date = time;
+  } else {
+    if (typeof time === 'string' && /^[0-9]+$/.test(time)) {
+      time = parseInt(time);
+    }
+    if (typeof time === 'number' && time.toString().length === 10) {
+      time = time * 1000;
+    }
+    date = new Date(time);
+  }
+  var formatObj = {
+    y: date.getFullYear(),
+    m: date.getMonth() + 1,
+    d: date.getDate(),
+    h: date.getHours(),
+    i: date.getMinutes(),
+    s: date.getSeconds(),
+    a: date.getDay() };
+
+  var time_str = format.replace(/{([ymdhisa])+}/g, function (result, key) {
+    var value = formatObj[key];
+    // Note: getDay() returns 0 on Sunday
+    if (key === 'a') {return ['日', '一', '二', '三', '四', '五', '六'][value];}
+    return value.toString().padStart(2, '0');
+  });
+  return time_str;
+}
+
+/**
+   * @param {number} time
+   * @param {string} option
+   * @returns {string}
+   */
+function formatTime(time, option) {
+  if (('' + time).length === 10) {
+    time = parseInt(time) * 1000;
+  } else {
+    time = +time;
+  }
+  var d = new Date(time);
+  var now = Date.now();
+
+  var diff = (now - d) / 1000;
+
+  if (diff < 30) {
+    return '刚刚';
+  } else if (diff < 3600) {
+    // less 1 hour
+    return Math.ceil(diff / 60) + '分钟前';
+  } else if (diff < 3600 * 24) {
+    return Math.ceil(diff / 3600) + '小时前';
+  } else if (diff < 3600 * 24 * 2) {
+    return '1天前';
+  }
+  if (option) {
+    return parseTime(time, option);
+  } else {
+    return (
+      d.getMonth() +
+      1 +
+      '月' +
+      d.getDate() +
+      '日' +
+      d.getHours() +
+      '时' +
+      d.getMinutes() +
+      '分');
+
+  }
+}
+
+/**
+   * @param {string} url
+   * @returns {Object}
+   */
+function param2Obj(url) {
+  var search = url.split('?')[1];
+  if (!search) {
+    return {};
+  }
+  return JSON.parse(
+  '{"' +
+  decodeURIComponent(search).
+  replace(/"/g, '\\"').
+  replace(/&/g, '","').
+  replace(/=/g, '":"').
+  replace(/\+/g, ' ') +
+  '"}');
+
+}
+
+/***/ }),
+
 /***/ 2:
 /*!******************************************************************************************!*\
   !*** ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js ***!
@@ -9043,7 +9157,8 @@ var _focus = _interopRequireDefault(__webpack_require__(/*! ./focus */ 28));
 var _column = _interopRequireDefault(__webpack_require__(/*! ./column */ 29));
 var _boiling = _interopRequireDefault(__webpack_require__(/*! ./boiling */ 30));
 var _favorities = _interopRequireDefault(__webpack_require__(/*! ./favorities */ 31));
-var _comment = _interopRequireDefault(__webpack_require__(/*! ./comment */ 32));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var _default =
+var _comment = _interopRequireDefault(__webpack_require__(/*! ./comment */ 32));
+var _friend = _interopRequireDefault(__webpack_require__(/*! ./friend */ 33));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var _default =
 
 
 {
@@ -9056,7 +9171,8 @@ var _comment = _interopRequireDefault(__webpack_require__(/*! ./comment */ 32));
   column: _column.default,
   boiling: _boiling.default,
   favorities: _favorities.default,
-  comment: _comment.default };exports.default = _default;
+  comment: _comment.default,
+  friend: _friend.default };exports.default = _default;
 
 /***/ }),
 
@@ -9093,6 +9209,17 @@ var article = {
   getArticlePage: function getArticlePage(args) {
     return (0, _request.request)({
       url: baseUrl + '/article/page',
+      method: "Get",
+      data: args });
+
+  },
+
+  /**
+      * 	分页获取
+      */
+  getMiniArticlePage: function getMiniArticlePage(args) {
+    return (0, _request.request)({
+      url: baseUrl + '/article/mini/page',
       method: "Get",
       data: args });
 
@@ -9337,126 +9464,22 @@ var user = {
       method: "POST",
       data: args });
 
+  },
+
+  /**
+      * 	搜索用户
+      */
+  searchUser: function searchUser(uniqueId) {
+    return (0, _request.request)({
+      url: baseUrl + "/user/app/" + uniqueId,
+      method: "GET" });
+
   } };var _default =
 
 
 
 
 user;exports.default = _default;
-
-/***/ }),
-
-/***/ 274:
-/*!******************************************************************************!*\
-  !*** /Users/mac/Documents/code/burukeyou-web/burukeyou-mobile/utils/Time.js ***!
-  \******************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.parseTime = parseTime;exports.formatTime = formatTime;exports.param2Obj = param2Obj; /**
-                                                                                                                                                                         * Parse the time to string
-                                                                                                                                                                         * @param {(Object|string|number)} time
-                                                                                                                                                                         * @param {string} cFormat
-                                                                                                                                                                         * @returns {string | null}
-                                                                                                                                                                         */
-function parseTime(time, cFormat) {
-  if (arguments.length === 0) {
-    return null;
-  }
-  var format = cFormat || '{y}-{m}-{d} {h}:{i}:{s}';
-  var date;
-  if (typeof time === 'object') {
-    date = time;
-  } else {
-    if (typeof time === 'string' && /^[0-9]+$/.test(time)) {
-      time = parseInt(time);
-    }
-    if (typeof time === 'number' && time.toString().length === 10) {
-      time = time * 1000;
-    }
-    date = new Date(time);
-  }
-  var formatObj = {
-    y: date.getFullYear(),
-    m: date.getMonth() + 1,
-    d: date.getDate(),
-    h: date.getHours(),
-    i: date.getMinutes(),
-    s: date.getSeconds(),
-    a: date.getDay() };
-
-  var time_str = format.replace(/{([ymdhisa])+}/g, function (result, key) {
-    var value = formatObj[key];
-    // Note: getDay() returns 0 on Sunday
-    if (key === 'a') {return ['日', '一', '二', '三', '四', '五', '六'][value];}
-    return value.toString().padStart(2, '0');
-  });
-  return time_str;
-}
-
-/**
-   * @param {number} time
-   * @param {string} option
-   * @returns {string}
-   */
-function formatTime(time, option) {
-  if (('' + time).length === 10) {
-    time = parseInt(time) * 1000;
-  } else {
-    time = +time;
-  }
-  var d = new Date(time);
-  var now = Date.now();
-
-  var diff = (now - d) / 1000;
-
-  if (diff < 30) {
-    return '刚刚';
-  } else if (diff < 3600) {
-    // less 1 hour
-    return Math.ceil(diff / 60) + '分钟前';
-  } else if (diff < 3600 * 24) {
-    return Math.ceil(diff / 3600) + '小时前';
-  } else if (diff < 3600 * 24 * 2) {
-    return '1天前';
-  }
-  if (option) {
-    return parseTime(time, option);
-  } else {
-    return (
-      d.getMonth() +
-      1 +
-      '月' +
-      d.getDate() +
-      '日' +
-      d.getHours() +
-      '时' +
-      d.getMinutes() +
-      '分');
-
-  }
-}
-
-/**
-   * @param {string} url
-   * @returns {Object}
-   */
-function param2Obj(url) {
-  var search = url.split('?')[1];
-  if (!search) {
-    return {};
-  }
-  return JSON.parse(
-  '{"' +
-  decodeURIComponent(search).
-  replace(/"/g, '\\"').
-  replace(/&/g, '","').
-  replace(/=/g, '":"').
-  replace(/\+/g, ' ') +
-  '"}');
-
-}
 
 /***/ }),
 
@@ -9831,7 +9854,87 @@ comment;exports.default = _default;
 
 /***/ }),
 
-/***/ 344:
+/***/ 33:
+/*!******************************************************************************!*\
+  !*** /Users/mac/Documents/code/burukeyou-web/burukeyou-mobile/api/friend.js ***!
+  \******************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _request = __webpack_require__(/*! @/utils/request.js */ 23);
+
+var baseUrl = "/friend";
+
+var friend = {
+  /**
+                *  发送好友请求
+                * @param {Object} args	
+                */
+  sendFriendRequest: function sendFriendRequest(args) {
+    return (0, _request.request)({
+      url: baseUrl + "/request",
+      method: "POST",
+      data: args });
+
+  },
+
+  /**
+      * 	查看好友请求列表
+      */
+  getFriendRequestList: function getFriendRequestList(id) {
+    return (0, _request.request)({
+      url: baseUrl + "/request/" + id,
+      method: "GET" });
+
+  },
+
+  /**
+      * 	操作好友请求
+      */
+  opFriendRequest: function opFriendRequest(args) {
+    return (0, _request.request)({
+      url: baseUrl + "/request/operation",
+      method: "POST",
+      data: {
+        sendUserId: args.sendUserId,
+        sendUserNickname: args.sendUserNickname,
+        sendUserAvatar: args.sendUserAvatar,
+        operation: args.operation },
+
+      header: {
+        "Content-Type": "application/x-www-form-urlencoded" } });
+
+
+  },
+
+  /**
+      * 	 获得当前用户好友列表
+      */
+  getFriendList: function getFriendList() {
+    return (0, _request.request)({
+      url: baseUrl + "/relation" });
+
+  },
+  /**
+      * 	 删除好友
+      */
+  deleteFriend: function deleteFriend(friendId) {
+    return (0, _request.request)({
+      url: baseUrl + "/relation/" + friendId,
+      method: "DELETE" });
+
+  } };var _default =
+
+
+
+
+
+friend;exports.default = _default;
+
+/***/ }),
+
+/***/ 351:
 /*!**********************************************************************************************!*\
   !*** /Users/mac/Documents/code/burukeyou-web/burukeyou-mobile/components/uni-icons/icons.js ***!
   \**********************************************************************************************/
@@ -9973,7 +10076,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ 373:
+/***/ 380:
 /*!*******************************************************************************!*\
   !*** /Users/mac/Documents/code/burukeyou-web/burukeyou-mobile/common/time.js ***!
   \*******************************************************************************/
@@ -10072,18 +10175,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ 4:
-/*!***************************************************************************!*\
-  !*** /Users/mac/Documents/code/burukeyou-web/burukeyou-mobile/pages.json ***!
-  \***************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-
-
-/***/ }),
-
-/***/ 424:
+/***/ 391:
 /*!**********************************************************************************************************!*\
   !*** /Users/mac/Documents/code/burukeyou-web/burukeyou-mobile/components/uni-swipe-action-item/mpwxs.js ***!
   \**********************************************************************************************************/
@@ -10185,6 +10277,17 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
       exec();
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+
+/***/ }),
+
+/***/ 4:
+/*!***************************************************************************!*\
+  !*** /Users/mac/Documents/code/burukeyou-web/burukeyou-mobile/pages.json ***!
+  \***************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+
 
 /***/ }),
 
@@ -11094,7 +11197,7 @@ module.exports = {"_from":"@dcloudio/uni-stat@next","_id":"@dcloudio/uni-stat@2.
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/index/index": { "navigationStyle": "custom" }, "pages/boiling/boiling": { "navigationBarTitleText": "广场" }, "pages/boiling/public-boiling": { "navigationBarTitleText": "发沸点" }, "pages/index/public-article": { "navigationBarTitleText": "发文章" }, "pages/my/my": { "navigationBarTitleText": "我的" }, "pages/found/found": { "navigationStyle": "custom" }, "pages/message/message": { "navigationStyle": "custom", "enablePullDownRefresh": true }, "pages/video/video": { "navigationBarTitleText": "小视频" }, "pages/video/video-detail": {}, "pages/my/setting/setting": { "navigationBarTitleText": "设置" }, "pages/search/search": { "navigationBarTitleText": "全网搜索" }, "pages/detail/articleDetail": { "navigationBarTitleText": "文章详情" }, "pages/detail/public-comment": { "navigationBarTitleText": "发评论·" }, "pages/detail/reply": { "navigationBarTitleText": "回复" }, "pages/my/feedback/feedback": { "navigationBarTitleText": "意见反馈·" }, "pages/my/login/login": { "navigationBarTitleText": "登陆" }, "pages/my/login/register": { "navigationBarTitleText": "注册" }, "pages/my/user-home/user-home": { "navigationBarTitleText": "个人主页" }, "pages/message/chat/chat": {}, "pages/message/more/more": { "navigationBarTitleText": "" }, "pages/message/more/friend-list": { "navigationBarTitleText": "好友列表" }, "pages/topic/topic": { "navigationBarTitleText": "话题广场" }, "pages/topic/topic-detail": { "navigationBarTitleText": "话题详情" }, "pages/my/notification/notification": { "navigationBarTitleText": "消息通知" }, "pages/my/user-home/favorites": { "navigationBarTitleText": "收藏" }, "pages/my/user-home/favorites-add": { "navigationBarTitleText": "新建收藏夹" }, "pages/my/user-home/favorites-detail": { "navigationBarTitleText": "收藏主页" }, "pages/my/user-home/column-detail": { "navigationBarTitleText": "专栏主页" }, "pages/focus/focus": { "navigationBarTitleText": "关注用户" }, "pages/focus/focus-label": { "navigationBarTitleText": "标签管理" }, "pages/focus/fan": { "navigationBarTitleText": "粉丝" } }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "burukeYou社区", "navigationBarBackgroundColor": "#FFFFFF", "backgroundColor": "#FFFFFF" } };exports.default = _default;
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/index/index": { "navigationStyle": "custom" }, "pages/boiling/boiling": { "navigationBarTitleText": "广场" }, "pages/boiling/public-boiling": { "navigationBarTitleText": "发沸点" }, "pages/index/public-article": { "navigationBarTitleText": "发文章" }, "pages/my/my": { "navigationBarTitleText": "我的" }, "pages/found/found": { "navigationStyle": "custom" }, "pages/message/message": { "navigationStyle": "custom", "enablePullDownRefresh": true }, "pages/video/video": { "navigationBarTitleText": "小视频" }, "pages/video/video-detail": {}, "pages/my/setting/setting": { "navigationBarTitleText": "设置" }, "pages/search/search": { "navigationBarTitleText": "全网搜索" }, "pages/detail/articleDetail": { "navigationBarTitleText": "文章详情" }, "pages/detail/public-comment": { "navigationBarTitleText": "发评论·" }, "pages/detail/reply": { "navigationBarTitleText": "回复" }, "pages/my/feedback/feedback": { "navigationBarTitleText": "意见反馈·" }, "pages/my/login/login": { "navigationBarTitleText": "登陆" }, "pages/my/login/register": { "navigationBarTitleText": "注册" }, "pages/my/user-home/user-home": { "navigationBarTitleText": "个人主页" }, "pages/message/chat/chat": {}, "pages/message/more/add-friend": { "navigationBarTitleText": "添加好友" }, "pages/message/more/friend-list": { "navigationBarTitleText": "好友列表" }, "pages/message/more/friend-reques": { "navigationBarTitleText": "新的朋友" }, "pages/topic/topic": { "navigationBarTitleText": "话题广场" }, "pages/topic/topic-detail": { "navigationBarTitleText": "话题详情" }, "pages/my/notification/notification": { "navigationBarTitleText": "消息通知" }, "pages/my/user-home/favorites": { "navigationBarTitleText": "收藏" }, "pages/my/user-home/favorites-add": { "navigationBarTitleText": "新建收藏夹" }, "pages/my/user-home/favorites-detail": { "navigationBarTitleText": "收藏主页" }, "pages/my/user-home/column-detail": { "navigationBarTitleText": "专栏主页" }, "pages/focus/focus": { "navigationBarTitleText": "关注用户" }, "pages/focus/focus-label": { "navigationBarTitleText": "标签管理" }, "pages/focus/fan": { "navigationBarTitleText": "粉丝" } }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "burukeYou社区", "navigationBarBackgroundColor": "#FFFFFF", "backgroundColor": "#FFFFFF" } };exports.default = _default;
 
 /***/ }),
 

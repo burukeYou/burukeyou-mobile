@@ -19,8 +19,9 @@
     "pages/my/login/register",
     "pages/my/user-home/user-home",
     "pages/message/chat/chat",
-    "pages/message/more/more",
+    "pages/message/more/add-friend",
     "pages/message/more/friend-list",
+    "pages/message/more/friend-reques",
     "pages/topic/topic",
     "pages/topic/topic-detail",
     "pages/my/notification/notification",
@@ -80,5 +81,6 @@
   "usingComponents": {
     "van-icon": "/wxcomponents/vant-weapp/icon/index",
     "divider": "/bkcomponents/divider"
-  }
+  },
+  "sitemapLocation": "sitemap6.json"
 }

@@ -14,7 +14,9 @@
 				<navigator :url="'/pages/message/more/friend-list'">
 					<view>好友列表</view>
 				</navigator>
-				<view>添加好友</view>
+				<navigator :url="'/pages/message/more/add-friend'">
+					<view>添加好友</view>
+				</navigator>
 			</view>	 
 		</uni-popup>
 		

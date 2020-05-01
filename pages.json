@@ -129,15 +129,21 @@
             "style" : {}
         }
         ,{
-            "path" : "pages/message/more/more",
+            "path" : "pages/message/more/add-friend",
             "style" : {
-				"navigationBarTitleText":""
+				"navigationBarTitleText":"添加好友"
 			}
         },
 		{
 		    "path" : "pages/message/more/friend-list",
 		    "style" : {
 				"navigationBarTitleText":"好友列表"
+			}
+		},
+		{
+		    "path" : "pages/message/more/friend-reques",
+		    "style" : {
+				"navigationBarTitleText":"新的朋友"
 			}
 		}
         ,{

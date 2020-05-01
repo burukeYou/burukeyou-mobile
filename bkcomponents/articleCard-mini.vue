@@ -1,7 +1,7 @@
 <template>
 	<view class="flex align-center justify-between border-bottom" style="background-color: #FFFFFF;padding: 20rpx;">
 		<view style="margin-right: 5rpx;">
-			<text>{{article.title}}</text>
+			<text @click="toArticleDetail(article.id)">{{article.title}}</text>
 			<view class="text-light-muted">{{article.thumbupCount}} 人点赞  {{article.userNickname}}  {{convertTime}}</view>
 		</view>
 		<view>

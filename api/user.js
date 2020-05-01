@@ -26,6 +26,16 @@ const user = {
 			method:"POST",
 			data: args
 		});
+	},
+	
+	/**
+	 * 	搜索用户
+	 */
+	searchUser(uniqueId){
+		return request({
+			url: baseUrl + "/user/app/"+uniqueId,
+			method:"GET",
+		});
 	}
 	
 }

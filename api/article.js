@@ -29,6 +29,17 @@ const article = {
 	},
 	
 	/**
+	 * 	分页获取
+	 */
+	getMiniArticlePage(args){
+		return request({
+			url: baseUrl + '/article/mini/page',
+			method:"Get",
+			data:args
+		});
+	},
+	
+	/**
 	 * 	获取文章详情
 	 */
 	getDetailById(id){
