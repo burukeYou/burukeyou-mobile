@@ -184,7 +184,10 @@
 			},
 			// 去评论页
 			toComment(){
-				this.$global.open('detail/public-comment?parentType=Article'+'&parentId='+this.article.id+'&isComment=true');
+				let aid = this.article.id;
+				let puid = this.article.userId;
+				let ptitle = this.article.title
+				this.$global.open('detail/public-comment?parentType=Article'+'&parentId='+aid+'&isComment=true'+'&parentUserId='+puid+'&parentTitle='+ptitle);
 			},
 			// 去回复列表
 			toReply(commentId){

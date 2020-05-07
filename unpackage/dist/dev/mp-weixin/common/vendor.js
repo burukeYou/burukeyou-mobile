@@ -1556,9 +1556,9 @@ uni$1;exports.default = _default;
 /***/ }),
 
 /***/ 12:
-/*!*****************************************************************************************!*\
-  !*** /Users/mac/Documents/code/burukeyou-web/burukeyou-mobile/utils/chat/ChatServer.js ***!
-  \*****************************************************************************************/
+/*!*********************************************************************************!*\
+  !*** /Users/mac/Documents/code/burukeyou-mobile-local/utils/chat/ChatServer.js ***!
+  \*********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1577,18 +1577,29 @@ var _ChatEntity = __webpack_require__(/*! @/utils/chat/ChatEntity.js */ 16);func
 
 var ChatServer = {
   // 连接聊天服务器
-  connectChatSever: function connectChatSever() {var _this = this;
+  connectChatSever: function connectChatSever() {
     _index.default.dispatch('openSocket');
+    var tryCount = 0;
 
     // 监听连接状态
     setInterval(function () {
-      var status = _this.$store.state.SocketTask.readyState;
-      console.log("检测连接状态:" + status);
-      if (status === 2 || status === 3 || status === undefined) {
-        console.log("已断开");
-        //this.$store.state.SocketTask.close();
-        //this.$store.state.SocketTask = null;
-        _this.$store.dispatch('openSocket'); // 重连接
+      if (_index.default.state.SocketTask === false) {
+        console.log("SocketTask为空");
+        if (tryCount <= 2) {
+          tryCount += 1;
+          _index.default.dispatch('openSocket');
+        } else {
+          console.log("尝试连接次数超过3次停止连接");
+        }
+      } else {
+        var status = _index.default.state.SocketTask.readyState;
+        console.log("检测连接状态:" + status);
+        if (status === 2 || status === 3 || status === undefined) {
+          console.log("已断开");
+          //this.$store.state.SocketTask.close();
+          //this.$store.state.SocketTask = null;
+          _index.default.dispatch('openSocket'); // 重连接
+        }
       }
     }, 10000);
   },
@@ -1611,10 +1622,43 @@ var ChatServer = {
 
 
     // 3 -消息ack (失败重发处理)	
-  }
+  },
 
-  //
-};exports.ChatServer = ChatServer;var _default =
+  // 发送连接消息
+  sendConnectMsg: function sendConnectMsg() {
+    var data = _ChatEntity.ChatMethod.buildConnectMessage();
+    _index.default.state.SocketTask.send({
+      data: JSON.stringify(data),
+      success: function success() {
+        console.log("发送success");
+      },
+      fail: function fail(error) {
+        // 消息失败尝试重发尝试 (这里的失败时网络发送失败,而ack是业务失败)
+        console.log("失败" + JSON.stringify(error));
+      } });
+
+  },
+
+  // 发送心跳消息
+  sendKeepHeartMsg: function sendKeepHeartMsg() {
+    var data = _ChatEntity.ChatMethod.buildKeepHeartMessage();
+    console.log("发送心跳消息:" + JSON.stringify(data));
+
+    console.log(JSON.stringify(_index.default.state.SocketTask));
+    if (_index.default.state.SocketTask !== false) {
+      _index.default.state.SocketTask.send({
+        data: JSON.stringify(data),
+        success: function success() {
+          console.log("发送success");
+        },
+        fail: function fail(error) {
+          // 消息失败尝试重发尝试 (这里的失败时网络发送失败,而ack是业务失败)
+          console.log("失败" + JSON.stringify(error));
+        } });
+
+    }
+
+  } };exports.ChatServer = ChatServer;var _default =
 
 
 
@@ -1623,9 +1667,9 @@ ChatServer;exports.default = _default;
 /***/ }),
 
 /***/ 13:
-/*!******************************************************************************!*\
-  !*** /Users/mac/Documents/code/burukeyou-web/burukeyou-mobile/vuex/index.js ***!
-  \******************************************************************************/
+/*!**********************************************************************!*\
+  !*** /Users/mac/Documents/code/burukeyou-mobile-local/vuex/index.js ***!
+  \**********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1635,7 +1679,9 @@ var _vuex = _interopRequireDefault(__webpack_require__(/*! vuex */ 14));
 
 
 
-var _config = _interopRequireDefault(__webpack_require__(/*! @/utils/config.js */ 15));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}_vue.default.use(_vuex.default);var _default =
+var _config = _interopRequireDefault(__webpack_require__(/*! @/utils/config.js */ 15));
+var _ChatServer = _interopRequireDefault(__webpack_require__(/*! @/utils/chat/ChatServer.js */ 12));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}_vue.default.use(_vuex.default);var _default =
+
 
 
 new _vuex.default.Store({
@@ -1660,7 +1706,9 @@ new _vuex.default.Store({
     },
 
     // 聊天会话列表
-    chatList: [] },
+    chatList: [
+      //{userId:'2',avatar:"../../../static/logo.png",content:"2",type:"text",createTime:1585144449},
+    ] },
 
   // =======================mutations============this.$store.commit('login',user);============================
   mutations: {
@@ -1670,7 +1718,7 @@ new _vuex.default.Store({
       state.loginUser = res.user;
       state.token = res.access_token;
       uni.setStorageSync('user', JSON.stringify(res.user)); //将用户信息缓存
-      uni.setStorageSync('token', res.access_token); //将用户信息缓存	
+      uni.setStorageSync('token', res.access_token); //将用户信息缓存
     },
     // 注销
     logout: function logout(state) {
@@ -1695,13 +1743,10 @@ new _vuex.default.Store({
         } });
 
 
-
-      if (!state.SocketTask) {
-        console.log("未打开SocketTask");
-        return;
-      };
-
-
+      // 发送心跳
+      // setInterval(() =>{
+      // 	ChatServer.sendKeepHeartMsg();
+      // },1000)
 
       // 监听开启
       state.SocketTask.onOpen(function () {
@@ -1710,12 +1755,9 @@ new _vuex.default.Store({
         state.isConnect = true;
       });
 
-      console.log("AAAAAAAAAAAAAAAAAAAAAAAAA:::" + state.isConnect);
-
-
       // 监听关闭
-      state.SocketTask.onClose(function () {
-        console.log('连接已关闭');
+      state.SocketTask.onClose(function (res) {
+        console.log('连接已关闭' + JSON.stringify(res));
         state.isConnect = false;
         state.SocketTask = false;
         state.IsOnline = false;
@@ -1724,11 +1766,12 @@ new _vuex.default.Store({
       });
 
       // 监听错误
-      state.SocketTask.onError(function () {
-        console.log('连接错误');
+      state.SocketTask.onError(function (res) {
+        console.log('连接错误' + JSON.stringify(res));
         state.isConnect = false;
         state.SocketTask = false;
         state.IsOnline = false;
+        //dispatch('openSocket');
       });
 
       // 监听接收信息
@@ -1737,15 +1780,15 @@ new _vuex.default.Store({
         // 字符串转json
         var res = JSON.parse(e.data);
         // 绑定返回结果
-        if (res.type == 'bind') {
-          // 用户绑定
-          return dispatch('userBind', res.data);
-        }
+        // if (res.type == 'bind'){
+        // 	// 用户绑定
+        // 	return dispatch('userBind',res.data)
+        // }
         // 处理接收信息
         if (res.type !== 'text') return;
         /*
                                          {
-                                         	to_id:1,      // 接收人 
+                                         	to_id:1,      // 接收人
                                          	from_id:12,	  // 发送人id
                                          	from_username:"某某",  // 发送人昵称
                                          	from_userpic:"http://pic136.nipic.com/file/20170725/10673188_152559977000_2.jpg",
@@ -1763,15 +1806,18 @@ new _vuex.default.Store({
     // 2- 处理接收消息
     handleChatMessage: function handleChatMessage(_ref2, data) {var state = _ref2.state,dispatch = _ref2.dispatch;
       console.log('处理接收消息', data);
-      // 全局通知接口
-      uni.$emit('UserChat', data);
-      // 存储到chatdetail
-      dispatch('updateChatDetailToUser', {
-        data: data,
-        send: false });
 
+
+      // 全局通知接口
+      //uni.$emit('UserChat',data);
+
+      // 存储到chatdetail
+      // dispatch('updateChatDetailToUser',{
+      // 	data,
+      // 	send:false
+      // })
       // 更新会话列表
-      dispatch('updateChatList', data);
+      //dispatch('updateChatList',data)
     } },
 
 
@@ -2742,9 +2788,9 @@ var index_esm = {
 /***/ }),
 
 /***/ 15:
-/*!********************************************************************************!*\
-  !*** /Users/mac/Documents/code/burukeyou-web/burukeyou-mobile/utils/config.js ***!
-  \********************************************************************************/
+/*!************************************************************************!*\
+  !*** /Users/mac/Documents/code/burukeyou-mobile-local/utils/config.js ***!
+  \************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2756,16 +2802,17 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
   URL: "http://localhost:8090/api/v1", // Zuul服务网关
 
   // websocket地址
-  //WsUrl: "wss://127.0.0.1:8088/connect"
-  //WsUrl: "ws://localhost:8088/connect"
-  WsUrl: "ws://localhost:9999" };exports.default = _default;
+  WsUrl: "wss://127.0.0.1:8088/connect"
+  //WsUrl: "ws://localhost:8081/connect"
+  //WsUrl: "ws://localhost:9999"  // nginx
+};exports.default = _default;
 
 /***/ }),
 
 /***/ 16:
-/*!*****************************************************************************************!*\
-  !*** /Users/mac/Documents/code/burukeyou-web/burukeyou-mobile/utils/chat/ChatEntity.js ***!
-  \*****************************************************************************************/
+/*!*********************************************************************************!*\
+  !*** /Users/mac/Documents/code/burukeyou-mobile-local/utils/chat/ChatEntity.js ***!
+  \*********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2776,10 +2823,10 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.Message = 
                                                                                                                                                                                                                                                                                                                                                          * 	 常量
                                                                                                                                                                                                                                                                                                                                                          */
 var ChatConstant = {
-  CONNECT: 1, // 第一次(或重连)初始化连接
-  CHAT: 2, // 聊天消息
+  CONNECT: 0, // 第一次(或重连)初始化连接
+  CHAT: 1, // 聊天消息
   SIGNED: 3, // 消息签收
-  KEEPALIVE: 4, // 客户端保持心跳
+  KEEPALIVE: 2, // 客户端保持心跳
   PULL_FRIEND: 5 //"重新拉去好友请求"
 };
 
@@ -2802,7 +2849,7 @@ exports.ChatConstant = ChatConstant;function Message(type, sendId, sendNickName,
 // 通讯携带消息的数据包
 function DataContent(act, message) {
   this.action = act;
-  this.message = message;
+  this.chatMessage = message;
   this.time = new Date().getTime(); // 每条消息的时间戳
 }
 
@@ -2814,6 +2861,18 @@ var ChatMethod = {
     var toUser = _index.default.state.loginUser;
     var message = new Message("text", user.id, user.nickname, user.avatar, toUser.id, msg, null);
     return new DataContent(ChatConstant.CHAT, message);
+  },
+
+  //
+  buildConnectMessage: function buildConnectMessage() {
+    var user = _index.default.state.loginUser;
+    var toUser = _index.default.state.loginUser;
+    var message = new Message("text", user.id, user.nickname, user.avatar, toUser.id, "", null);
+    return new DataContent(ChatConstant.CONNECT, message);
+  },
+
+  buildKeepHeartMessage: function buildKeepHeartMessage() {
+    return new DataContent(ChatConstant.KEEPALIVE, null);
   } };exports.ChatMethod = ChatMethod;
 
 /***/ }),
@@ -2947,10 +3006,10 @@ function normalizeComponent (
 
 /***/ }),
 
-/***/ 191:
-/*!******************************************************************************!*\
-  !*** /Users/mac/Documents/code/burukeyou-web/burukeyou-mobile/utils/Time.js ***!
-  \******************************************************************************/
+/***/ 194:
+/*!**********************************************************************!*\
+  !*** /Users/mac/Documents/code/burukeyou-mobile-local/utils/Time.js ***!
+  \**********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9092,9 +9151,9 @@ internalMixin(Vue);
 /***/ }),
 
 /***/ 20:
-/*!********************************************************************************!*\
-  !*** /Users/mac/Documents/code/burukeyou-web/burukeyou-mobile/utils/Global.js ***!
-  \********************************************************************************/
+/*!************************************************************************!*\
+  !*** /Users/mac/Documents/code/burukeyou-mobile-local/utils/Global.js ***!
+  \************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9141,9 +9200,9 @@ internalMixin(Vue);
 /***/ }),
 
 /***/ 21:
-/*!*****************************************************************************!*\
-  !*** /Users/mac/Documents/code/burukeyou-web/burukeyou-mobile/api/index.js ***!
-  \*****************************************************************************/
+/*!*********************************************************************!*\
+  !*** /Users/mac/Documents/code/burukeyou-mobile-local/api/index.js ***!
+  \*********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9158,7 +9217,10 @@ var _column = _interopRequireDefault(__webpack_require__(/*! ./column */ 29));
 var _boiling = _interopRequireDefault(__webpack_require__(/*! ./boiling */ 30));
 var _favorities = _interopRequireDefault(__webpack_require__(/*! ./favorities */ 31));
 var _comment = _interopRequireDefault(__webpack_require__(/*! ./comment */ 32));
-var _friend = _interopRequireDefault(__webpack_require__(/*! ./friend */ 33));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var _default =
+var _friend = _interopRequireDefault(__webpack_require__(/*! ./friend */ 33));
+var _search = _interopRequireDefault(__webpack_require__(/*! ./search */ 34));
+var _notification = _interopRequireDefault(__webpack_require__(/*! ./notification */ 35));
+var _im = _interopRequireDefault(__webpack_require__(/*! ./im */ 36));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var _default =
 
 
 {
@@ -9172,14 +9234,17 @@ var _friend = _interopRequireDefault(__webpack_require__(/*! ./friend */ 33));fu
   boiling: _boiling.default,
   favorities: _favorities.default,
   comment: _comment.default,
-  friend: _friend.default };exports.default = _default;
+  friend: _friend.default,
+  search: _search.default,
+  notification: _notification.default,
+  IM: _im.default };exports.default = _default;
 
 /***/ }),
 
 /***/ 22:
-/*!*******************************************************************************!*\
-  !*** /Users/mac/Documents/code/burukeyou-web/burukeyou-mobile/api/article.js ***!
-  \*******************************************************************************/
+/*!***********************************************************************!*\
+  !*** /Users/mac/Documents/code/burukeyou-mobile-local/api/article.js ***!
+  \***********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9242,9 +9307,9 @@ article;exports.default = _default;
 /***/ }),
 
 /***/ 23:
-/*!*********************************************************************************!*\
-  !*** /Users/mac/Documents/code/burukeyou-web/burukeyou-mobile/utils/request.js ***!
-  \*********************************************************************************/
+/*!*************************************************************************!*\
+  !*** /Users/mac/Documents/code/burukeyou-mobile-local/utils/request.js ***!
+  \*************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9296,9 +9361,9 @@ function request() {var options = arguments.length > 0 && arguments[0] !== undef
 /***/ }),
 
 /***/ 24:
-/*!*******************************************************************************!*\
-  !*** /Users/mac/Documents/code/burukeyou-web/burukeyou-mobile/api/channel.js ***!
-  \*******************************************************************************/
+/*!***********************************************************************!*\
+  !*** /Users/mac/Documents/code/burukeyou-mobile-local/api/channel.js ***!
+  \***********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9324,9 +9389,9 @@ channel;exports.default = _default;
 /***/ }),
 
 /***/ 25:
-/*!*****************************************************************************!*\
-  !*** /Users/mac/Documents/code/burukeyou-web/burukeyou-mobile/api/topic.js ***!
-  \*****************************************************************************/
+/*!*********************************************************************!*\
+  !*** /Users/mac/Documents/code/burukeyou-mobile-local/api/topic.js ***!
+  \*********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9382,9 +9447,9 @@ topic;exports.default = _default;
 /***/ }),
 
 /***/ 26:
-/*!*****************************************************************************!*\
-  !*** /Users/mac/Documents/code/burukeyou-web/burukeyou-mobile/api/label.js ***!
-  \*****************************************************************************/
+/*!*********************************************************************!*\
+  !*** /Users/mac/Documents/code/burukeyou-mobile-local/api/label.js ***!
+  \*********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9429,9 +9494,9 @@ label;exports.default = _default;
 /***/ }),
 
 /***/ 27:
-/*!****************************************************************************!*\
-  !*** /Users/mac/Documents/code/burukeyou-web/burukeyou-mobile/api/user.js ***!
-  \****************************************************************************/
+/*!********************************************************************!*\
+  !*** /Users/mac/Documents/code/burukeyou-mobile-local/api/user.js ***!
+  \********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9484,9 +9549,9 @@ user;exports.default = _default;
 /***/ }),
 
 /***/ 28:
-/*!*****************************************************************************!*\
-  !*** /Users/mac/Documents/code/burukeyou-web/burukeyou-mobile/api/focus.js ***!
-  \*****************************************************************************/
+/*!*********************************************************************!*\
+  !*** /Users/mac/Documents/code/burukeyou-mobile-local/api/focus.js ***!
+  \*********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9531,9 +9596,9 @@ focus;exports.default = _default;
 /***/ }),
 
 /***/ 29:
-/*!******************************************************************************!*\
-  !*** /Users/mac/Documents/code/burukeyou-web/burukeyou-mobile/api/column.js ***!
-  \******************************************************************************/
+/*!**********************************************************************!*\
+  !*** /Users/mac/Documents/code/burukeyou-mobile-local/api/column.js ***!
+  \**********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9623,9 +9688,9 @@ module.exports = g;
 /***/ }),
 
 /***/ 30:
-/*!*******************************************************************************!*\
-  !*** /Users/mac/Documents/code/burukeyou-web/burukeyou-mobile/api/boiling.js ***!
-  \*******************************************************************************/
+/*!***********************************************************************!*\
+  !*** /Users/mac/Documents/code/burukeyou-mobile-local/api/boiling.js ***!
+  \***********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9667,9 +9732,9 @@ boiling;exports.default = _default;
 /***/ }),
 
 /***/ 31:
-/*!**********************************************************************************!*\
-  !*** /Users/mac/Documents/code/burukeyou-web/burukeyou-mobile/api/favorities.js ***!
-  \**********************************************************************************/
+/*!**************************************************************************!*\
+  !*** /Users/mac/Documents/code/burukeyou-mobile-local/api/favorities.js ***!
+  \**************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9770,9 +9835,9 @@ favorities;exports.default = _default;
 /***/ }),
 
 /***/ 32:
-/*!*******************************************************************************!*\
-  !*** /Users/mac/Documents/code/burukeyou-web/burukeyou-mobile/api/comment.js ***!
-  \*******************************************************************************/
+/*!***********************************************************************!*\
+  !*** /Users/mac/Documents/code/burukeyou-mobile-local/api/comment.js ***!
+  \***********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9855,9 +9920,9 @@ comment;exports.default = _default;
 /***/ }),
 
 /***/ 33:
-/*!******************************************************************************!*\
-  !*** /Users/mac/Documents/code/burukeyou-web/burukeyou-mobile/api/friend.js ***!
-  \******************************************************************************/
+/*!**********************************************************************!*\
+  !*** /Users/mac/Documents/code/burukeyou-mobile-local/api/friend.js ***!
+  \**********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9934,10 +9999,67 @@ friend;exports.default = _default;
 
 /***/ }),
 
-/***/ 351:
-/*!**********************************************************************************************!*\
-  !*** /Users/mac/Documents/code/burukeyou-web/burukeyou-mobile/components/uni-icons/icons.js ***!
-  \**********************************************************************************************/
+/***/ 34:
+/*!**********************************************************************!*\
+  !*** /Users/mac/Documents/code/burukeyou-mobile-local/api/search.js ***!
+  \**********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _request = __webpack_require__(/*! @/utils/request.js */ 23);
+
+var baseUrl = "/search";
+
+var search = {
+  search: function search(args) {
+    return (0, _request.request)({
+      url: baseUrl + "/search",
+      data: args });
+
+  } };var _default =
+
+
+
+
+
+search;exports.default = _default;
+
+/***/ }),
+
+/***/ 35:
+/*!****************************************************************************!*\
+  !*** /Users/mac/Documents/code/burukeyou-mobile-local/api/notification.js ***!
+  \****************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _request = __webpack_require__(/*! @/utils/request.js */ 23);
+
+var baeUrl = "/notification";
+
+var notification = {
+  /**
+                      * 	 根据通知类型获取通知
+                      */
+  getPageByType: function getPageByType(args) {
+    return (0, _request.request)({
+      url: baeUrl + "/notification/page",
+      data: args });
+
+  } };var _default =
+
+
+
+notification;exports.default = _default;
+
+/***/ }),
+
+/***/ 354:
+/*!**************************************************************************************!*\
+  !*** /Users/mac/Documents/code/burukeyou-mobile-local/components/uni-icons/icons.js ***!
+  \**************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10076,10 +10198,41 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ 380:
-/*!*******************************************************************************!*\
-  !*** /Users/mac/Documents/code/burukeyou-web/burukeyou-mobile/common/time.js ***!
-  \*******************************************************************************/
+/***/ 36:
+/*!******************************************************************!*\
+  !*** /Users/mac/Documents/code/burukeyou-mobile-local/api/im.js ***!
+  \******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _request = __webpack_require__(/*! @/utils/request.js */ 23);
+
+var baseUrl = "/";
+
+var IM = {
+  /**
+            * 	发送消息
+            * @param {Object} args	
+            */
+  sendMsg: function sendMsg(args) {
+    return (0, _request.request)({
+      url: baseUrl + "/sendMsg",
+      method: "POST",
+      data: args });
+
+  } };var _default =
+
+
+
+IM;exports.default = _default;
+
+/***/ }),
+
+/***/ 383:
+/*!***********************************************************************!*\
+  !*** /Users/mac/Documents/code/burukeyou-mobile-local/common/time.js ***!
+  \***********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10175,10 +10328,10 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ 391:
-/*!**********************************************************************************************************!*\
-  !*** /Users/mac/Documents/code/burukeyou-web/burukeyou-mobile/components/uni-swipe-action-item/mpwxs.js ***!
-  \**********************************************************************************************************/
+/***/ 394:
+/*!**************************************************************************************************!*\
+  !*** /Users/mac/Documents/code/burukeyou-mobile-local/components/uni-swipe-action-item/mpwxs.js ***!
+  \**************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10281,9 +10434,9 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 /***/ }),
 
 /***/ 4:
-/*!***************************************************************************!*\
-  !*** /Users/mac/Documents/code/burukeyou-web/burukeyou-mobile/pages.json ***!
-  \***************************************************************************/
+/*!*******************************************************************!*\
+  !*** /Users/mac/Documents/code/burukeyou-mobile-local/pages.json ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -11190,9 +11343,9 @@ module.exports = {"_from":"@dcloudio/uni-stat@next","_id":"@dcloudio/uni-stat@2.
 /***/ }),
 
 /***/ 7:
-/*!********************************************************************************************!*\
-  !*** /Users/mac/Documents/code/burukeyou-web/burukeyou-mobile/pages.json?{"type":"style"} ***!
-  \********************************************************************************************/
+/*!************************************************************************************!*\
+  !*** /Users/mac/Documents/code/burukeyou-mobile-local/pages.json?{"type":"style"} ***!
+  \************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11202,9 +11355,9 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 /***/ }),
 
 /***/ 8:
-/*!*******************************************************************************************!*\
-  !*** /Users/mac/Documents/code/burukeyou-web/burukeyou-mobile/pages.json?{"type":"stat"} ***!
-  \*******************************************************************************************/
+/*!***********************************************************************************!*\
+  !*** /Users/mac/Documents/code/burukeyou-mobile-local/pages.json?{"type":"stat"} ***!
+  \***********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 

@@ -2,20 +2,21 @@
 	<!-- 好友列表 -->
 	<view>
 		<view v-for="(value,key,index) in list" :key="index" style="display: flex;flex-direction: column;align-items: flex-start;padding: 20rpx;">
-			<view style="border-bottom: 3rpx solid #E0E0E0;width: 100%;">{{key}}</view>
-			
+			<view style="border-bottom: 3rpx solid #E0E0E0;width: 100%;">{{key}}</view>	
+			<!-- ? 为什么要json后才能传 -->	
 			<uni-swipe-action style="width: 100%;">
-				<uni-swipe-action-item  :options="options" :element="e" :key="i" v-for="(e,i) in value" @click="bindClick" :auto-close="true">
-					<view @click="toChatDialog(e)"  style="display: flex;align-items: center;justify-content: flex-start;margin: 5rpx 0rpx;">
+				<uni-swipe-action-item  :options="options" :element="e" :key="i" v-for="(item,i) in value" @click="bindClick" :auto-close="true">
+					<view @click="toChat(JSON.stringify(item))"  style="display: flex;align-items: center;justify-content: flex-start;margin: 5rpx 0rpx;">
 						<view>	
-							<image :src="e.friendAvatar" style="height: 80rpx;width: 80rpx;"class="rounded-circle"></image>
+							<image :src="item.friendAvatar" style="height: 80rpx;width: 80rpx;"class="rounded-circle"></image>
 						</view>
-						<view style="margin-left: 20rpx;">
-							{{e.friendNickname}}
+						<view  style="margin-left: 20rpx;flex:1">
+							{{item.friendNickname}}
 						</view>
 					</view>
 				</uni-swipe-action-item>
 			</uni-swipe-action>
+			
 		</view>
 		
 		
@@ -40,12 +41,15 @@
 			}
 		},
 		methods: {
-			toChatDialog: (e) => {
-				console.log("去聊天对话框:"+JSON.stringify(e));
+			toChat(item){
+				console.log(item);
+				let e = JSON.parse(item)
+				console.log(e.friendId);
 				uni.navigateTo({
-				    url: '/pages/message/chat/chat?friendId='+e.friendId+'&friendNickname='+e.friendNickname+'&friendAvatar='+e.friendAvatar+''
+				    url: '/pages/message/chat/chat?friendId='+e.friendId+'&friendNickname='+e.friendNickname+'&friendAvatar='+e.friendAvatar
 				});
 			},
+		
 			// 获取好友列表
 			getFriendList(){
 				this.$http.friend.getFriendList().then(res => {
@@ -71,7 +75,15 @@
 						 });
 					}
 				}).catch(err => console.log(err));
-			}
+			},
+			// 打开path页面
+			open(path){
+				let p = `/pages/${path}`;
+				console.log(p)
+				uni.navigateTo({
+					url: p
+				});
+			},
 			
 		},
 		components: {uniIndexedList,uniSwipeAction,uniSwipeActionItem},

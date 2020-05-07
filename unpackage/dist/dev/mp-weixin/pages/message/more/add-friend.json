@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "添加好友",
+  "usingComponents": {
+    "uni-search-bar": "/components/uni-search-bar/uni-search-bar"
+  }
+}

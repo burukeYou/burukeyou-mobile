@@ -1,5 +1,5 @@
 
-.uni-badge.data-v-044989b8 {
+.uni-badge.data-v-d63120c2 {
 	
 	display: -webkit-box;
 	display: -webkit-flex;
@@ -23,51 +23,51 @@
 	font-size: 12px;
 	padding: 0px 6px;
 }
-.uni-badge--inverted.data-v-044989b8 {
+.uni-badge--inverted.data-v-d63120c2 {
 	padding: 0 5px 0 0;
 	color: #f1f1f1;
 }
-.uni-badge--default.data-v-044989b8 {
+.uni-badge--default.data-v-d63120c2 {
 	color: #333;
 	background-color: #f1f1f1;
 }
-.uni-badge--default-inverted.data-v-044989b8 {
+.uni-badge--default-inverted.data-v-d63120c2 {
 	color: #999;
 	background-color: transparent;
 }
-.uni-badge--primary.data-v-044989b8 {
+.uni-badge--primary.data-v-d63120c2 {
 	color: #fff;
 	background-color: #007aff;
 }
-.uni-badge--primary-inverted.data-v-044989b8 {
+.uni-badge--primary-inverted.data-v-d63120c2 {
 	color: #007aff;
 	background-color: transparent;
 }
-.uni-badge--success.data-v-044989b8 {
+.uni-badge--success.data-v-d63120c2 {
 	color: #fff;
 	background-color: #4cd964;
 }
-.uni-badge--success-inverted.data-v-044989b8 {
+.uni-badge--success-inverted.data-v-d63120c2 {
 	color: #4cd964;
 	background-color: transparent;
 }
-.uni-badge--warning.data-v-044989b8 {
+.uni-badge--warning.data-v-d63120c2 {
 	color: #fff;
 	background-color: #f0ad4e;
 }
-.uni-badge--warning-inverted.data-v-044989b8 {
+.uni-badge--warning-inverted.data-v-d63120c2 {
 	color: #f0ad4e;
 	background-color: transparent;
 }
-.uni-badge--error.data-v-044989b8 {
+.uni-badge--error.data-v-d63120c2 {
 	color: #fff;
 	background-color: #dd524d;
 }
-.uni-badge--error-inverted.data-v-044989b8 {
+.uni-badge--error-inverted.data-v-d63120c2 {
 	color: #dd524d;
 	background-color: transparent;
 }
-.uni-badge--small.data-v-044989b8 {
+.uni-badge--small.data-v-d63120c2 {
 	-webkit-transform: scale(0.8);
 	        transform: scale(0.8);
 	-webkit-transform-origin: center center;

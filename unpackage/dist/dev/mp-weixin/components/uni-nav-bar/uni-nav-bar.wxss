@@ -1,19 +1,19 @@
 
-.uni-nav-bar-text.data-v-0c705af0 {
+.uni-nav-bar-text.data-v-2107d9eb {
 		
 		
 		font-size: 32rpx;
 		
 }
-.uni-nav-bar-right-text.data-v-0c705af0 {
+.uni-nav-bar-right-text.data-v-2107d9eb {
 		font-size: 28rpx;
 }
-.uni-navbar__content.data-v-0c705af0 {
+.uni-navbar__content.data-v-2107d9eb {
 		position: relative;
 		background-color: #ffffff;
 		overflow: hidden;
 }
-.uni-navbar__content_view.data-v-0c705af0 {
+.uni-navbar__content_view.data-v-2107d9eb {
 		
 		display: -webkit-box;
 		display: -webkit-flex;
@@ -29,7 +29,7 @@
 		/* background-color: #FFFFFF;
  */
 }
-.uni-navbar__header.data-v-0c705af0 {
+.uni-navbar__header.data-v-2107d9eb {
 		
 		display: -webkit-box;
 		display: -webkit-flex;
@@ -45,7 +45,7 @@
 		/* background-color: #ffffff;
  */
 }
-.uni-navbar__header-btns.data-v-0c705af0 {
+.uni-navbar__header-btns.data-v-2107d9eb {
 		
 		display: -webkit-box;
 		display: -webkit-flex;
@@ -62,7 +62,7 @@
 		-webkit-align-items: center;
 		        align-items: center;
 }
-.uni-navbar__header-btns-left.data-v-0c705af0 {
+.uni-navbar__header-btns-left.data-v-2107d9eb {
 		
 		display: -webkit-box;
 		display: -webkit-flex;
@@ -73,7 +73,7 @@
 		-webkit-justify-content: flex-start;
 		        justify-content: flex-start;
 }
-.uni-navbar__header-btns-right.data-v-0c705af0 {
+.uni-navbar__header-btns-right.data-v-2107d9eb {
 		
 		display: -webkit-box;
 		display: -webkit-flex;
@@ -85,12 +85,12 @@
 		-webkit-justify-content: flex-end;
 		        justify-content: flex-end;
 }
-.uni-navbar__header-container.data-v-0c705af0 {
+.uni-navbar__header-container.data-v-2107d9eb {
 		-webkit-box-flex: 1;
 		-webkit-flex: 1;
 		        flex: 1;
 }
-.uni-navbar__header-container-inner.data-v-0c705af0 {
+.uni-navbar__header-container-inner.data-v-2107d9eb {
 		
 		display: -webkit-box;
 		display: -webkit-flex;
@@ -107,19 +107,19 @@
 		        justify-content: center;
 		font-size: 28rpx;
 }
-.uni-navbar__placeholder-view.data-v-0c705af0 {
+.uni-navbar__placeholder-view.data-v-2107d9eb {
 		height: 44px;
 }
-.uni-navbar--fixed.data-v-0c705af0 {
+.uni-navbar--fixed.data-v-2107d9eb {
 		position: fixed;
 		z-index: 998;
 }
-.uni-navbar--shadow.data-v-0c705af0 {
+.uni-navbar--shadow.data-v-2107d9eb {
 		
 		box-shadow: 0 1px 6px #ccc;
 		
 }
-.uni-navbar--border.data-v-0c705af0 {
+.uni-navbar--border.data-v-2107d9eb {
 		border-bottom-width: 1rpx;
 		border-bottom-style: solid;
 		border-bottom-color: #e5e5e5;

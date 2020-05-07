@@ -9,7 +9,7 @@
 			this.getNetWorkInfo();
 			
 			// 连接聊天服务器
-			//ChatServer.connectChatSever();  //this.$store.dispatch('openSocket');	
+			ChatServer.connectChatSever();  //this.$store.dispatch('openSocket');	
 		},
 		// 关闭和开启时
 		onShow: function() {

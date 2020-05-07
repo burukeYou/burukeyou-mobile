@@ -4,21 +4,23 @@ import Vuex from 'vuex'
 Vue.use(Vuex);
 
 import $config from "@/utils/config.js"
+import ChatServer from "@/utils/chat/ChatServer.js"
+
 
 
 export default new Vuex.Store({
 	// =======================state========================================
-    state:{
+	state:{
 		// user info
 		loginStatus: false,
-		loginUser:{}, 
+		loginUser:{},
 		token:"",
-		
+
 		// socket
 		isConnect: false ,
 		SocketTask: false,   // new WebSocket后返回的对象
 		isOnline: false,    // 是否上线
-		
+
 		// 当前聊天对象（进入聊天页面获取）
 		ToUser:{
 			id:999, // 通过判断user_id是否为0，当前用户处在什么场景下
@@ -26,9 +28,11 @@ export default new Vuex.Store({
 			userAvatar:"",
 			status: ""      // 用户状态( 在线,离线,)
 		},
-		
+
 		// 聊天会话列表
-		chatList:[]
+		chatList:[
+			//{userId:'2',avatar:"../../../static/logo.png",content:"2",type:"text",createTime:1585144449},
+		]
 	},
 	// =======================mutations============this.$store.commit('login',user);============================
 	mutations:{
@@ -38,7 +42,7 @@ export default new Vuex.Store({
 			state.loginUser = res.user
 			state.token = res.access_token
 			uni.setStorageSync('user', JSON.stringify(res.user)); //将用户信息缓存
-			uni.setStorageSync('token',res.access_token); //将用户信息缓存	
+			uni.setStorageSync('token',res.access_token); //将用户信息缓存
 		},
 		// 注销
 		logout:(state) => {
@@ -54,66 +58,61 @@ export default new Vuex.Store({
 		openSocket({ state,dispatch }){
 			// 防止重复连接
 			if(state.isConnect) return
-			
+
 			// 连接
 			state.SocketTask = uni.connectSocket({
-			    url: $config.WsUrl,
-			    complete: ()=> {
+				url: $config.WsUrl,
+				complete: ()=> {
 					console.log("ws连接成功");
 				}
 			});
-			
-			
-			if (!state.SocketTask){
-				console.log("未打开SocketTask");
-				return;
-			} ;
-			
-			
-			
+
+			// 发送心跳
+			// setInterval(() =>{
+			// 	ChatServer.sendKeepHeartMsg();
+			// },1000)
+
 			// 监听开启
 			state.SocketTask.onOpen(()=>{
 				// 将连接状态设为已连接
 				console.log('将连接状态设为已连接');
 				state.isConnect = true
 			})
-			
-			console.log("AAAAAAAAAAAAAAAAAAAAAAAAA:::"+state.isConnect);
-			
-			
+
 			// 监听关闭
-			state.SocketTask.onClose(()=>{
-				console.log('连接已关闭');
+			state.SocketTask.onClose((res)=>{
+				console.log('连接已关闭'+JSON.stringify(res));
 				state.isConnect  = false;
 				state.SocketTask = false;
 				state.IsOnline = false
 				// 清空会话列表
 				// 更新未读数提示
 			})
-			
+
 			// 监听错误
-			state.SocketTask.onError(()=>{
-				console.log('连接错误');
+			state.SocketTask.onError((res)=>{
+				console.log('连接错误'+JSON.stringify(res));
 				state.isConnect = false;
 				state.SocketTask = false;
 				state.IsOnline = false
+				//dispatch('openSocket');
 			})
-			
+
 			// 监听接收信息
 			state.SocketTask.onMessage((e)=>{
 				console.log('接收消息',e);
 				// 字符串转json
 				let res = JSON.parse(e.data);
 				// 绑定返回结果
-				if (res.type == 'bind'){
-					// 用户绑定
-					return dispatch('userBind',res.data)
-				}
+				// if (res.type == 'bind'){
+				// 	// 用户绑定
+				// 	return dispatch('userBind',res.data)
+				// }
 				// 处理接收信息
 				if (res.type !== 'text') return;
 				/*
 				{
-					to_id:1,      // 接收人 
+					to_id:1,      // 接收人
 					from_id:12,	  // 发送人id
 					from_username:"某某",  // 发送人昵称
 					from_userpic:"http://pic136.nipic.com/file/20170725/10673188_152559977000_2.jpg",
@@ -122,29 +121,32 @@ export default new Vuex.Store({
 					time:151235451   // 接收到的时间
 				}
 				*/
-			   // 处理接收消息
-			   dispatch('handleChatMessage',res)
+				// 处理接收消息
+				dispatch('handleChatMessage',res)
 			})
 		},
-			
-			
+
+
 		// 2- 处理接收消息
 		handleChatMessage({state,dispatch},data){
 			console.log('处理接收消息',data);
+
+
 			// 全局通知接口
-			uni.$emit('UserChat',data);
+			//uni.$emit('UserChat',data);
+
 			// 存储到chatdetail
-			dispatch('updateChatDetailToUser',{
-				data,
-				send:false
-			})
+			// dispatch('updateChatDetailToUser',{
+			// 	data,
+			// 	send:false
+			// })
 			// 更新会话列表
-			dispatch('updateChatList',data)
-		},	
-		
+			//dispatch('updateChatList',data)
+		},
+
 	},
 	// =======================getters========================================
-	
+
 	getters:{
 		// 总未读数
 		totalNoread(state){
@@ -154,5 +156,5 @@ export default new Vuex.Store({
 			})
 			return total
 		}
-	}	
+	}
 });

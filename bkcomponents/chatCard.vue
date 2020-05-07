@@ -1,4 +1,5 @@
 <template>
+	<!-- 会话列表 -->
 	<view>
 		<uni-swipe-action >
 			<uni-swipe-action-item :options="options"  @click="bindClick" :auto-close="true">

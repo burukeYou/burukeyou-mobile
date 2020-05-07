@@ -9,6 +9,9 @@ import boiling from "./boiling"
 import favorities from "./favorities"
 import comment from "./comment"
 import friend from "./friend"
+import search from "./search"
+import notification from "./notification"
+import IM from "./im"
 
 
 export default {
@@ -22,5 +25,8 @@ export default {
 	boiling,
 	favorities,
 	comment,
-	friend
+	friend,
+	search,
+	notification,
+	IM
 }

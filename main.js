@@ -30,6 +30,7 @@ Vue.prototype.$store = store;
 Vue.prototype.$auth = (callback) =>{
 	// 
 	if(!store.state.loginStatus){
+		console.log("当前loginStatus为false")
 		if(!$global.restoreUserState()){
 			uni.navigateTo({
 				url:"/pages/my/login/login"

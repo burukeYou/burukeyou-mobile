@@ -49,7 +49,8 @@
 		},
 		computed:{
 			isSelf(){
-				return this.msgItem.userId === '1';
+				//return this.msgItem.userId === this.$store.state.loginUser.id;
+				return this.msgItem.userId === this.$store.state.loginUser.id;
 			},
 			convertTime(){
 				return TimeUtil.getChatTime(this.msgItem.createTime,this.preTime);

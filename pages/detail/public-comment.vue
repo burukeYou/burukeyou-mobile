@@ -25,7 +25,9 @@
 				comment:{
 					parentId:"",
 					parentType:"",
-					content:""
+					content:"",
+					parentUserId:"",
+					parentTitle:""
 				},
 				
 				reply:{
@@ -52,25 +54,28 @@
 				this.reply.respUserNickname = args.respUserNickname;
 				this.reply.commentId = args.commentId;
 			}else{
-				console.log("SBSBBSBSB");
-				isComment: true
+				// console.log("SBSBBSBSB");
+				// isComment: true
 				this.comment.parentType = args.parentType;
 				this.comment.parentId = args.parentId;
+				this.comment.parentUserId = args.parentUserId;
+				this.comment.parentTitle = args.parentTitle;
 			}
 		},
 		methods:{
 			addComment(){
-				console.log(JSON.stringify(this.comment));
-				this.$http.comment.publishComment(this.comment).then(res => {
-						if(res.code === "200"){
-							uni.showToast({
-								title:"评论成功",
-							})
-							uni.navigateBack({
-								delta:-1
-							})
-						}
-				}).catch(err => console.log(err));
+				this.$auth(() => {
+					this.$http.comment.publishComment(this.comment).then(res => {
+							if(res.code === "200"){
+								uni.showToast({
+									title:"评论成功",
+								})
+								uni.navigateBack({
+									delta:-1
+								})
+							}
+					}).catch(err => console.log(err));
+				})		
 			},
 			addReply(){
 				this.$http.comment.publicReply(this.reply).then(res => {

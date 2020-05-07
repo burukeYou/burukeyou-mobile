@@ -1,18 +1,18 @@
 
-.uni-swipe.data-v-6fd08ccc {
+.uni-swipe.data-v-14947f72 {
 	overflow: hidden;
 }
-.uni-swipe-box.data-v-6fd08ccc {
+.uni-swipe-box.data-v-14947f72 {
 	position: relative;
 	width: 100%;
 }
-.uni-swipe_content.data-v-6fd08ccc {
+.uni-swipe_content.data-v-14947f72 {
 	-webkit-box-flex: 1;
 	-webkit-flex: 1;
 	        flex: 1;
 	position: relative;
 }
-.uni-swipe_move-box.data-v-6fd08ccc {
+.uni-swipe_move-box.data-v-14947f72 {
 	
 	display: -webkit-box;
 	display: -webkit-flex;
@@ -24,7 +24,7 @@
 	-webkit-flex-direction: row;
 	        flex-direction: row;
 }
-.uni-swipe_box.data-v-6fd08ccc {
+.uni-swipe_box.data-v-14947f72 {
 	
 	display: -webkit-box;
 	display: -webkit-flex;
@@ -41,7 +41,7 @@
 	font-size: 14px;
 	background-color: #fff;
 }
-.uni-swipe_button-group.data-v-6fd08ccc {
+.uni-swipe_button-group.data-v-14947f72 {
 	
 	
 	display: -webkit-box;
@@ -55,7 +55,7 @@
 	-webkit-flex-direction: row;
 	        flex-direction: row;
 }
-.uni-swipe_button.data-v-6fd08ccc {
+.uni-swipe_button.data-v-14947f72 {
 	
 	
 	display: -webkit-box;
@@ -74,14 +74,14 @@
 	        align-items: center;
 	padding: 0 20px;
 }
-.uni-swipe_button-text.data-v-6fd08ccc {
+.uni-swipe_button-text.data-v-14947f72 {
 	
 	-webkit-flex-shrink: 0;
 	        flex-shrink: 0;
 	
 	font-size: 14px;
 }
-.ani.data-v-6fd08ccc {
+.ani.data-v-14947f72 {
 	-webkit-transition-property: -webkit-transform;
 	transition-property: -webkit-transform;
 	transition-property: transform;

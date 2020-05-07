@@ -1,5 +1,5 @@
 
-.uni-swiper__warp.data-v-3eee3214 {
+.uni-swiper__warp.data-v-16c5fdb1 {
 		
 		display: -webkit-box;
 		display: -webkit-flex;
@@ -15,7 +15,7 @@
 		position: relative;
 		overflow: hidden;
 }
-.uni-swiper__dots-box.data-v-3eee3214 {
+.uni-swiper__dots-box.data-v-16c5fdb1 {
 		position: absolute;
 		bottom: 10px;
 		left: 0;
@@ -39,7 +39,7 @@
 		-webkit-align-items: center;
 		        align-items: center;
 }
-.uni-swiper__dots-item.data-v-3eee3214 {
+.uni-swiper__dots-item.data-v-16c5fdb1 {
 		width: 8px;
 		border-radius: 100px;
 		margin-left: 6px;
@@ -47,19 +47,19 @@
 		/* transition: width 0.2s linear;  不要取消注释，不然会不能变色
  */
 }
-.uni-swiper__dots-item.data-v-3eee3214:first-child {
+.uni-swiper__dots-item.data-v-16c5fdb1:first-child {
 		margin: 0;
 }
-.uni-swiper__dots-default.data-v-3eee3214 {
+.uni-swiper__dots-default.data-v-16c5fdb1 {
 		border-radius: 100px;
 }
-.uni-swiper__dots-long.data-v-3eee3214 {
+.uni-swiper__dots-long.data-v-16c5fdb1 {
 		border-radius: 50px;
 }
-.uni-swiper__dots-bar.data-v-3eee3214 {
+.uni-swiper__dots-bar.data-v-16c5fdb1 {
 		border-radius: 50px;
 }
-.uni-swiper__dots-nav.data-v-3eee3214 {
+.uni-swiper__dots-nav.data-v-16c5fdb1 {
 		bottom: 0px;
 		height: 40px;
 		
@@ -82,7 +82,7 @@
 		        align-items: center;
 		background-color: rgba(0, 0, 0, 0.2);
 }
-.uni-swiper__dots-nav-item.data-v-3eee3214 {
+.uni-swiper__dots-nav-item.data-v-16c5fdb1 {
 		/* overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap; */
@@ -90,7 +90,7 @@
 		color: #fff;
 		margin: 0 15px;
 }
-.uni-swiper__dots-indexes.data-v-3eee3214 {
+.uni-swiper__dots-indexes.data-v-16c5fdb1 {
 		
 		display: -webkit-box;
 		display: -webkit-flex;
@@ -105,7 +105,7 @@
 		-webkit-align-items: center;
 		        align-items: center;
 }
-.uni-swiper__dots-indexes-text.data-v-3eee3214 {
+.uni-swiper__dots-indexes-text.data-v-16c5fdb1 {
 		color: #fff;
 		font-size: 24rpx;
 }
