@@ -100,9 +100,18 @@ export default new Vuex.Store({
 
 			// 监听接收信息
 			state.SocketTask.onMessage((e)=>{
-				console.log('接收消息',e);
+				console.log('接收消息',JSON.stringify(e));
 				// 字符串转json
 				let res = JSON.parse(e.data);
+				let item = {
+					userId: res.chatMessage.sendId,
+					avatar: res.chatMessage.sendAvatar,
+					content: res.chatMessage.msg,
+					type: res.chatMessage.type,
+					createTime: new Date(),
+				}
+				state.chatList.push(item);
+				
 				// 绑定返回结果
 				// if (res.type == 'bind'){
 				// 	// 用户绑定

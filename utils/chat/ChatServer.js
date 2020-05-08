@@ -60,8 +60,9 @@ export let ChatServer =  {
 	},
 	
 	// 发送连接消息
-	sendConnectMsg(){
-		let data = ChatMethod.buildConnectMessage();
+	sendConnectMsg(toUserId){
+		let data = ChatMethod.buildConnectMessage(toUserId);
+		console.log("当前发送连接数据:"+JSON.stringify(data));
 		$store.state.SocketTask.send({
 			data: JSON.stringify(data),
 			success:() => {

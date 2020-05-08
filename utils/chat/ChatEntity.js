@@ -19,7 +19,7 @@ export let ChatConstant = {
 export function Message(type,sendId,sendNickName,sendAvatar,acceptId,msg,msgId){
 	this.type = type;   //   消息类型;  "text", “IMG”....
 	this.sendId = sendId;	
-	this.sendNickName = sendNickName;
+	this.sendNickname = sendNickName;
 	this.sendAvatar = sendAvatar;
 	
 	this.acceptId =  acceptId;
@@ -41,14 +41,15 @@ export let ChatMethod = {
 		let user = $store.state.loginUser;
 		let toUser = $store.state.loginUser;
 		let message =  new Message("text",user.id,user.nickname,user.avatar,toUser.id,msg,null);
+		console.log(JSON.stringify(message));
 		return new DataContent(ChatConstant.CHAT,message)
 	},
 	
 	//
-	buildConnectMessage: () => {
-		let user = $store.state.loginUser;
-		let toUser = $store.state.loginUser;
-		let message =  new Message("text",user.id,user.nickname,user.avatar,toUser.id,"",null);
+	buildConnectMessage: (toUserId) => {
+		let user = $store.state.loginUser;		
+		//let toUser = $store.state.loginUser;
+		let message =  new Message("text",user.id,user.nickname,user.avatar,toUserId,"",null);
 		return new DataContent(ChatConstant.CONNECT,message)
 	},
 	

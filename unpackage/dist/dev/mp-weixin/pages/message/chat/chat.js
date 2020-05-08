@@ -185,7 +185,9 @@ var _ChatServer = _interopRequireDefault(__webpack_require__(/*! @/utils/chat/Ch
     console.log("当前朋友id" + option.friendId + "/" + option.friendNickname + "/" + option.friendAvatar);
 
     // 连接IM服务器绑定用户和通道关系
-    _ChatServer.default.sendConnectMsg();
+    this.$auth(function () {
+      _ChatServer.default.sendConnectMsg(option.friendId);
+    });
   },
   onReady: function onReady() {
     this.pageToBootom();
@@ -203,7 +205,7 @@ var _ChatServer = _interopRequireDefault(__webpack_require__(/*! @/utils/chat/Ch
 
     },
     // http
-    sendMsgHttp: function sendMsgHttp() {
+    sendMsgHttp: function sendMsgHttp() {var _this2 = this;
       if (this.message === "") {
         uni.showToast({
           title: '消息不能为空',
@@ -222,9 +224,9 @@ var _ChatServer = _interopRequireDefault(__webpack_require__(/*! @/utils/chat/Ch
 
       this.$store.state.chatList.push(re);
 
-      //
-      this.$http.IM.sendMsg(this.friend.friendId, this.message).then(function (res) {
-
+      //this.friend.friendId
+      this.$http.IM.sendMsg({ receivedId: this.friend.friendId, message: this.message }).then(function (res) {
+        _this2.pageToBootom();
       }).catch(function (err) {
         console.log(err);
         uni.showToast({
@@ -232,6 +234,7 @@ var _ChatServer = _interopRequireDefault(__webpack_require__(/*! @/utils/chat/Ch
 
       });
       this.message = "";
+
     },
     // tcp
     sendMsg: function sendMsg() {

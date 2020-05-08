@@ -1,6 +1,6 @@
 import {request} from "@/utils/request.js"
 
-let baseUrl = "/"
+let baseUrl = "/msgPush"
 
 const IM = {
 	/**
@@ -11,7 +11,8 @@ const IM = {
 		return request({
 			url: baseUrl + "/sendMsg",
 			method: "POST",
-			data:args
+			data:args,
+			header: {'content-type': 'application/x-www-form-urlencoded'}
 		});
 	}
 	

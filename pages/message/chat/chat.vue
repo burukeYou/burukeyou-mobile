@@ -14,10 +14,10 @@
 		</scroll-view>
 		
 		<!-- 3 底部操作 -->
-		<view class="fixed-bottom flex justify-aroud align-center border-top bg-white" 
+		<view class="fixed-bottom flex justify-aroud align-center border-top bg-white"  
 				style="height: 100rpx;background-color: #EEEEEE;padding: 7rpx;">
 			<input @confirm="sendMsgHttp" v-model="message" type="text" style="flex: 1;margin: 0px 10rpx;background-color: #FFFFFF;padding: 5rpx;"/>
-			<view style="font-size: 24px;color: #BBBBBB;" class="iconfont iconfasong" @click="sendMsg"></view>
+			<view style="font-size: 24px;color: #BBBBBB;" class="iconfont iconfasong" @click="sendMsgHttp"></view>
 		</view>
 		
 	</view>
@@ -54,7 +54,9 @@
 			console.log("当前朋友id"+option.friendId + "/"+option.friendNickname+"/"+option.friendAvatar); 
 			
 			// 连接IM服务器绑定用户和通道关系
-			ChatServer.sendConnectMsg();
+			this.$auth(() => {
+				ChatServer.sendConnectMsg(option.friendId);
+			})	
 		},
 		onReady() {
 				this.pageToBootom();
@@ -91,9 +93,9 @@
 					
 				this.$store.state.chatList.push(re);
 						
-				//
-				this.$http.IM.sendMsg(this.friend.friendId,this.message).then(res => {
-					
+				//this.friend.friendId
+				this.$http.IM.sendMsg({receivedId:this.friend.friendId,message:this.message}).then(res => {
+					this.pageToBootom();
 				}).catch(err => {
 					console.log(err);
 					uni.showToast({
@@ -101,6 +103,7 @@
 					})
 				})
 				this.message = "";	
+				
 			},
 			// tcp
 			sendMsg(){

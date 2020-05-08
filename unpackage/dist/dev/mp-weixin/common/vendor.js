@@ -1625,8 +1625,9 @@ var ChatServer = {
   },
 
   // 发送连接消息
-  sendConnectMsg: function sendConnectMsg() {
-    var data = _ChatEntity.ChatMethod.buildConnectMessage();
+  sendConnectMsg: function sendConnectMsg(toUserId) {
+    var data = _ChatEntity.ChatMethod.buildConnectMessage(toUserId);
+    console.log("当前发送连接数据:" + JSON.stringify(data));
     _index.default.state.SocketTask.send({
       data: JSON.stringify(data),
       success: function success() {
@@ -1776,9 +1777,18 @@ new _vuex.default.Store({
 
       // 监听接收信息
       state.SocketTask.onMessage(function (e) {
-        console.log('接收消息', e);
+        console.log('接收消息', JSON.stringify(e));
         // 字符串转json
         var res = JSON.parse(e.data);
+        var item = {
+          userId: res.chatMessage.sendId,
+          avatar: res.chatMessage.sendAvatar,
+          content: res.chatMessage.msg,
+          type: res.chatMessage.type,
+          createTime: new Date() };
+
+        state.chatList.push(item);
+
         // 绑定返回结果
         // if (res.type == 'bind'){
         // 	// 用户绑定
@@ -2802,8 +2812,8 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
   URL: "http://localhost:8090/api/v1", // Zuul服务网关
 
   // websocket地址
-  WsUrl: "wss://127.0.0.1:8088/connect"
-  //WsUrl: "ws://localhost:8081/connect"
+  //WsUrl: "wss://127.0.0.1:8088/connect"
+  WsUrl: "ws://localhost:8081/connect"
   //WsUrl: "ws://localhost:9999"  // nginx
 };exports.default = _default;
 
@@ -2838,7 +2848,7 @@ var ChatConstant = {
 exports.ChatConstant = ChatConstant;function Message(type, sendId, sendNickName, sendAvatar, acceptId, msg, msgId) {
   this.type = type; //   消息类型;  "text", “IMG”....
   this.sendId = sendId;
-  this.sendNickName = sendNickName;
+  this.sendNickname = sendNickName;
   this.sendAvatar = sendAvatar;
 
   this.acceptId = acceptId;
@@ -2860,14 +2870,15 @@ var ChatMethod = {
     var user = _index.default.state.loginUser;
     var toUser = _index.default.state.loginUser;
     var message = new Message("text", user.id, user.nickname, user.avatar, toUser.id, msg, null);
+    console.log(JSON.stringify(message));
     return new DataContent(ChatConstant.CHAT, message);
   },
 
   //
-  buildConnectMessage: function buildConnectMessage() {
+  buildConnectMessage: function buildConnectMessage(toUserId) {
     var user = _index.default.state.loginUser;
-    var toUser = _index.default.state.loginUser;
-    var message = new Message("text", user.id, user.nickname, user.avatar, toUser.id, "", null);
+    //let toUser = $store.state.loginUser;
+    var message = new Message("text", user.id, user.nickname, user.avatar, toUserId, "", null);
     return new DataContent(ChatConstant.CONNECT, message);
   },
 
@@ -10208,7 +10219,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _request = __webpack_require__(/*! @/utils/request.js */ 23);
 
-var baseUrl = "/";
+var baseUrl = "/msgPush";
 
 var IM = {
   /**
@@ -10219,7 +10230,8 @@ var IM = {
     return (0, _request.request)({
       url: baseUrl + "/sendMsg",
       method: "POST",
-      data: args });
+      data: args,
+      header: { 'content-type': 'application/x-www-form-urlencoded' } });
 
   } };var _default =
 
