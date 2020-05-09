@@ -25,6 +25,16 @@ const focus = {
 			url: baseUrl+'/focus/'+condition.type+'/'+condition.id,
 			method:"Delete"
 		});
+	},
+	
+	/**
+	 * 	获得关注用户列表
+	 */
+	getFocusUser(){
+		return request({
+			url: baseUrl+'/focus/user',
+			method:"GET"
+		});
 	}
 	
 	

@@ -57,7 +57,7 @@
 
 <script>
 	import {formatTime} from "@/utils/Time.js"
-		
+	import http from "@/api/index.js"
 	
 	export default {
 		props:{
@@ -77,6 +77,21 @@
 				this.$auth(()=>{
 					this.localIsThumbup = !this.localIsThumbup;
 					console.log('点赞沸点id'+this.article.id+"--先赞的值"+this.localIsThumbup);
+					let con = {isLike:this.localIsThumbup,parentType:"ARTICLE",parentId:this.article.id}
+					
+					http.like.postLike(con).then(res => {
+						if(res.code === "200"){
+							uni.showToast({
+								title:"点赞成功"
+							})	
+							this.article.thumbupCount += 1;
+						}else{
+							uni.showToast({
+								title:"点赞失败"
+							})
+							this.localIsThumbup = !this.localIsThumbup;
+						}
+					}).catch(err => console.log(err));
 				});
 			},
 			

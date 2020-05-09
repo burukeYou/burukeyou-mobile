@@ -27,10 +27,10 @@
 		
 
 		<view class="sub" style="margin-top: 20rpx;">
-			<uni-list-item title="好友请求" @click="open('message/more/friend-reques')" showExtraIcon :show-arrow="false" :show-badge="true" badge-text="1" badgeType="error" style="border-bottom: 1px solid #A9A5A0">
+			<uni-list-item title="好友请求" @click="open('message/more/friend-reques')" showExtraIcon :show-arrow="false" :show-badge="true" :badge-text="friendRequestCount <= 0 ? '' : friendRequestCount" badgeType="error" style="border-bottom: 1px solid #A9A5A0">
 				<text slot="icon" class="iconfont iconling" style="color: #007BFF;"></text>
 			</uni-list-item>
-			<uni-list-item title="消息中心" @click="open('my/notification/notification')" showExtraIcon :show-arrow="false" :show-badge="true" badge-text="12" badgeType="error" style="border-bottom: 1px solid #A9A5A0">
+			<uni-list-item title="消息中心" @click="open('my/notification/notification')" showExtraIcon :show-arrow="false" :show-badge="true"  badgeType="error" style="border-bottom: 1px solid #A9A5A0">
 				<text slot="icon" class="iconfont iconling" style="color: #007BFF;"></text>
 			</uni-list-item>
 			<uni-list-item title="我赞过的" showExtraIcon>
@@ -67,7 +67,8 @@
 		data() {
 			return {
 				loginStatus: this.$store.state.loginStatus,
-				user:{}
+				user:{},
+				friendRequestCount:0
 			}
 		}, 
 		onLoad() {
@@ -91,7 +92,7 @@
 		    console.log("当前用户信息:"+  JSON.stringify(this.$store.state.loginUser));
 		    console.log("当前token:"+ this.$store.state.token);
 			
-			
+			this.getFrequestCount();
 		},
 		mounted() {
 				console.log("mounted:"+this.loginStatus)
@@ -100,6 +101,11 @@
 			uniListItem
 		},
 		methods: {
+			getFrequestCount(){
+				this.$http.friend.getFrequestCount().then(res => {
+					this.friendRequestCount = res.data;
+				}).catch(err => console.log(err));
+			},
 			toSetting(){
 				console.log("toSetting");
 				uni.navigateTo({

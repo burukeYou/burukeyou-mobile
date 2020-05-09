@@ -12,6 +12,7 @@ import friend from "./friend"
 import search from "./search"
 import notification from "./notification"
 import IM from "./im"
+import like from "./like"
 
 
 export default {
@@ -28,5 +29,6 @@ export default {
 	friend,
 	search,
 	notification,
-	IM
+	IM,
+	like
 }

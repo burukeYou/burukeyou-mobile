@@ -62,6 +62,15 @@ const friend = {
 		});	
 	},
 	
+	/**
+	 * 	获得好友请求数量
+	 */
+	getFrequestCount(){
+		return request({
+			url: baseUrl + "/request/count"
+		});	
+	}
+	
 	
 	
 }

@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="850b8f9b-f7ec-487a-aaac-7b336c92e023" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/api/im.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/im.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/message/chat/chat.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/message/chat/chat.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/friend.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/friend.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/my/my.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/my/my.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/my/notification/notification.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/my/notification/notification.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/unpackage/dist/dev/.sourcemap/mp-weixin/bkcomponents/bk-tabs.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/unpackage/dist/dev/.sourcemap/mp-weixin/bkcomponents/bk-tabs.js.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/unpackage/dist/dev/.sourcemap/mp-weixin/bkcomponents/boilingCard.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/unpackage/dist/dev/.sourcemap/mp-weixin/bkcomponents/boilingCard.js.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/unpackage/dist/dev/.sourcemap/mp-weixin/bkcomponents/follow.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/unpackage/dist/dev/.sourcemap/mp-weixin/bkcomponents/follow.js.map" afterDir="false" />
@@ -31,10 +33,10 @@
       <change beforePath="$PROJECT_DIR$/unpackage/dist/dev/.sourcemap/mp-weixin/pages/found/found.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/unpackage/dist/dev/.sourcemap/mp-weixin/pages/found/found.js.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/unpackage/dist/dev/.sourcemap/mp-weixin/pages/found/header-swiper.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/unpackage/dist/dev/.sourcemap/mp-weixin/pages/found/header-swiper.js.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/unpackage/dist/dev/.sourcemap/mp-weixin/pages/index/public-article.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/unpackage/dist/dev/.sourcemap/mp-weixin/pages/index/public-article.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/unpackage/dist/dev/.sourcemap/mp-weixin/pages/message/chat/chat.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/unpackage/dist/dev/.sourcemap/mp-weixin/pages/message/chat/chat.js.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/unpackage/dist/dev/.sourcemap/mp-weixin/pages/my/login/login.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/unpackage/dist/dev/.sourcemap/mp-weixin/pages/my/login/login.js.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/unpackage/dist/dev/.sourcemap/mp-weixin/pages/my/login/register.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/unpackage/dist/dev/.sourcemap/mp-weixin/pages/my/login/register.js.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/unpackage/dist/dev/.sourcemap/mp-weixin/pages/my/my.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/unpackage/dist/dev/.sourcemap/mp-weixin/pages/my/my.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/unpackage/dist/dev/.sourcemap/mp-weixin/pages/my/notification/notification.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/unpackage/dist/dev/.sourcemap/mp-weixin/pages/my/notification/notification.js.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/unpackage/dist/dev/.sourcemap/mp-weixin/pages/my/setting/setting.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/unpackage/dist/dev/.sourcemap/mp-weixin/pages/my/setting/setting.js.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/unpackage/dist/dev/.sourcemap/mp-weixin/pages/my/user-home/column-detail.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/unpackage/dist/dev/.sourcemap/mp-weixin/pages/my/user-home/column-detail.js.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/unpackage/dist/dev/.sourcemap/mp-weixin/pages/my/user-home/favorites-detail.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/unpackage/dist/dev/.sourcemap/mp-weixin/pages/my/user-home/favorites-detail.js.map" afterDir="false" />
@@ -42,13 +44,11 @@
       <change beforePath="$PROJECT_DIR$/unpackage/dist/dev/.sourcemap/mp-weixin/pages/search/search.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/unpackage/dist/dev/.sourcemap/mp-weixin/pages/search/search.js.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/unpackage/dist/dev/mp-weixin/app.json" beforeDir="false" afterPath="$PROJECT_DIR$/unpackage/dist/dev/mp-weixin/app.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/unpackage/dist/dev/mp-weixin/common/vendor.js" beforeDir="false" afterPath="$PROJECT_DIR$/unpackage/dist/dev/mp-weixin/common/vendor.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/unpackage/dist/dev/mp-weixin/pages/message/chat/chat.js" beforeDir="false" afterPath="$PROJECT_DIR$/unpackage/dist/dev/mp-weixin/pages/message/chat/chat.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/unpackage/dist/dev/mp-weixin/pages/message/chat/chat.wxml" beforeDir="false" afterPath="$PROJECT_DIR$/unpackage/dist/dev/mp-weixin/pages/message/chat/chat.wxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/unpackage/dist/dev/mp-weixin/pages/my/my.js" beforeDir="false" afterPath="$PROJECT_DIR$/unpackage/dist/dev/mp-weixin/pages/my/my.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/unpackage/dist/dev/mp-weixin/pages/my/my.wxml" beforeDir="false" afterPath="$PROJECT_DIR$/unpackage/dist/dev/mp-weixin/pages/my/my.wxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/unpackage/dist/dev/mp-weixin/pages/my/notification/notification.js" beforeDir="false" afterPath="$PROJECT_DIR$/unpackage/dist/dev/mp-weixin/pages/my/notification/notification.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/unpackage/dist/dev/mp-weixin/pages/my/notification/notification.wxml" beforeDir="false" afterPath="$PROJECT_DIR$/unpackage/dist/dev/mp-weixin/pages/my/notification/notification.wxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/unpackage/dist/dev/mp-weixin/project.config.json" beforeDir="false" afterPath="$PROJECT_DIR$/unpackage/dist/dev/mp-weixin/project.config.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/chat/ChatEntity.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/chat/ChatEntity.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/chat/ChatServer.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/chat/ChatServer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/config.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vuex/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/vuex/index.js" afterDir="false" />
     </list>
     <list id="17ea3513-ac7f-452a-8f2b-4058e60d7df9" name="Revert &quot;temp&quot;" comment="" />
     <list id="79d77af1-296a-4b23-89e4-64281e7d9d59" name="Revert &quot;temp&quot;-2" comment="Revert &quot;temp&quot;&#10;&#10;This reverts commit 2e5741d1" />
@@ -126,6 +126,7 @@
       <workItem from="1588874381214" duration="285000" />
       <workItem from="1588874669295" duration="15000" />
       <workItem from="1588874686540" duration="1311000" />
+      <workItem from="1588917395552" duration="676000" />
     </task>
     <task id="LOCAL-00001" summary="temp">
       <created>1588873863217</created>
@@ -155,7 +156,14 @@
       <option name="project" value="LOCAL" />
       <updated>1588874663531</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="对接聊天">
+      <created>1588917497666</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1588917497667</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -179,14 +187,15 @@
     <MESSAGE value="temp" />
     <MESSAGE value="other" />
     <MESSAGE value="Revert &quot;temp&quot;&#10;&#10;This reverts commit 2e5741d1" />
-    <option name="LAST_COMMIT_MESSAGE" value="Revert &quot;temp&quot;&#10;&#10;This reverts commit 2e5741d1" />
+    <MESSAGE value="对接聊天" />
+    <option name="LAST_COMMIT_MESSAGE" value="对接聊天" />
     <option name="GROUP_MULTIFILE_MERGE_BY_DIRECTORY" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="283" y="60" key="CommitChangelistDialog2" timestamp="1588917420287">
+    <state x="283" y="60" key="CommitChangelistDialog2" timestamp="1588917496877">
       <screen x="0" y="23" width="1396" height="877" />
     </state>
-    <state x="283" y="60" key="CommitChangelistDialog2/0.23.1396.877@0.23.1396.877" timestamp="1588917420287" />
+    <state x="283" y="60" key="CommitChangelistDialog2/0.23.1396.877@0.23.1396.877" timestamp="1588917496877" />
     <state x="100" y="123" width="1196" height="677" key="DiffContextDialog" timestamp="1588874378801">
       <screen x="0" y="23" width="1396" height="877" />
     </state>
@@ -207,10 +216,10 @@
       <screen x="0" y="23" width="1396" height="877" />
     </state>
     <state x="550" y="384" key="VCS.ChangelistChooser/0.23.1396.877@0.23.1396.877" timestamp="1588874141772" />
-    <state x="298" y="201" key="Vcs.Push.Dialog.v2" timestamp="1588874483962">
+    <state x="298" y="201" key="Vcs.Push.Dialog.v2" timestamp="1588917727621">
       <screen x="0" y="23" width="1396" height="877" />
     </state>
-    <state x="298" y="201" key="Vcs.Push.Dialog.v2/0.23.1396.877@0.23.1396.877" timestamp="1588874483962" />
+    <state x="298" y="201" key="Vcs.Push.Dialog.v2/0.23.1396.877@0.23.1396.877" timestamp="1588917727621" />
     <state x="100" y="123" width="1196" height="677" key="com.intellij.history.integration.ui.views.DirectoryHistoryDialog" timestamp="1588874378801">
       <screen x="0" y="23" width="1396" height="877" />
     </state>

@@ -25,8 +25,20 @@
 		},
 		methods:{
 			// 跟新关注状态
-			postOrCanelFollow(args) {
-				console.log("关注沸点" + args.parentId + "---现在的值:" + args.isFollow)
+			postOrCanelFollow(value) {
+				console.log("关注用户" + value.parentId + "---现在的值:" + value.isFollow)
+				
+				if(value.isFollow){
+					let args = {targetId:value.parentId,targetType:"USER"}
+					this.$http.focus.postFocus(args).then(res => {
+						
+					}).catch(err => console.log(err));
+				}else{
+					let args = {type:"USER",id:value.parentId}
+					this.$http.focus.cancelFocus(args).then(res => {
+						
+					}).catch(err => console.log(err));
+				}	
 			},	
 		},
 		components: {

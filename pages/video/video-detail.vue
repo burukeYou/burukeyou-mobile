@@ -3,7 +3,7 @@
 		<view class="uni-padding-wrap uni-common-mt" >
 			<view>
 				<video style="width: 685rpx;" id="myVideo" 
-				src="http://burukeyou.oss-cn-shenzhen.aliyuncs.com/video/14_%E5%AE%9E%E9%AA%8C%E4%BA%8C%E6%89%A9%E5%B1%95%E7%8E%AF%E8%8A%82.mp4"
+				src="http://burukeyou.oss-cn-shenzhen.aliyuncs.com/video/%E7%AD%89%E4%BD%A0%E4%B8%8B%E8%AF%BE.mkv"
 					@error="videoErrorCallback" page-gesture autoplay
 					:danmu-list="danmuList" enable-danmu danmu-btn controls></video>
 			</view>

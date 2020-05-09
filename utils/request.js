@@ -32,7 +32,7 @@ export function request(options = {}){
 				},
 				fail: (error) => {
 					uni.showToast({
-						titile: errorerrMsg || "请求失败",
+						titile: error || "请求失败",
 						icon: 'none'
 					});
 					return reject();

@@ -21,8 +21,12 @@
 				</block>
 				
 			</view>
-			<view slot="1">
-				待对接 ......
+			<view slot="1" class="p-2">
+					<view class="border-bottom  p-1" v-for="(e,i) in systemNotificationList">
+						<view>
+							<text style="color: red;margin-right: 10rpx;">*</text>{{e.content.title}}
+						</view>
+					</view>
 			</view>
 		
 		</bk-tabs>
@@ -47,7 +51,8 @@
 					page:1,
 					size:40
 				},
-				userNotificationList:[]
+				userNotificationList:[],
+				systemNotificationList:[]
 			}
 		},
 		onShow() {
@@ -59,6 +64,7 @@
 				this.loadMoreStatus = "more";
 				console.log("切换:"+JSON.stringify(e));
 				this.condition.type = e.value;
+				this.search();
 			},
 			loadMore(){
 				this.loadMoreStatus = "loading";
@@ -69,7 +75,10 @@
 			},
 			search(){
 				this.$http.notification.getPageByType(this.condition).then(res => {
-					this.userNotificationList = res.data.records;
+					if(this.condition.type === "USER")
+						this.userNotificationList = res.data.records;
+					else 
+						this.systemNotificationList = res.data.records;
 				}).catch(err => console.log(err));
 			}
 		},

@@ -29,22 +29,22 @@
 					
 					<view class="flex-column" @click="open('focus/focus')">
 						<view style="color: #b7b7b7;">关注</view>
-						<view style="font-size: 32rpx;font-weight: 500;text-align: center;">10</view>
+						<!-- <view style="font-size: 32rpx;font-weight: 500;text-align: center;">10</view> -->
 					</view>
 					<view style="border: 2rpx solid #F7F7F7;height: 64%;"></view>
 					<view class="flex-column" @click="open('focus/fan')">
 						<view style="color: #b7b7b7;">粉丝</view>
-						<view style="font-size: 32rpx;font-weight: 500;text-align: center;">288</view>
+						<!-- <view style="font-size: 32rpx;font-weight: 500;text-align: center;">288</view> -->
 					</view>
 						<view style="border: 2rpx solid #F7F7F7;height: 64%;"></view>
 					<view class="flex-column">
 						<view style="color: #b7b7b7;">访问量</view>
-						<view style="font-size: 32rpx;font-weight: 500;text-align: center;">1788</view>
+						<!-- <view style="font-size: 32rpx;font-weight: 500;text-align: center;">1788</view> -->
 					</view>	
 					<view style="border: 2rpx solid #F7F7F7;height: 64%;"></view>
 					<view class="flex-column">
 						<view style="color: #b7b7b7;">点赞量</view>
-						<view style="font-size: 32rpx;font-weight: 500;text-align: center;">10</view>
+						<!-- <view style="font-size: 32rpx;font-weight: 500;text-align: center;">10</view> -->
 					</view>					
 			</view>
 		</view>
