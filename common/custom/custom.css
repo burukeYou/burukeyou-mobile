@@ -453,8 +453,9 @@
 .shadow-none { box-shadow: none !important;}
 .shadow1 {box-shadow: 0 0 10px #00000059;}
 .shadow2 {box-shadow:4px 4px 10px #00000059;}
-.shadow3 {box-shadow:6rpx 6rpx 20rpx #ddd;}
+
 .shadow4 {    box-shadow: 3px 3px 5px #00000059;}
 .shadow5 {    box-shadow: 0 6px 26px rgba(0,0,0,.25);}
+.shadow3 {box-shadow:6rpx 6rpx 20rpx #ddd;}  
 /* #endif */
 

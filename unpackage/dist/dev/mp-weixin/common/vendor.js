@@ -3017,7 +3017,7 @@ function normalizeComponent (
 
 /***/ }),
 
-/***/ 194:
+/***/ 195:
 /*!**********************************************************************!*\
   !*** /Users/mac/Documents/code/burukeyou-mobile-local/utils/Time.js ***!
   \**********************************************************************/
@@ -9231,7 +9231,8 @@ var _comment = _interopRequireDefault(__webpack_require__(/*! ./comment */ 32));
 var _friend = _interopRequireDefault(__webpack_require__(/*! ./friend */ 33));
 var _search = _interopRequireDefault(__webpack_require__(/*! ./search */ 34));
 var _notification = _interopRequireDefault(__webpack_require__(/*! ./notification */ 35));
-var _im = _interopRequireDefault(__webpack_require__(/*! ./im */ 36));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var _default =
+var _im = _interopRequireDefault(__webpack_require__(/*! ./im */ 36));
+var _like = _interopRequireDefault(__webpack_require__(/*! ./like */ 37));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var _default =
 
 
 {
@@ -9248,7 +9249,8 @@ var _im = _interopRequireDefault(__webpack_require__(/*! ./im */ 36));function _
   friend: _friend.default,
   search: _search.default,
   notification: _notification.default,
-  IM: _im.default };exports.default = _default;
+  IM: _im.default,
+  like: _like.default };exports.default = _default;
 
 /***/ }),
 
@@ -9359,7 +9361,7 @@ function request() {var options = arguments.length > 0 && arguments[0] !== undef
       },
       fail: function fail(error) {
         uni.showToast({
-          titile: errorerrMsg || "请求失败",
+          titile: error || "请求失败",
           icon: 'none' });
 
         return reject();
@@ -9593,6 +9595,16 @@ var focus = {
     return (0, _request.request)({
       url: baseUrl + '/focus/' + condition.type + '/' + condition.id,
       method: "Delete" });
+
+  },
+
+  /**
+      * 	获得关注用户列表
+      */
+  getFocusUser: function getFocusUser() {
+    return (0, _request.request)({
+      url: baseUrl + '/focus/user',
+      method: "GET" });
 
   } };var _default =
 
@@ -10000,6 +10012,15 @@ var friend = {
       url: baseUrl + "/relation/" + friendId,
       method: "DELETE" });
 
+  },
+
+  /**
+      * 	获得好友请求数量
+      */
+  getFrequestCount: function getFrequestCount() {
+    return (0, _request.request)({
+      url: baseUrl + "/request/count" });
+
   } };var _default =
 
 
@@ -10067,7 +10088,7 @@ notification;exports.default = _default;
 
 /***/ }),
 
-/***/ 354:
+/***/ 355:
 /*!**************************************************************************************!*\
   !*** /Users/mac/Documents/code/burukeyou-mobile-local/components/uni-icons/icons.js ***!
   \**************************************************************************************/
@@ -10241,7 +10262,49 @@ IM;exports.default = _default;
 
 /***/ }),
 
-/***/ 383:
+/***/ 37:
+/*!********************************************************************!*\
+  !*** /Users/mac/Documents/code/burukeyou-mobile-local/api/like.js ***!
+  \********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _request = __webpack_require__(/*! @/utils/request.js */ 23);
+
+
+
+var baseUrl = '/like';
+
+var like = {
+  /**
+              *  点赞/取消点赞
+              * @param {Object} args
+              */
+  postLike: function postLike(args) {
+    return (0, _request.request)({
+      url: baseUrl + '/like/' + args.isLike + '/' + args.parentType + '/' + args.parentId,
+      method: "POST" });
+
+  }
+
+  // postLike(args){
+  // 	return request({
+  // 		url: baseUrl+'/like'+args.isLike+'/'+args.parentType+'/'+args.parentId,
+  // 		method:"POST",
+  // 		data:condition,
+  // 		header: {'content-type': 'application/x-www-form-urlencoded'},
+  // 	});
+  // },
+};var _default =
+
+
+
+like;exports.default = _default;
+
+/***/ }),
+
+/***/ 384:
 /*!***********************************************************************!*\
   !*** /Users/mac/Documents/code/burukeyou-mobile-local/common/time.js ***!
   \***********************************************************************/
@@ -10340,7 +10403,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ 394:
+/***/ 395:
 /*!**************************************************************************************************!*\
   !*** /Users/mac/Documents/code/burukeyou-mobile-local/components/uni-swipe-action-item/mpwxs.js ***!
   \**************************************************************************************************/
